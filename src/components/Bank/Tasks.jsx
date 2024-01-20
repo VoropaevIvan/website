@@ -1,5 +1,5 @@
 import axios from "axios";
-import Task from "./Task";
+import Task from "./Task/Task";
 import { useEffect, useState } from "react";
 
 const getAllTasksFromServer = async (setTasksFromServer) => {
@@ -25,7 +25,7 @@ export const Tasks = () => {
   }, []);
 
   return (
-    <>
+    <div style={{ width: "60%", marginLeft: "auto", marginRight: "auto" }}>
       {!!tasksFromServer &&
         tasksFromServer.map((task) => {
           return (
@@ -37,6 +37,6 @@ export const Tasks = () => {
             />
           );
         })}
-    </>
+    </div>
   );
 };
