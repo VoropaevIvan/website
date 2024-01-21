@@ -1,17 +1,10 @@
 import { useState } from "react";
+import Table from "../Utils/Table/Table";
 
 export const Test = () => {
-  const [x, setX] = useState("1");
-
-  const handleClick = () => {
-    console.log("before", x);
-    setX(x + "!");
-    console.log("after", x);
-  };
   return (
     <>
-      <h1>{x}</h1>
-      <button onClick={handleClick}>Кнопка</button>
+      <Table />
     </>
   );
 };

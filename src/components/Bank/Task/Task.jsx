@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./Task.css";
 
 export const Task = ({ id, text, trueAnswer }) => {
   trueAnswer = String(trueAnswer);
@@ -27,7 +28,7 @@ export const Task = ({ id, text, trueAnswer }) => {
   }
 
   return (
-    <div style={{ border: "1px solid black", margin: "40px", padding: "10px" }}>
+    <div className="task">
       <div dangerouslySetInnerHTML={createMarkup(text)} />
       <br />
       <form onSubmit={handleAnswerSubmit}>
