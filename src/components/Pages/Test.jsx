@@ -4,7 +4,7 @@ import Table from "../Utils/Table/Table";
 export const Test = () => {
   return (
     <>
-      <Table />
+      <h1>Test</h1>
     </>
   );
 };

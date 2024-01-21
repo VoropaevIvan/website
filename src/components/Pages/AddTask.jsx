@@ -40,25 +40,33 @@ const AddTask = () => {
     text: "Текст",
     answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
     solution: "",
+    videorazbor: "",
   });
 
   const [allTaskData, setAllTaskData] = useState({
     text: "Введите условие задачи",
     answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
     solution: "Введите решение на задачу",
+    videorazbor: "",
   });
+
+  const [isSend, setIsSend] = useState(false);
+  const [curFile, setCurFile] = useState(null);
 
   const setText = (text) => {
     setAllTaskData({ ...allTaskData, text: text });
+    setIsSend(false);
   };
   const setSolution = (solution) => {
     setAllTaskData({ ...allTaskData, solution: solution });
+    setIsSend(false);
   };
   const setAnswer = (answer) => {
     setAllTaskData({
       ...allTaskData,
       answer: answer,
     });
+    setIsSend(false);
   };
   const setAnswerType = (e) => {
     // setAllTaskData({ ...allTaskData, answer: answer });
@@ -74,6 +82,7 @@ const AddTask = () => {
         answer: { cols: 2, rows: 1, data: [["", ""]] },
       });
     }
+    setIsSend(false);
   };
   const setTableSize = ({ number, type }) => {
     if (type === "cols") {
@@ -101,8 +110,25 @@ const AddTask = () => {
         },
       });
     }
+    setIsSend(false);
   };
-
+  const handleSendButton = async () => {
+    try {
+      console.log(allTaskData);
+      const res = await axios.post(`http://localhost:5000/api/addtask/`, {
+        ...allTaskData,
+        number_ege: 1,
+      });
+      if (res.status === 200) {
+        // alert("ok");
+        setIsSend(true);
+      }
+    } catch (error) {
+      //setInitialDataFromServer();
+      console.log(error);
+      alert("Произошла ошибка", error);
+    }
+  };
   useEffect(() => {
     async function fetchData() {
       getTaskById(66, setInitialDataFromServer, setAllTaskData);
@@ -171,7 +197,17 @@ const AddTask = () => {
           </div>
         )}
       </div>
-
+      <div className="videorazbor">
+        <span>
+          Видеоразбор
+          <input
+            value={allTaskData.videorazbor}
+            onChange={(e) => {
+              setAllTaskData({ ...allTaskData, videorazbor: e.target.value });
+            }}
+          ></input>
+        </span>
+      </div>
       <details>
         <summary>Текстовое решение задачи</summary>
         <div className="editor">
@@ -183,6 +219,22 @@ const AddTask = () => {
           <h3>{allTaskData.solution}</h3>
         </div>
       </details>
+      <div>
+        <input
+          type="file"
+          //value={curFile}
+          onChange={(e) => {
+            //setCurFile(e.target.files[0]);
+            console.log(e.target.files[0]);
+          }}
+        ></input>
+      </div>
+      <span>
+        <button className="sendButton" onClick={handleSendButton}>
+          Сохранить
+        </button>
+        {isSend && <strong>Задача сохранена</strong>}
+      </span>
     </div>
   );
 };
