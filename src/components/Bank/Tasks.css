@@ -3,4 +3,15 @@
   margin-left: auto;
   margin-right: auto;
   border-radius: 1px;
+  height: auto;
+  /* margin-top: 10;
+  padding-top: 10; */
+}
+
+.bank {
+  background-color: antiquewhite;
+  /* margin: 100px; */
+  padding-top: 15px;
+  padding-bottom: 10px;
+  width: 100%;
 }

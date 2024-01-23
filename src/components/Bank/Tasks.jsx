@@ -26,18 +26,20 @@ export const Tasks = () => {
   }, []);
 
   return (
-    <div className="tasks">
-      {!!tasksFromServer &&
-        tasksFromServer.map((task) => {
-          return (
-            <Task
-              key={task.id}
-              id={task.id}
-              text={task.text}
-              trueAnswer={task.answer}
-            />
-          );
-        })}
+    <div className="bank">
+      <div className="tasks">
+        {!!tasksFromServer &&
+          tasksFromServer.map((task) => {
+            return (
+              <Task
+                key={task.id}
+                id={task.id}
+                text={task.text}
+                trueAnswer={task.answer}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };

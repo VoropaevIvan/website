@@ -1,25 +1,28 @@
 .menu {
   text-align: center;
-  padding: 5px;
   position: sticky;
   width: 100%;
   top: 0px;
-  height: 30px;
-  vertical-align: middle;
+
   background-color: #00ffff;
   color: #000000;
   z-index: 999999;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 10px;
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 .menu a {
   color: #000000;
   text-decoration: none;
-  vertical-align: middle;
-  margin: 5px;
-  height: 100%;
+  margin: 10px;
+  font-size: 18px;
   /* background-color: #000000; */
 }
 
 .menu .active {
   color: rgb(255, 255, 255);
+  font-size: 18px;
 }
