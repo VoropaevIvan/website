@@ -19,6 +19,7 @@ function App() {
             <Route path="bank" element={<Tasks />}></Route>
             <Route path="editor" element={<TinyEditor />}></Route>
             <Route path="addtask" element={<AddTask />}></Route>
+            <Route path="addtask/:id" element={<AddTask />}></Route>
             <Route path="test" element={<Test />}></Route>
             <Route path="edit-task" element={<EditTask />}></Route>
             <Route path="*" element={<NotFound />}></Route>

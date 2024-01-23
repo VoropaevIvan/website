@@ -2,7 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import TinyEditor from "../Utils/TinyEditor";
 import Table from "../Utils/Table/Table";
+import FileView from "../Utils/FileView";
 import "./AddTask.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const createDataForTable = ({ cols, rows }) => {
   let initialData = [];
@@ -36,6 +38,10 @@ const whatAnswerType = ({ cols, rows }) => {
 };
 
 const AddTask = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
+
   const [initialDataFromServer, setInitialDataFromServer] = useState({
     text: "Текст",
     answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
@@ -51,7 +57,9 @@ const AddTask = () => {
   });
 
   const [isSend, setIsSend] = useState(false);
-  const [curFile, setCurFile] = useState(null);
+
+  const [currentFile, setCurrentFile] = useState(null);
+  const [files, setFiles] = useState([]);
 
   const setText = (text) => {
     setAllTaskData({ ...allTaskData, text: text });
@@ -122,6 +130,7 @@ const AddTask = () => {
       if (res.status === 200) {
         // alert("ok");
         setIsSend(true);
+        navigate("./123", { relative: "path" });
       }
     } catch (error) {
       //setInitialDataFromServer();
@@ -129,12 +138,27 @@ const AddTask = () => {
       alert("Произошла ошибка", error);
     }
   };
+
+  const saveFileOnServer = () => {
+    // Send to server...
+
+    setFiles([...files, `file_${files.length}.txt`]);
+  };
+  const delFile = (fileName) => {
+    setFiles(
+      files.filter((file) => {
+        return file !== fileName;
+      })
+    );
+  };
+
   useEffect(() => {
     async function fetchData() {
       getTaskById(66, setInitialDataFromServer, setAllTaskData);
     }
     fetchData();
-  }, []);
+    console.log("fetch");
+  }, [location]);
 
   return (
     <div className="addTask">
@@ -222,12 +246,15 @@ const AddTask = () => {
       <div>
         <input
           type="file"
-          //value={curFile}
           onChange={(e) => {
-            //setCurFile(e.target.files[0]);
-            console.log(e.target.files[0]);
+            setCurrentFile(e.target.files[0]);
           }}
         ></input>
+        <button onClick={saveFileOnServer}>Отправить</button>
+        <br></br>
+        {files.map((file) => {
+          return <FileView key={file} fileName={file} delFile={delFile} />;
+        })}
       </div>
       <span>
         <button className="sendButton" onClick={handleSendButton}>
