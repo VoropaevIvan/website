@@ -66,37 +66,44 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(nullable = false)
-    private int num;
+    @Column(nullable = false, length = MAX_LENGTH)
+    private String content;
 
     @Column(nullable = false, length = MAX_LENGTH)
-    private String dsc;
-
-    @Column(nullable = false, length = MAX_LENGTH)
-    private String files;
-
-    @Column(nullable = false, length = MAX_LENGTH)
-    private String ans;
+    private String answer;
 
     @Column(nullable = false)
-    private String lvl;
+    private String numberEGE;
 
-    @Column(nullable = false)
+    @Column
     private boolean isOfficial;
 
-    @Column(nullable = false)
-    private boolean isRelevant;
+    @Column
+    private String actuality;
 
-    @Column(nullable = false)
-    private Timestamp dateOfAdd;
-
-    private String topic;
+    @Column
+    private String difficulty;
 
     @Column(length = MAX_LENGTH)
-    private String src;
+    private String source;
+
+    @Column
+    private int topic;
+
+    @Column(length = MAX_LENGTH)
+    private String files;
+
+    @Column
+    private Timestamp addDate;
+
+    @Column
+    private Timestamp lastChangeDate;
 
     @Column(length = MAX_LENGTH)
     private String videoReview;
+
+    @Column(length = MAX_LENGTH)
+    private String solution;
 
     public int getId() {
         return id;
@@ -107,48 +114,30 @@ public class Task {
         return this;
     }
 
-    public int getNumber() {
-        return num;
+    public String getContent() {
+        return content;
     }
 
-    public Task setNumber(int num) {
-        this.num = num;
-        return this;
-    }
-
-    public String getDescription() {
-        return dsc;
-    }
-
-    public Task setDescription(String dsc) {
-        this.dsc = dsc;
-        return this;
-    }
-
-    public String getFiles() {
-        return files;
-    }
-
-    public Task setFiles(String files) {
-        this.files = files;
+    public Task setContent(String content) {
+        this.content = content;
         return this;
     }
 
     public String getAnswer() {
-        return ans;
+        return answer;
     }
 
-    public Task setAnswer(String ans) {
-        this.ans = ans;
+    public Task setAnswer(String answer) {
+        this.answer = answer;
         return this;
     }
 
-    public String getLevel() {
-        return lvl;
+    public String getNumberEGE() {
+        return numberEGE;
     }
 
-    public Task setLevel(String lvl) {
-        this.lvl = lvl;
+    public Task setNumberEGE(String numberEGE) {
+        this.numberEGE = numberEGE;
         return this;
     }
 
@@ -161,39 +150,66 @@ public class Task {
         return this;
     }
 
-    public boolean isRelevant() {
-        return isRelevant;
+    public String getActuality() {
+        return actuality;
     }
 
-    public Task setRelevant(boolean relevant) {
-        isRelevant = relevant;
+    public Task setActuality(String actuality) {
+        this.actuality = actuality;
         return this;
     }
 
-    public Timestamp getDateOfAdd() {
-        return dateOfAdd;
+    public String getDifficulty() {
+        return difficulty;
     }
 
-    public Task setDateOfAdd(Timestamp dateOfAdd) {
-        this.dateOfAdd = dateOfAdd;
-        return this;
-    }
-
-    public String getTopic() {
-        return topic;
-    }
-
-    public Task setTopic(String topic) {
-        this.topic = topic;
+    public Task setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
         return this;
     }
 
     public String getSource() {
-        return src;
+        return source;
     }
 
-    public Task setSource(String src) {
-        this.src = src;
+    public Task setSource(String source) {
+        this.source = source;
+        return this;
+    }
+
+    public int getTopic() {
+        return topic;
+    }
+
+    public Task setTopic(int topic) {
+        this.topic = topic;
+        return this;
+    }
+
+    public String getFiles() {
+        return files;
+    }
+
+    public Task setFiles(String files) {
+        this.files = files;
+        return this;
+    }
+
+    public Timestamp getAddDate() {
+        return addDate;
+    }
+
+    public Task setAddDate(Timestamp addDate) {
+        this.addDate = addDate;
+        return this;
+    }
+
+    public Timestamp getLastChangeDate() {
+        return lastChangeDate;
+    }
+
+    public Task setLastChangeDate(Timestamp lastChangeDate) {
+        this.lastChangeDate = lastChangeDate;
         return this;
     }
 
@@ -203,6 +219,15 @@ public class Task {
 
     public Task setVideoReview(String videoReview) {
         this.videoReview = videoReview;
+        return this;
+    }
+
+    public String getSolution() {
+        return solution;
+    }
+
+    public Task setSolution(String solution) {
+        this.solution = solution;
         return this;
     }
 }

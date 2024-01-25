@@ -14,7 +14,7 @@ public class TaskLoader {
     @Profile("init")
     CommandLineRunner init(TaskRepository repository) {
         return args -> {
-            repository.save(new Task()
+            /*repository.save(new Task()
                     .setNumber(3)
                     .setDescription("1 + 1 = ?")
                     .setFiles("")
@@ -40,7 +40,7 @@ public class TaskLoader {
                             LocalDateTime.of(2024, 1, 23, 12, 0, 30)))
                     .setTopic("A sum of two numbers")
                     .setSource("https://random.com/task/2")
-                    .setVideoReview("https://youtube.com/"));
+                    .setVideoReview("https://youtube.com/"));*/
         };
     }
 }

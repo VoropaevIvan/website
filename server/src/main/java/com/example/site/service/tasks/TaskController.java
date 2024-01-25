@@ -52,6 +52,6 @@ public class TaskController {
         */
 
         repository.save(task);
-        return "Saved";
+        return String.valueOf(task.getId());
     }
 }
