@@ -47,6 +47,8 @@ const AddTask = () => {
     answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
     solution: "",
     videorazbor: "",
+    numberEGE: "№ 1",
+    author: "EGE 2023",
   });
 
   const [allTaskData, setAllTaskData] = useState({
@@ -54,6 +56,8 @@ const AddTask = () => {
     answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
     solution: "Введите решение на задачу",
     videorazbor: "",
+    numberEGE: "№ 1",
+    author: "EGE 2023",
   });
 
   const [isSend, setIsSend] = useState(false);
@@ -162,6 +166,57 @@ const AddTask = () => {
 
   return (
     <div className="addTask">
+      <span>
+        <p>
+          {"Номер ЕГЭ "}
+
+          <select
+            onChange={(e) => {
+              setAllTaskData({ ...allTaskData, numberEGE: e.target.value });
+            }}
+            value={allTaskData.numberEGE}
+          >
+            {[
+              "№ 1",
+              "№ 2",
+              "№ 3",
+              "№ 4",
+              "№ 5",
+              "№ 6",
+              "№ 7",
+              "№ 8",
+              "№ 9",
+              "№ 10",
+              "№ 11",
+              "№ 12",
+              "№ 13",
+              "№ 14",
+              "№ 15",
+              "№ 16",
+              "№ 17",
+              "№ 18",
+              "№ 19-21",
+              "№ 22",
+              "№ 23",
+              "№ 24",
+              "№ 25",
+              "№ 26",
+              "№ 27",
+            ].map((s) => {
+              return <option key={s}>{s}</option>;
+            })}
+          </select>
+        </p>
+      </span>
+      <span>
+        {"Откуда задача "}
+        <input
+          value={allTaskData.author}
+          onChange={(e) => {
+            setAllTaskData({ ...allTaskData, author: e.target.value });
+          }}
+        ></input>
+      </span>
       <h2>Условие задачи</h2>
       <div className="editor">
         <TinyEditor
