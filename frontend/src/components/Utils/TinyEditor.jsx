@@ -7,11 +7,12 @@ const TinyEditor = ({ setText, initialText, height }) => {
   function myCustomOnChangeHandler() {
     setText(editorRef.current.getContent());
   }
-
+  console.log("ENV", process.env.PUBLIC_URL);
   return (
     <>
       <Editor
-        apiKey={process.env.REACT_APP_TINY_KEY}
+        // apiKey={process.env.REACT_APP_TINY_KEY}
+        tinymceScriptSrc={process.env.PUBLIC_URL + "/tinymce/tinymce.min.js"}
         onInit={(evt, editor) => (editorRef.current = editor)}
         initialValue={
           initialText || "<p>This is the initial content of the editor.</p>"
