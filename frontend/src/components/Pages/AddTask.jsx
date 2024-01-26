@@ -3,39 +3,14 @@ import { useEffect, useState } from "react";
 import TinyEditor from "../Utils/TinyEditor";
 import Table from "../Utils/Table/Table";
 import FileView from "../Utils/FileView";
-import "./AddTask.css";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const createDataForTable = ({ cols, rows }) => {
-  let initialData = [];
-  for (let i = 1; i <= rows; i++) {
-    let obj = [];
-    for (let j = 1; j <= cols; j++) {
-      obj.push("");
-    }
-    initialData.push(obj);
-  }
-  return JSON.parse(JSON.stringify(initialData));
-};
-
-const getTaskById = async (id, setInitialDataFromServer, setAllTaskData) => {
-  try {
-    const res = await axios.get(`http://localhost:5000/api/task/${id}`);
-
-    if (res.data) {
-      console.log(res.data);
-      setInitialDataFromServer(res.data);
-      setAllTaskData(res.data);
-    }
-  } catch (error) {
-    //setInitialDataFromServer();
-    console.log(error);
-  }
-};
-
-const whatAnswerType = ({ cols, rows }) => {
-  return cols === 0 && rows === 0 ? "Текстовое поле" : "Таблица";
-};
+import {
+  whatAnswerType,
+  getAnswerType,
+  getTableSize,
+} from "../Utils/addTaskUtils/addTaskUtils";
+import { getTaskById } from "../Utils/addTaskUtils/server";
+import "./AddTask.css";
 
 const AddTask = () => {
   const navigate = useNavigate();
@@ -43,21 +18,29 @@ const AddTask = () => {
   console.log(location);
 
   const [initialDataFromServer, setInitialDataFromServer] = useState({
-    text: "Текст",
+    content: "Текст",
     answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
     solution: "",
     videorazbor: "",
     numberEGE: "№ 1",
     author: "EGE 2023",
+    isOfficial: false,
+    actuality: "Актуальна",
+    difficulty: "Уровень ЕГЭ",
+    topic: "",
   });
 
   const [allTaskData, setAllTaskData] = useState({
-    text: "Введите условие задачи",
+    content: "Введите условие задачи",
     answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
     solution: "Введите решение на задачу",
     videorazbor: "",
     numberEGE: "№ 1",
     author: "EGE 2023",
+    isOfficial: false,
+    actuality: "Актуальна",
+    difficulty: "Уровень ЕГЭ",
+    topic: "",
   });
 
   const [isSend, setIsSend] = useState(false);
@@ -65,8 +48,8 @@ const AddTask = () => {
   const [currentFile, setCurrentFile] = useState(null);
   const [files, setFiles] = useState([]);
 
-  const setText = (text) => {
-    setAllTaskData({ ...allTaskData, text: text });
+  const setText = (content) => {
+    setAllTaskData({ ...allTaskData, content: content });
     setIsSend(false);
   };
   const setSolution = (solution) => {
@@ -80,56 +63,26 @@ const AddTask = () => {
     });
     setIsSend(false);
   };
+
   const setAnswerType = (e) => {
-    // setAllTaskData({ ...allTaskData, answer: answer });
     const typeAnswer = e.target.value;
-    if (typeAnswer === "Текстовое поле") {
-      setAllTaskData({
-        ...allTaskData,
-        answer: { cols: 0, rows: 0, data: "" },
-      });
-    } else {
-      setAllTaskData({
-        ...allTaskData,
-        answer: { cols: 2, rows: 1, data: [["", ""]] },
-      });
-    }
+    setAllTaskData({
+      ...allTaskData,
+      answer: getAnswerType(typeAnswer),
+    });
     setIsSend(false);
   };
+
   const setTableSize = ({ number, type }) => {
-    if (type === "cols") {
-      setAllTaskData({
-        ...allTaskData,
-        answer: {
-          ...allTaskData.answer,
-          cols: Number(number),
-          data: createDataForTable({
-            cols: Number(number),
-            rows: allTaskData.answer.rows,
-          }),
-        },
-      });
-    } else {
-      setAllTaskData({
-        ...allTaskData,
-        answer: {
-          ...allTaskData.answer,
-          rows: Number(number),
-          data: createDataForTable({
-            cols: allTaskData.answer.cols,
-            rows: Number(number),
-          }),
-        },
-      });
-    }
+    setAllTaskData(getTableSize({ number, type, allTaskData }));
     setIsSend(false);
   };
+
   const handleSendButton = async () => {
     try {
       console.log(allTaskData);
       const res = await axios.post(`http://localhost:5000/api/addtask/`, {
         ...allTaskData,
-        number_ege: 1,
       });
       if (res.status === 200) {
         // alert("ok");
@@ -148,6 +101,7 @@ const AddTask = () => {
 
     setFiles([...files, `file_${files.length}.txt`]);
   };
+
   const delFile = (fileName) => {
     setFiles(
       files.filter((file) => {
@@ -169,7 +123,6 @@ const AddTask = () => {
       <span>
         <p>
           {"Номер ЕГЭ "}
-
           <select
             onChange={(e) => {
               setAllTaskData({ ...allTaskData, numberEGE: e.target.value });
@@ -208,6 +161,7 @@ const AddTask = () => {
           </select>
         </p>
       </span>
+
       <span>
         {"Откуда задача "}
         <input
@@ -217,13 +171,80 @@ const AddTask = () => {
           }}
         ></input>
       </span>
+      <div>
+        <span>
+          {"Официальная задача? "}
+          <select
+            value={allTaskData.isOfficial ? "Да" : "Нет"}
+            onChange={(e) => {
+              setAllTaskData({
+                ...allTaskData,
+                isOfficial: e.target.value === "Да" ? true : false,
+              });
+            }}
+          >
+            <option>Да</option>
+            <option>Нет</option>
+          </select>
+        </span>
+      </div>
+      <div>
+        <span>
+          {"Актуальность задачи "}
+          <select
+            value={allTaskData.actuality}
+            onChange={(e) => {
+              setAllTaskData({
+                ...allTaskData,
+                actuality: e.target.value,
+              });
+            }}
+          >
+            <option>Будет на ЕГЭ</option>
+            <option>Актуальна</option>
+            <option>Не актуальна</option>
+          </select>
+        </span>
+      </div>
+      <div>
+        <span>
+          {"Сложность задачи "}
+          <select
+            value={allTaskData.difficulty}
+            onChange={(e) => {
+              setAllTaskData({
+                ...allTaskData,
+                difficulty: e.target.value,
+              });
+            }}
+          >
+            <option>Гроб</option>
+            <option>Чуть сложнее ЕГЭ</option>
+            <option>Уровень ЕГЭ</option>
+            <option>Легче ЕГЭ</option>
+            <option>Гораздо легче ЕГЭ</option>
+          </select>
+        </span>
+      </div>
+      <div>
+        <span>
+          {"Тема задачи "}
+          <input
+            value={allTaskData.topic}
+            onChange={(e) => {
+              setAllTaskData({ ...allTaskData, topic: e.target.value });
+            }}
+          ></input>
+        </span>
+      </div>
+
       <h2>Условие задачи</h2>
       <div className="editor">
         <TinyEditor
           setText={setText}
-          initialText={initialDataFromServer.text}
+          initialText={initialDataFromServer.content}
         />
-        <h3>{allTaskData.text}</h3>
+        <h3>{allTaskData.content}</h3>
       </div>
       <div className="answer">
         {/* <label htmlFor="answer">Ответ</label> */}
