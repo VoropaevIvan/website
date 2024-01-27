@@ -34,7 +34,7 @@ export const Tasks = () => {
               <Task
                 key={task.id}
                 id={task.id}
-                text={task.text}
+                content={task.content}
                 trueAnswer={task.answer}
               />
             );

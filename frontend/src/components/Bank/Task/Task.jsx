@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Task.css";
 
-export const Task = ({ id, text, trueAnswer }) => {
+export const Task = ({ id, content, trueAnswer }) => {
   trueAnswer = String(trueAnswer);
   const [isSolved, setIsSolved] = useState({
     decision: false,
@@ -29,7 +29,7 @@ export const Task = ({ id, text, trueAnswer }) => {
 
   return (
     <div className="task">
-      <div dangerouslySetInnerHTML={createMarkup(text)} />
+      <div dangerouslySetInnerHTML={createMarkup(content)} />
       <br />
       <form onSubmit={handleAnswerSubmit}>
         <label>

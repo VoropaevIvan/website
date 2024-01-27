@@ -11,6 +11,7 @@ const Menu = () => {
         <NavLink to="/bank">Банк задач</NavLink>
         <NavLink to="/addtask">Добавление задачи</NavLink>
         <NavLink to="/edit-task">Редактирование задачи</NavLink>
+        <NavLink to="/variant">Вариант</NavLink>
         <NavLink to="/test">Тест</NavLink>
       </span>
     </div>

@@ -7,7 +7,7 @@ const TinyEditor = ({ setText, initialText, height }) => {
   function myCustomOnChangeHandler() {
     setText(editorRef.current.getContent());
   }
-  console.log("ENV", process.env.PUBLIC_URL);
+
   return (
     <>
       <Editor

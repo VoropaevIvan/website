@@ -12,35 +12,35 @@ import {
 import { getTaskById } from "../Utils/addTaskUtils/server";
 import "./AddTask.css";
 
+const isNewTask = (pathname) => {
+  const id = pathname.split("/").reverse()[0];
+  return !(!isNaN(Number(id)) && id);
+};
+const curTaskId = (pathname) => {
+  const id = pathname.split("/").reverse()[0];
+  return Number(id);
+};
+
 const AddTask = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
-  const [initialDataFromServer, setInitialDataFromServer] = useState({
-    content: "Текст",
-    answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
-    solution: "",
+  const [allTaskData, setAllTaskData] = useState({
+    content: "---",
+    answer: { rows: 0, cols: 0, data: "" },
+    solution: "---",
     videorazbor: "",
     numberEGE: "№ 1",
-    author: "EGE 2023",
+    author: "",
     isOfficial: false,
     actuality: "Актуальна",
     difficulty: "Уровень ЕГЭ",
     topic: "",
   });
 
-  const [allTaskData, setAllTaskData] = useState({
-    content: "Введите условие задачи",
-    answer: { rows: 0, cols: 0, data: "Ответ по дефолту" },
-    solution: "Введите решение на задачу",
-    videorazbor: "",
-    numberEGE: "№ 1",
-    author: "EGE 2023",
-    isOfficial: false,
-    actuality: "Актуальна",
-    difficulty: "Уровень ЕГЭ",
-    topic: "",
+  const [initialDataForEditor, setInitialDataForEditor] = useState({
+    content: "Введите условие задачи...",
+    solution: "Введите решение на задачу...",
   });
 
   const [isSend, setIsSend] = useState(false);
@@ -87,7 +87,10 @@ const AddTask = () => {
       if (res.status === 200) {
         // alert("ok");
         setIsSend(true);
-        navigate("./123", { relative: "path" });
+        if (isNewTask(location.pathname)) {
+          const curId = res.data.id;
+          navigate("./" + curId, { relative: "path" });
+        }
       }
     } catch (error) {
       //setInitialDataFromServer();
@@ -111,11 +114,15 @@ const AddTask = () => {
   };
 
   useEffect(() => {
-    async function fetchData() {
-      getTaskById(66, setInitialDataFromServer, setAllTaskData);
+    async function fetchData(taskId) {
+      getTaskById(taskId, setAllTaskData, setInitialDataForEditor);
     }
-    fetchData();
-    console.log("fetch");
+    if (!isNewTask(location.pathname)) {
+      fetchData(curTaskId(location.pathname));
+      console.log("fetch");
+    } else {
+      //console.log("НЕ id" + id);
+    }
   }, [location]);
 
   return (
@@ -242,7 +249,8 @@ const AddTask = () => {
       <div className="editor">
         <TinyEditor
           setText={setText}
-          initialText={initialDataFromServer.content}
+          // initialText={initialDataFromServer.content}
+          initialText={initialDataForEditor.content}
         />
         <h3>{allTaskData.content}</h3>
       </div>
@@ -314,7 +322,8 @@ const AddTask = () => {
           <TinyEditor
             setText={setSolution}
             height={350}
-            initialText={initialDataFromServer.solution}
+            // initialText={initialDataFromServer.solution}
+            initialText={initialDataForEditor.solution}
           />
           <h3>{allTaskData.solution}</h3>
         </div>
@@ -334,9 +343,15 @@ const AddTask = () => {
       </div>
       <span>
         <button className="sendButton" onClick={handleSendButton}>
-          Сохранить
+          {isNewTask(location.pathname) ? "Добавить задачу" : "Обновить задачу"}
         </button>
-        {isSend && <strong>Задача сохранена</strong>}
+        {isSend && (
+          <strong>
+            {isNewTask(location.pathname)
+              ? "Задачаа добавлена"
+              : "Задача обновлена"}
+          </strong>
+        )}
       </span>
     </div>
   );
