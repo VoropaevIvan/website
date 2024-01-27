@@ -3,12 +3,15 @@ package com.example.site.service.tasks;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/task")
 public class TaskController {
     @Autowired
@@ -28,12 +31,12 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public String addNewTask(@RequestParam String jsonTask) {
+    public ResponseEntity<String> addNewTask(@RequestBody String jsonTask) {
         Task task;
         try {
             task = objectMapper.readValue(jsonTask, Task.class);
         } catch (JsonProcessingException e) {
-            return "Json Error";
+            return new ResponseEntity<>("JsonTaskParseError", HttpStatusCode.valueOf(422));
         }
 
         /*
@@ -52,6 +55,6 @@ public class TaskController {
         */
 
         repository.save(task);
-        return String.valueOf(task.getId());
+        return new ResponseEntity<>(String.valueOf(task.getId()), HttpStatusCode.valueOf(200));
     }
 }
