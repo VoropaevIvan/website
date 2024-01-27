@@ -29,7 +29,7 @@ const AddTask = () => {
     content: "---",
     answer: { rows: 0, cols: 0, data: "" },
     solution: "---",
-    videorazbor: "",
+    videoReview: "",
     numberEGE: "№ 1",
     author: "",
     isOfficial: false,
@@ -309,9 +309,9 @@ const AddTask = () => {
         <span>
           Видеоразбор
           <input
-            value={allTaskData.videorazbor}
+            value={allTaskData.videoReview}
             onChange={(e) => {
-              setAllTaskData({ ...allTaskData, videorazbor: e.target.value });
+              setAllTaskData({ ...allTaskData, videoReview: e.target.value });
             }}
           ></input>
         </span>
