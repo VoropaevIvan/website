@@ -7,9 +7,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 @RestController
 @CrossOrigin
 @RequestMapping("/task")
@@ -31,28 +28,14 @@ public class TaskController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addNewTask(@RequestBody String jsonTask) {
+    public ResponseEntity<String> addNewTask(@RequestBody String requestBody) {
         Task task;
         try {
-            task = objectMapper.readValue(jsonTask, Task.class);
+            TaskJson taskJson = objectMapper.readValue(requestBody, TaskJson.class);
+            task = new Task(taskJson);
         } catch (JsonProcessingException e) {
             return new ResponseEntity<>("JsonTaskParseError", HttpStatusCode.valueOf(422));
         }
-
-        /*
-        Task task = new Task()
-                .setNumber(10)
-                .setDescription(dsc)
-                .setFiles("")
-                .setAnswer(ans)
-                .setLevel("easy")
-                .setOfficial(false)
-                .setRelevant(true)
-                .setDateOfAdd(Timestamp.valueOf(LocalDateTime.now()))
-                .setTopic("A sum of two numbers")
-                .setSource("https://random.com/task/1")
-                .setVideoReview("https://youtube.com/");
-        */
 
         repository.save(task);
         return new ResponseEntity<>(String.valueOf(task.getId()), HttpStatusCode.valueOf(200));

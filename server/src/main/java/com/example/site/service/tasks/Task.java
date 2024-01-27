@@ -62,6 +62,25 @@ import java.sql.Timestamp;
 public class Task {
     private static final int MAX_LENGTH = Integer.MAX_VALUE;
 
+    public Task() {
+    }
+
+    Task(TaskJson taskJson) {
+        content = taskJson.content();
+        answer = taskJson.answer().toString();
+        numberEGE = taskJson.numberEGE();
+        isOfficial = taskJson.isOfficial();
+        actuality = taskJson.actuality();
+        difficulty = taskJson.difficulty();
+        source = taskJson.source();
+        topic = taskJson.topic();
+        files = taskJson.files();
+        addDate = taskJson.addDate();
+        lastChangeDate = taskJson.lastChangeDate();
+        solution = taskJson.solution();
+        videoReview = taskJson.videoReview();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
