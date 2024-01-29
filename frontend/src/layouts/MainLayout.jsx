@@ -7,7 +7,7 @@ const MainLayout = () => {
   console.log(location);
   return (
     <>
-      {location.pathname !== "/variant" ? <Menu /> : <Menu />}
+      {location.pathname !== "/variant" ? <Menu /> : ""}
       {/* <NavBar /> */}
       <Outlet />
     </>

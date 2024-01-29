@@ -1,0 +1,55 @@
+.wrapper {
+  min-width: 100%;
+  overflow: hidden;
+  background-color: brown;
+}
+
+.variant {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  justify-content: stretch;
+  flex-wrap: wrap;
+  /* align-items: stretch; */
+}
+
+.varHeader {
+  background-color: aqua;
+  min-height: 8vh;
+
+  /* height: 40%; */
+}
+
+.varCentre {
+  display: flex;
+  flex: 1 1 auto;
+
+  flex-direction: row;
+}
+
+.varNavigate {
+  display: flex;
+  background-color: rgb(0, 255, 76);
+  flex: 0 0 auto;
+  min-width: 5%;
+}
+.varTask {
+  display: flex;
+  background-color: burlywood;
+  flex-direction: column;
+  flex: 1 1 auto;
+  /* width: 80%; */
+}
+
+.varTaskText {
+  display: flex;
+  background-color: darkcyan;
+
+  flex: 1 1 auto;
+}
+
+.varAnswer {
+  background-color: brown;
+  min-height: 8vh;
+}
