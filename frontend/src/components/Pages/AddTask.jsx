@@ -81,7 +81,7 @@ const AddTask = () => {
   const handleSendButton = async () => {
     try {
       console.log(allTaskData);
-      const res = await axios.post(`http://localhost:5000/api/addtask/`, {
+      const res = await axios.post(process.env.REACT_APP_LINK_ADD_TASK, {
         ...allTaskData,
       });
       if (res.status === 200) {
