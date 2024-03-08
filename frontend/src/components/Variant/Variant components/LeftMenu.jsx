@@ -1,7 +1,12 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
 import "./LeftMenu.css";
+import { setCurrentTask } from "../../../redux/slices/variantSlice";
 
-function LeftMenu() {
+function LeftMenu({ valueInAnswerInput, setValueInAnswerInput }) {
+  const curAnswers = useSelector((state) => state.variant.answers);
+
+  const dispatch = useDispatch();
   const divRef = useRef(null);
 
   const nums = [];
@@ -25,7 +30,19 @@ function LeftMenu() {
       <div ref={divRef} className="leftmenubuttons">
         {nums.map((num) => {
           return (
-            <button key={num} className="leftmenubutton">
+            <button
+              onClick={() => {
+                const newAns = curAnswers[num];
+                if (newAns) {
+                  setValueInAnswerInput(curAnswers[num]);
+                } else {
+                  setValueInAnswerInput("");
+                }
+                dispatch(setCurrentTask(num));
+              }}
+              key={num}
+              className="leftmenubutton"
+            >
               {num}
             </button>
           );

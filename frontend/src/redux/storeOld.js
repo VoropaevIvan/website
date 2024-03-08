@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import variantReducer from "./slices/variantSlice";
+import newTaskReducer from "./slices/newTaskSlice";
 
 const store = configureStore({
   reducer: {
-    variant: variantReducer,
+    newTask: newTaskReducer,
   },
 });
 
-export default store;
+export default storeOld;
