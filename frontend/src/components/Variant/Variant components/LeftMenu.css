@@ -18,3 +18,8 @@
   max-height: 100%;
   /* padding-top: 20px; */
 }
+
+.activevartask {
+  color: rgb(255, 255, 255);
+  background-color: blue;
+}

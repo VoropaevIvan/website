@@ -3,6 +3,7 @@ const initialState = {
   title: "init",
   answers: {},
   currentTask: 0,
+  data: [],
 };
 
 const variantSlice = createSlice({
@@ -20,10 +21,20 @@ const variantSlice = createSlice({
       newAnswers[action.payload.taskNumber] = action.payload.newAnswer;
       return { ...state, answers: newAnswers };
     },
+    clearAnswer: (state, action) => {
+      const newAnswers = { ...state.answers };
+      delete newAnswers[action.payload];
+      return { ...state, answers: newAnswers };
+    },
+    setData: (state, action) => {
+      return { ...state, data: action.payload };
+    },
   },
 });
 
 export const setTitleVariant = variantSlice.actions.setTitleVariant;
 export const setCurrentTask = variantSlice.actions.setCurrentTask;
 export const setAnswer = variantSlice.actions.setAnswer;
+export const clearAnswer = variantSlice.actions.clearAnswer;
+export const setData = variantSlice.actions.setData;
 export default variantSlice.reducer;

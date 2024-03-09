@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setAnswer } from "../../../redux/slices/variantSlice";
-import { useState } from "react";
+import { clearAnswer, setAnswer } from "../../../redux/slices/variantSlice";
 
 const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
   //const [valueInAnswerInput, setValueInAnswerInput] = useState("");
@@ -14,11 +13,15 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
       setAnswer({ taskNumber: curTaskNumber, newAnswer: valueInAnswerInput })
     );
   };
+  const handleClearAnswerButtonClick = () => {
+    dispatch(clearAnswer(curTaskNumber));
+    setValueInAnswerInput("");
+  };
 
   if (curAnswers[curTaskNumber]) {
     curAnswer = curAnswers[curTaskNumber];
   }
-  console.log(curAnswer);
+
   return (
     <>
       <input
@@ -28,8 +31,13 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
         }}
         disabled={curAnswer.length > 0}
       ></input>
-      <button onClick={handleSaveButtonClick}>Сохранить</button>
-      <button>Отменить</button>
+      <button
+        onClick={handleSaveButtonClick}
+        disabled={(valueInAnswerInput.length === 0) | (curAnswer.length > 0)}
+      >
+        Сохранить
+      </button>
+      <button onClick={handleClearAnswerButtonClick}>Очистить</button>
     </>
   );
 };
