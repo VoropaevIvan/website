@@ -9,6 +9,7 @@ import AddTask from "./components/Pages/AddTask";
 import { Test } from "./components/Pages/Test";
 import EditTask from "./components/Pages/EditTask";
 import Variant from "./components/Variant/Variant";
+import VariantResults from "./components/Variant/VariantResults";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="test" element={<Test />}></Route>
             <Route path="edit-task" element={<EditTask />}></Route>
             <Route path="variant" element={<Variant />}></Route>
+            <Route path="results" element={<VariantResults />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Route>
         </Routes>

@@ -1,7 +1,6 @@
-import { useState } from "react";
 import "./Table.css";
 
-function Table({ rows, cols, setAnswer, data }) {
+function Table({ rows, cols, setAnswer, data, disabled }) {
   const handleChangeinput = (i, j, value) => {
     const newData = [...data];
     newData[i][j] = value;
@@ -18,6 +17,7 @@ function Table({ rows, cols, setAnswer, data }) {
                 return (
                   <td key={"d" + j}>
                     <input
+                      disabled={disabled}
                       type="text"
                       onChange={(e) => {
                         handleChangeinput(i, j, e.target.value);

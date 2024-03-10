@@ -5,7 +5,7 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
   //const [valueInAnswerInput, setValueInAnswerInput] = useState("");
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const curAnswers = useSelector((state) => state.variant.answers);
-  let curAnswer = "";
+  const curAnswer = curAnswers[curTaskNumber] ? curAnswers[curTaskNumber] : "";
 
   const dispatch = useDispatch();
   const handleSaveButtonClick = () => {
@@ -17,10 +17,6 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
     dispatch(clearAnswer(curTaskNumber));
     setValueInAnswerInput("");
   };
-
-  if (curAnswers[curTaskNumber]) {
-    curAnswer = curAnswers[curTaskNumber];
-  }
 
   return (
     <>

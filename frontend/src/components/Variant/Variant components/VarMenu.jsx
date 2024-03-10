@@ -6,6 +6,9 @@ function VarMenu() {
       <NavLink to="/" end>
         На главную
       </NavLink>
+      <NavLink to="/results" end>
+        Завершить вариант
+      </NavLink>
     </span>
   );
 }
