@@ -18,7 +18,7 @@ record TaskJson(
         String videoReview,
         String solution
 ) {
-    record Answer(int rows, int cols, String data) {
+    record Answer(int rows, int cols, Object data) {
         @Override
         public String toString() {
             return "{ \"rows\": " + rows +
