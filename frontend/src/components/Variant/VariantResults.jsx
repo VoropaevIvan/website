@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
-import { tableToTags } from "../Utils/addTaskUtils/variantUtils";
-
+import {
+  eraseEmptyRowsFromTable,
+  tableToTags,
+} from "../Utils/addTaskUtils/variantUtils";
+import "./VariantResults.css";
 const VariantResults = () => {
   const varData = useSelector((state) => state.variant.data);
   const curAnswers = useSelector((state) => state.variant.answers);
@@ -13,15 +16,32 @@ const VariantResults = () => {
         return <p key={ind}>-</p>;
       }
     }
-    if (type === "table" || type === "two") {
+    if (type === "two") {
       if (ans) {
         return tableToTags(ans, ind);
       } else {
         return <p key={ind}>-</p>;
       }
     }
+    if (type === "table") {
+      if (ans) {
+        return tableToTags(eraseEmptyRowsFromTable(ans), ind);
+      } else {
+        return <p key={ind}>-</p>;
+      }
+    }
   };
 
+  const answerDecision = (x, y) => {
+    if (x) {
+      if (String(x) === String(y)) {
+        return "trueanswer";
+      } else {
+        return "wronganswer";
+      }
+    }
+    return "noanswer";
+  };
   return (
     <>
       <h1>Результаты</h1>
@@ -35,9 +55,16 @@ const VariantResults = () => {
           {varData.map((el, i) => {
             return (
               <tr key={i}>
-                <td>{i}</td>
+                <td
+                  className={answerDecision(
+                    curAnswers[i],
+                    varData[i]["answer"]
+                  )}
+                >
+                  {i + 1}
+                </td>
                 <td>{prepareAnswer(curAnswers[i], varData[i].typeAnswer)}</td>
-                <td>10</td>
+                <td>{varData[i]["answer"]}</td>
               </tr>
             );
           })}

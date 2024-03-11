@@ -21,6 +21,7 @@ const Variant = () => {
     data: createDataForTable({ cols: 2, rows: 6 }),
     cols: 2,
     rows: 6,
+    default: true,
   });
   const dispatch = useDispatch();
 
@@ -35,16 +36,51 @@ const Variant = () => {
               data: createDataForTable({ cols: 2, rows: 6 }),
               cols: 2,
               rows: 6,
+              default: true,
             }
           : {
               data: createDataForTable({ cols: 2, rows: 1 }),
               cols: 2,
               rows: 1,
+              default: true,
             }
       );
     }
     fetchData();
   }, [dispatch]);
+
+  if (
+    curTaskNumber !== null &&
+    curAnswers &&
+    curAnswers[curTaskNumber] &&
+    varData
+  ) {
+    if (varData[curTaskNumber]["typeAnswer"] === "text") {
+      if (curAnswers[curTaskNumber] && valueInAnswerInput === "") {
+        setValueInAnswerInput(curAnswers[curTaskNumber]);
+      }
+    }
+    if (varData[curTaskNumber]["typeAnswer"] !== "text") {
+      if (curAnswers[curTaskNumber] && valueInAnswerTable?.default === true) {
+        setValueInAnswerTable(curAnswers[curTaskNumber]);
+      }
+    }
+  }
+
+  if (varData[curTaskNumber]) {
+    if (varData[curTaskNumber]["typeAnswer"] === "table") {
+      if (6 !== valueInAnswerTable["rows"]) {
+        if (curAnswers[curTaskNumber] === undefined) {
+          setValueInAnswerTable({
+            data: createDataForTable({ cols: 2, rows: 6 }),
+            cols: 2,
+            rows: 6,
+            default: true,
+          });
+        }
+      }
+    }
+  }
 
   return (
     <div className="container">
