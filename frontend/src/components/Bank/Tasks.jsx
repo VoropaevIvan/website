@@ -5,7 +5,8 @@ import "./Tasks.css";
 
 const getAllTasksFromServer = async (setTasksFromServer) => {
   try {
-    const res = await axios.get("http://localhost:5000/api/tasks");
+    console.log(process.env.REACT_APP_LINK_GET_ALL_TASK);
+    const res = await axios.get(process.env.REACT_APP_LINK_GET_ALL_TASK);
 
     if (res.data) {
       setTasksFromServer(res.data);

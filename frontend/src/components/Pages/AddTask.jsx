@@ -80,15 +80,21 @@ const AddTask = () => {
 
   const handleSendButton = async () => {
     try {
-      console.log(allTaskData);
+      let taskId = -1;
+
+      if (!isNewTask(location.pathname)) {
+        taskId = Number(location.pathname.split("/").reverse()[0]);
+      }
       const res = await axios.post(process.env.REACT_APP_LINK_ADD_TASK, {
         ...allTaskData,
+        id: taskId,
       });
+
       if (res.status === 200) {
         // alert("ok");
         setIsSend(true);
         if (isNewTask(location.pathname)) {
-          const curId = res.data.id;
+          const curId = res.data;
           navigate("./" + curId, { relative: "path" });
         }
       }

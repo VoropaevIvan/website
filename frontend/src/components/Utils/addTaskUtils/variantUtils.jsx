@@ -45,3 +45,47 @@ export const eraseEmptyRowsFromTable = (table) => {
   newTable.reverse();
   return { data: newTable, cols: table.cols, rows: newTable.length };
 };
+
+export const prepareAnswerFields = ({
+  curTaskNumber,
+  curAnswers,
+  varData,
+  setValueInAnswerInput,
+  valueInAnswerTable,
+  valueInAnswerInput,
+  createDataForTable,
+  setValueInAnswerTable,
+}) => {
+  if (
+    curTaskNumber !== null &&
+    curAnswers &&
+    curAnswers[curTaskNumber] &&
+    varData
+  ) {
+    if (varData[curTaskNumber]["typeAnswer"] === "text") {
+      if (curAnswers[curTaskNumber] && valueInAnswerInput === "") {
+        setValueInAnswerInput(curAnswers[curTaskNumber]);
+      }
+    }
+    if (varData[curTaskNumber]["typeAnswer"] !== "text") {
+      if (curAnswers[curTaskNumber] && valueInAnswerTable?.default === true) {
+        setValueInAnswerTable(curAnswers[curTaskNumber]);
+      }
+    }
+  }
+
+  if (varData[curTaskNumber]) {
+    if (varData[curTaskNumber]["typeAnswer"] === "table") {
+      if (6 !== valueInAnswerTable["rows"]) {
+        if (curAnswers[curTaskNumber] === undefined) {
+          setValueInAnswerTable({
+            data: createDataForTable({ cols: 2, rows: 6 }),
+            cols: 2,
+            rows: 6,
+            default: true,
+          });
+        }
+      }
+    }
+  }
+};

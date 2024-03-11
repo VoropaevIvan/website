@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setData } from "../../redux/slices/variantSlice";
 import { createDataForTable } from "../Utils/addTaskUtils/addTaskUtils";
 import TableForAnswer from "./Variant components/TableForAnswer";
+import { prepareAnswerFields } from "../Utils/addTaskUtils/variantUtils";
 
 const Variant = () => {
   const varData = useSelector((state) => state.variant.data);
@@ -49,38 +50,16 @@ const Variant = () => {
     fetchData();
   }, [dispatch]);
 
-  if (
-    curTaskNumber !== null &&
-    curAnswers &&
-    curAnswers[curTaskNumber] &&
-    varData
-  ) {
-    if (varData[curTaskNumber]["typeAnswer"] === "text") {
-      if (curAnswers[curTaskNumber] && valueInAnswerInput === "") {
-        setValueInAnswerInput(curAnswers[curTaskNumber]);
-      }
-    }
-    if (varData[curTaskNumber]["typeAnswer"] !== "text") {
-      if (curAnswers[curTaskNumber] && valueInAnswerTable?.default === true) {
-        setValueInAnswerTable(curAnswers[curTaskNumber]);
-      }
-    }
-  }
-
-  if (varData[curTaskNumber]) {
-    if (varData[curTaskNumber]["typeAnswer"] === "table") {
-      if (6 !== valueInAnswerTable["rows"]) {
-        if (curAnswers[curTaskNumber] === undefined) {
-          setValueInAnswerTable({
-            data: createDataForTable({ cols: 2, rows: 6 }),
-            cols: 2,
-            rows: 6,
-            default: true,
-          });
-        }
-      }
-    }
-  }
+  prepareAnswerFields({
+    curTaskNumber,
+    curAnswers,
+    varData,
+    setValueInAnswerInput,
+    valueInAnswerTable,
+    valueInAnswerInput,
+    createDataForTable,
+    setValueInAnswerTable,
+  });
 
   return (
     <div className="container">

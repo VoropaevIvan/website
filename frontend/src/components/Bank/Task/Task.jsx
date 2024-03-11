@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./Task.css";
 
 export const Task = ({ id, content, trueAnswer }) => {
+  console.log(trueAnswer);
   trueAnswer = String(trueAnswer);
   const [isSolved, setIsSolved] = useState({
     decision: false,
