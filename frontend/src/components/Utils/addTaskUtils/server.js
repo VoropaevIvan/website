@@ -11,11 +11,14 @@ export const getTaskById = async (
     if (res.data) {
       const dataOk = res.data;
       dataOk["answer"] = JSON.parse(res.data["answer"]);
-      dataOk["answer"].data = JSON.parse(dataOk["answer"].data);
+      if (!(dataOk["answer"].rows === 0 && dataOk["answer"].cols === 0)) {
+        dataOk["answer"].data = JSON.parse(dataOk["answer"].data);
+      }
+
       console.log(res.data);
       console.log(dataOk);
       // setInitialDataFromServer(res.data);
-      setAllTaskData(res.data);
+      setAllTaskData(dataOk);
       setInitialDataForEditor({
         content: res.data.content,
         solution: res.data.solution,

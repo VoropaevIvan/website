@@ -2,8 +2,7 @@ import { useState } from "react";
 import "./Task.css";
 
 export const Task = ({ id, content, trueAnswer }) => {
-  console.log(trueAnswer);
-  trueAnswer = String(trueAnswer);
+  //trueAnswer = String(trueAnswer);
   const [isSolved, setIsSolved] = useState({
     decision: false,
     text: "Задача ещё не решена",
@@ -35,14 +34,19 @@ export const Task = ({ id, content, trueAnswer }) => {
       <form onSubmit={handleAnswerSubmit}>
         <label>
           Ваш ответ
-          <input
-            style={{ margin: "4px" }}
-            value={userAnswer}
-            onChange={(e) => {
-              setUserAnswer(e.target.value);
-            }}
-            type="text"
-          ></input>
+          {trueAnswer && trueAnswer.rows === 0 && trueAnswer.cols === 0 && (
+            <input
+              style={{ margin: "4px" }}
+              value={userAnswer}
+              onChange={(e) => {
+                setUserAnswer(e.target.value);
+              }}
+              type="text"
+            ></input>
+          )}
+          {trueAnswer && trueAnswer.rows !== 0 && trueAnswer.cols !== 0 && (
+            <p>Таблица</p>
+          )}
         </label>
         <button style={{ margin: "5px" }} onClick={handleAnswerSubmit}>
           Отправить ответ

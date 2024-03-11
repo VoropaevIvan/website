@@ -5,11 +5,21 @@ import "./Tasks.css";
 
 const getAllTasksFromServer = async (setTasksFromServer) => {
   try {
-    console.log(process.env.REACT_APP_LINK_GET_ALL_TASK);
     const res = await axios.get(process.env.REACT_APP_LINK_GET_ALL_TASK);
 
     if (res.data) {
-      setTasksFromServer(res.data);
+      let dataOk = res.data.map((e) => {
+        return { ...e, answer: JSON.parse(e.answer) };
+      });
+      dataOk = dataOk.map((e) => {
+        return e.answer.rows !== 0
+          ? {
+              ...e,
+              answer: { ...e.answer, data: JSON.parse(e.answer.data) },
+            }
+          : e;
+      });
+      setTasksFromServer(dataOk);
     }
   } catch (error) {
     console.log(error);
