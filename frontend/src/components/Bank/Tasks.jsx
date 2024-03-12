@@ -2,6 +2,9 @@ import axios from "axios";
 import Task from "./Task/Task";
 import { useEffect, useState } from "react";
 import "./Tasks.css";
+import filterFunction from "./Filter/FilterFunction";
+import BankFilter from "./Filter/BankFilter";
+import { useSelector } from "react-redux";
 
 const getAllTasksFromServer = async (setTasksFromServer) => {
   try {
@@ -27,6 +30,8 @@ const getAllTasksFromServer = async (setTasksFromServer) => {
 };
 
 export const Tasks = () => {
+  const filtersData = useSelector((state) => state.bankFIlter);
+
   const [tasksFromServer, setTasksFromServer] = useState(null);
 
   useEffect(() => {
@@ -38,18 +43,26 @@ export const Tasks = () => {
 
   return (
     <div className="bank">
+      <div>
+        <BankFilter />
+      </div>
       <div className="tasks">
         {!!tasksFromServer &&
-          tasksFromServer.map((task) => {
-            return (
-              <Task
-                key={task.id}
-                id={task.id}
-                content={task.content}
-                trueAnswer={task.answer}
-              />
-            );
-          })}
+          tasksFromServer.length > 0 &&
+          tasksFromServer
+            .filter((task) => {
+              return filterFunction(task, filtersData);
+            })
+            .map((task) => {
+              return (
+                <Task
+                  key={task.id}
+                  id={task.id}
+                  content={task.content}
+                  trueAnswer={task.answer}
+                />
+              );
+            })}
       </div>
     </div>
   );
