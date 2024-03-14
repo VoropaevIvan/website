@@ -5,6 +5,7 @@ import "./Tasks.css";
 import filterFunction from "./Filter/FilterFunction";
 import BankFilter from "./Filter/BankFilter";
 import { useSelector } from "react-redux";
+import sortFunction from "./Filter/sortFunction";
 
 const getAllTasksFromServer = async (setTasksFromServer) => {
   try {
@@ -41,28 +42,35 @@ export const Tasks = () => {
     fetchData();
   }, []);
 
+  let filteredTasksFromServer = [];
+  if (tasksFromServer) {
+    filteredTasksFromServer = tasksFromServer.filter((task) => {
+      return filterFunction(task, filtersData);
+    });
+  }
+
+  let sortedAndFilteredTasks = sortFunction(
+    filteredTasksFromServer,
+    filtersData.sorting
+  );
+
   return (
     <div className="bank">
       <div>
         <BankFilter />
       </div>
       <div className="tasks">
-        {!!tasksFromServer &&
-          tasksFromServer.length > 0 &&
-          tasksFromServer
-            .filter((task) => {
-              return filterFunction(task, filtersData);
-            })
-            .map((task) => {
-              return (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  content={task.content}
-                  trueAnswer={task.answer}
-                />
-              );
-            })}
+        {sortedAndFilteredTasks.map((task) => {
+          return (
+            <Task
+              key={task.id}
+              id={task.id}
+              content={task.content}
+              trueAnswer={task.answer}
+              numberEGE={task.numberEGE}
+            />
+          );
+        })}
       </div>
     </div>
   );

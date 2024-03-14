@@ -6,8 +6,13 @@
   background-color: rgb(255, 255, 255);
   max-height: 100%;
 
-  /* border: 2px solid; */
-  /* border-color: greenyellow;
-  border-color: red;
-  border-color: black; */
+  border: 2px solid rgb(255, 255, 255);
+}
+
+.OK {
+  border: 2px solid rgb(44, 255, 44);
+}
+
+.WA {
+  border: 2px solid red;
 }
