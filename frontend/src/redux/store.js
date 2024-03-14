@@ -5,7 +5,7 @@ import bankFilterReducer from "./slices/bankFilterSlice";
 const store = configureStore({
   reducer: {
     variant: variantReducer,
-    bankFIlter: bankFilterReducer,
+    bankFilter: bankFilterReducer,
   },
 });
 

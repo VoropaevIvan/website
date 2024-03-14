@@ -6,6 +6,7 @@ export const DEFAULT_SOLVE_FOR_TASK_TEXT = "Введите решение на �
 export const WILL_BE_IN_EGE = "Будет на ЕГЭ";
 export const ACTUAL = "Актуальна";
 export const NOT_ACTUAL = "Не актуальна";
+export const ALL_ACTUALITY = "Все";
 
 // Task difficulty
 export const GROB = "Гроб";
@@ -13,6 +14,12 @@ export const LITTLE_HARD_THEN_EGE = "Чуть сложнее ЕГЭ";
 export const LEVEL_OF_EGE = "Уровень ЕГЭ";
 export const EASY_THEN_EGE = "Легче ЕГЭ";
 export const MUCH_EASY_THEN_EGE = "Гораздо легче ЕГЭ";
+export const ALL_DIFFICULTY = "Все";
+
+// Is official task
+export const OFFICIAL_TASK = "Да";
+export const NOT_OFFICIAL_TASK = "Нет";
+export const NOT_AND_OFFICIAL_TASK = "Все";
 
 // EGE NUMBERS
 export const NUMBERS_EGE_NAMES = [

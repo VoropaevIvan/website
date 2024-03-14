@@ -31,7 +31,7 @@ const getAllTasksFromServer = async (setTasksFromServer) => {
 };
 
 export const Tasks = () => {
-  const filtersData = useSelector((state) => state.bankFIlter);
+  const filtersData = useSelector((state) => state.bankFilter);
 
   const [tasksFromServer, setTasksFromServer] = useState(null);
 
@@ -68,6 +68,9 @@ export const Tasks = () => {
               content={task.content}
               trueAnswer={task.answer}
               numberEGE={task.numberEGE}
+              isOfficial={task.official}
+              actuality={task.actuality}
+              difficulty={task.difficulty}
             />
           );
         })}

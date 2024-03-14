@@ -5,7 +5,15 @@ import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
 import { eraseEmptyRowsFromTable } from "../../Utils/addTaskUtils/variantUtils";
 import { NOT_DONE_TASK, OK_DONE_TASK, WA_DONE_TASK } from "./constantsTask";
 
-export const Task = ({ id, content, trueAnswer, numberEGE }) => {
+export const Task = ({
+  id,
+  content,
+  trueAnswer,
+  numberEGE,
+  isOfficial,
+  actuality,
+  difficulty,
+}) => {
   const [isSolved, setIsSolved] = useState({
     decision: false,
     text: NOT_DONE_TASK,
@@ -118,7 +126,7 @@ export const Task = ({ id, content, trueAnswer, numberEGE }) => {
       <></>
     );
   };
-  console.log(isSolved.decision);
+
   return (
     <div
       className={
@@ -128,8 +136,15 @@ export const Task = ({ id, content, trueAnswer, numberEGE }) => {
       }
     >
       <strong>{numberEGE}</strong>
+      <p>
+        <strong>Официальная:</strong> {String(isOfficial)}
+      </p>
+      <p>{actuality}</p>
+      <p>{difficulty}</p>
+
+      <hr></hr>
       <div dangerouslySetInnerHTML={createMarkup(content)} />
-      <br />
+
       <form onSubmit={handleAnswerSubmit}>
         <label>
           Ваш ответ

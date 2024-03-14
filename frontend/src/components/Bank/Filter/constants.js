@@ -1,7 +1,7 @@
-export const ALL_VARIANTS = "Все";
+export const ALL_VARIANTS_TASK_NUMBER = "Все номера";
 
 export const TASK_NUMBERS_NAMES = [
-  ALL_VARIANTS,
+  ALL_VARIANTS_TASK_NUMBER,
   "№ 1",
   "№ 2",
   "№ 3",

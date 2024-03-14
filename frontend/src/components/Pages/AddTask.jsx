@@ -44,7 +44,7 @@ const AddTask = () => {
     solution: "---",
     videoReview: "",
     numberEGE: "№ 1",
-    author: "",
+    source: "",
     isOfficial: false,
     actuality: "Актуальна",
     difficulty: "Уровень ЕГЭ",
@@ -164,9 +164,9 @@ const AddTask = () => {
       <span>
         {"Откуда задача "}
         <input
-          value={allTaskData.author}
+          value={allTaskData.source}
           onChange={(e) => {
-            setAllTaskData({ ...allTaskData, author: e.target.value });
+            setAllTaskData({ ...allTaskData, source: e.target.value });
           }}
         ></input>
       </span>
