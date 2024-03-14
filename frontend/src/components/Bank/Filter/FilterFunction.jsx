@@ -1,13 +1,14 @@
+import { ALL_VARIANTS } from "./constants";
+
 const FilterFunction = (task, filtersData) => {
-  if (filtersData.numberEGE === "Все") {
+  if (filtersData.numberEGE === ALL_VARIANTS) {
     return true;
   }
-  console.log(task.numberEGE, filtersData.numberEGE);
+
   if (task.numberEGE === filtersData.numberEGE) {
     return true;
   } else {
     return false;
   }
-  //return true;
 };
 export default FilterFunction;

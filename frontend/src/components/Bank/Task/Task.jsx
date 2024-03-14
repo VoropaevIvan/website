@@ -3,11 +3,12 @@ import "./Task.css";
 import Table from "../../Utils/Table/Table";
 import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
 import { eraseEmptyRowsFromTable } from "../../Utils/addTaskUtils/variantUtils";
+import { NOT_DONE_TASK, OK_DONE_TASK, WA_DONE_TASK } from "./constantsTask";
 
 export const Task = ({ id, content, trueAnswer }) => {
   const [isSolved, setIsSolved] = useState({
     decision: false,
-    text: "Задача ещё не решена",
+    text: NOT_DONE_TASK,
   });
 
   const [userAnswer, setUserAnswer] = useState("");
@@ -39,23 +40,20 @@ export const Task = ({ id, content, trueAnswer }) => {
     }
   }
 
+  // Replace
   function analyseUserAnswer(answer) {
-    console.log(answer);
-    console.log(answer.data.toString());
-    console.log(trueAnswer.data.toString());
-
     if ((answer.cols !== 0) | (answer.rows !== 0)) {
       answer = eraseEmptyRowsFromTable(answer);
       if (trueAnswer.data.toString() === answer.data.toString()) {
-        setIsSolved({ decision: true, text: "Задача решена верно" });
+        setIsSolved({ decision: true, text: OK_DONE_TASK });
       } else {
-        setIsSolved({ decision: false, text: "Задача решена неправильно" });
+        setIsSolved({ decision: false, text: WA_DONE_TASK });
       }
     } else {
       if (trueAnswer.data === answer.data) {
-        setIsSolved({ decision: true, text: "Задача решена верно" });
+        setIsSolved({ decision: true, text: OK_DONE_TASK });
       } else {
-        setIsSolved({ decision: false, text: "Задача решена неправильно" });
+        setIsSolved({ decision: false, text: WA_DONE_TASK });
       }
     }
   }
@@ -117,7 +115,7 @@ export const Task = ({ id, content, trueAnswer }) => {
         disabled={false}
       />
     ) : (
-      <p>12345678</p>
+      <></>
     );
   };
 

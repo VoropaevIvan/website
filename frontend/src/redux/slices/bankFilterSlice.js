@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  numberEGE: "all",
+  numberEGE: "Все",
 };
 
 const bankFilterSlice = createSlice({

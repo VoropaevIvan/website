@@ -11,6 +11,19 @@ import {
 } from "../Utils/addTaskUtils/addTaskUtils";
 import { getTaskById } from "../Utils/addTaskUtils/server";
 import "./AddTask.css";
+import {
+  ACTUAL,
+  DEFAULT_SOLVE_FOR_TASK_TEXT,
+  DEFAULT_TASK_TEXT,
+  EASY_THEN_EGE,
+  GROB,
+  LEVEL_OF_EGE,
+  LITTLE_HARD_THEN_EGE,
+  MUCH_EASY_THEN_EGE,
+  NOT_ACTUAL,
+  NUMBERS_EGE_NAMES,
+  WILL_BE_IN_EGE,
+} from "./constants";
 
 const isNewTask = (pathname) => {
   const id = pathname.split("/").reverse()[0];
@@ -39,8 +52,8 @@ const AddTask = () => {
   });
 
   const [initialDataForEditor, setInitialDataForEditor] = useState({
-    content: "Введите условие задачи...",
-    solution: "Введите решение на задачу...",
+    content: DEFAULT_TASK_TEXT,
+    solution: DEFAULT_SOLVE_FOR_TASK_TEXT,
   });
 
   const [isSend, setIsSend] = useState(false);
@@ -91,7 +104,6 @@ const AddTask = () => {
       });
 
       if (res.status === 200) {
-        // alert("ok");
         setIsSend(true);
         if (isNewTask(location.pathname)) {
           const curId = res.data;
@@ -142,33 +154,7 @@ const AddTask = () => {
             }}
             value={allTaskData.numberEGE}
           >
-            {[
-              "№ 1",
-              "№ 2",
-              "№ 3",
-              "№ 4",
-              "№ 5",
-              "№ 6",
-              "№ 7",
-              "№ 8",
-              "№ 9",
-              "№ 10",
-              "№ 11",
-              "№ 12",
-              "№ 13",
-              "№ 14",
-              "№ 15",
-              "№ 16",
-              "№ 17",
-              "№ 18",
-              "№ 19-21",
-              "№ 22",
-              "№ 23",
-              "№ 24",
-              "№ 25",
-              "№ 26",
-              "№ 27",
-            ].map((s) => {
+            {NUMBERS_EGE_NAMES.map((s) => {
               return <option key={s}>{s}</option>;
             })}
           </select>
@@ -213,9 +199,9 @@ const AddTask = () => {
               });
             }}
           >
-            <option>Будет на ЕГЭ</option>
-            <option>Актуальна</option>
-            <option>Не актуальна</option>
+            <option>{WILL_BE_IN_EGE}</option>
+            <option>{ACTUAL}</option>
+            <option>{NOT_ACTUAL}</option>
           </select>
         </span>
       </div>
@@ -231,11 +217,11 @@ const AddTask = () => {
               });
             }}
           >
-            <option>Гроб</option>
-            <option>Чуть сложнее ЕГЭ</option>
-            <option>Уровень ЕГЭ</option>
-            <option>Легче ЕГЭ</option>
-            <option>Гораздо легче ЕГЭ</option>
+            <option>{GROB}</option>
+            <option>{LITTLE_HARD_THEN_EGE}</option>
+            <option>{LEVEL_OF_EGE}</option>
+            <option>{EASY_THEN_EGE}</option>
+            <option>{MUCH_EASY_THEN_EGE}</option>
           </select>
         </span>
       </div>
@@ -255,13 +241,11 @@ const AddTask = () => {
       <div className="editor">
         <TinyEditor
           setText={setText}
-          // initialText={initialDataFromServer.content}
           initialText={initialDataForEditor.content}
         />
         <h3>{allTaskData.content}</h3>
       </div>
       <div className="answer">
-        {/* <label htmlFor="answer">Ответ</label> */}
         <h3>Ответ</h3>
         <select
           onChange={setAnswerType}
@@ -328,7 +312,6 @@ const AddTask = () => {
           <TinyEditor
             setText={setSolution}
             height={350}
-            // initialText={initialDataFromServer.solution}
             initialText={initialDataForEditor.solution}
           />
           <h3>{allTaskData.solution}</h3>
@@ -354,7 +337,7 @@ const AddTask = () => {
         {isSend && (
           <strong>
             {isNewTask(location.pathname)
-              ? "Задачаа добавлена"
+              ? "Задача добавлена"
               : "Задача обновлена"}
           </strong>
         )}
