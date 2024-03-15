@@ -107,11 +107,10 @@ const AddTask = () => {
         setIsSend(true);
         if (isNewTask(location.pathname)) {
           const curId = res.data;
-          navigate("./" + curId, { relative: "path" });
+          navigate("../edit-task/" + curId, { relative: "path" });
         }
       }
     } catch (error) {
-      //setInitialDataFromServer();
       console.log(error);
       alert("Произошла ошибка", error);
     }

@@ -23,7 +23,7 @@ function App() {
             <Route path="addtask" element={<AddTask />}></Route>
             <Route path="addtask/:id" element={<AddTask />}></Route>
             <Route path="test" element={<Test />}></Route>
-            <Route path="edit-task" element={<EditTask />}></Route>
+            <Route path="edit-task/:id" element={<AddTask />}></Route>
             <Route path="variant" element={<Variant />}></Route>
             <Route path="results" element={<VariantResults />}></Route>
             <Route path="*" element={<NotFound />}></Route>
