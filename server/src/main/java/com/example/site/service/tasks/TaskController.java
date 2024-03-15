@@ -1,43 +1,46 @@
 package com.example.site.service.tasks;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/task")
+@RequestMapping("tasks")
 public class TaskController {
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     private TaskRepository repository;
 
-    @GetMapping("/{id}")
-    public Task getTask(@PathVariable int id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @GetMapping("/all")
-    public Iterable<Task> getAllTasks() {
+    @GetMapping
+    public List<Task> getTasks() {
         return repository.findAll();
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addNewTask(@RequestBody String requestBody) {
-        Task task;
-        try {
-            TaskJson taskJson = objectMapper.readValue(requestBody, TaskJson.class);
-            task = new Task(taskJson);
-        } catch (JsonProcessingException e) {
-            return new ResponseEntity<>("JsonTaskParseError", HttpStatusCode.valueOf(422));
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTask(@PathVariable int id) {
+        Optional<Task> optTask = repository.findById(id);
+        return optTask.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
+    @PostMapping
+    public int addTask(@RequestBody Task task) {
         repository.save(task);
-        return new ResponseEntity<>(String.valueOf(task.getId()), HttpStatusCode.valueOf(200));
+        return task.getId();
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Task> editTask(@PathVariable int id, @RequestBody Task task) {
+        Optional<Task> optTask = repository.findById(id);
+        if (optTask.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        task.setId(optTask.get().getId());
+        repository.save(task);
+        return ResponseEntity.ok(task);
     }
 }

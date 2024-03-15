@@ -2,7 +2,7 @@ package com.example.site.service.tasks;
 
 import jakarta.persistence.*;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * This class contains information about the exam task.
@@ -58,70 +58,35 @@ import java.sql.Timestamp;
  *   </tr>
  * </table>
  */
-@Entity(name = "tasks")
+@Entity
 public class Task {
-    private static final int MAX_LENGTH = Integer.MAX_VALUE;
 
-    public Task() {
-    }
-
-    Task(TaskJson taskJson) {
-        content = taskJson.content();
-        answer = taskJson.answer().toString();
-        numberEGE = taskJson.numberEGE();
-        isOfficial = taskJson.isOfficial();
-        actuality = taskJson.actuality();
-        difficulty = taskJson.difficulty();
-        source = taskJson.source();
-        topic = taskJson.topic();
-        files = taskJson.files();
-        addDate = taskJson.addDate();
-        lastChangeDate = taskJson.lastChangeDate();
-        solution = taskJson.solution();
-        videoReview = taskJson.videoReview();
+    @Embeddable
+    public record Answer(int rowsNum, int colsNum, String data) {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
-    @Column(nullable = false, length = MAX_LENGTH)
+    @Basic(optional = false)
     private String content;
 
-    @Column(nullable = false, length = MAX_LENGTH)
-    private String answer;
+    @Basic(optional = false)
+    private Answer answer;
 
-    @Column(nullable = false)
+    @Basic(optional = false)
     private String numberEGE;
 
-    @Column
     private boolean isOfficial;
-
-    @Column
     private String actuality;
-
-    @Column
     private String difficulty;
-
-    @Column(length = MAX_LENGTH)
     private String source;
-
-    @Column
     private int topic;
-
-    @Column(length = MAX_LENGTH)
     private String files;
-
-    @Column
-    private Timestamp addDate;
-
-    @Column
-    private Timestamp lastChangeDate;
-
-    @Column(length = MAX_LENGTH)
+    private LocalDateTime addDate;
+    private LocalDateTime lastChangeDate;
     private String videoReview;
-
-    @Column(length = MAX_LENGTH)
     private String solution;
 
     public int getId() {
@@ -142,11 +107,11 @@ public class Task {
         return this;
     }
 
-    public String getAnswer() {
+    public Answer getAnswer() {
         return answer;
     }
 
-    public Task setAnswer(String answer) {
+    public Task setAnswer(Answer answer) {
         this.answer = answer;
         return this;
     }
@@ -214,20 +179,20 @@ public class Task {
         return this;
     }
 
-    public Timestamp getAddDate() {
+    public LocalDateTime getAddDate() {
         return addDate;
     }
 
-    public Task setAddDate(Timestamp addDate) {
+    public Task setAddDate(LocalDateTime addDate) {
         this.addDate = addDate;
         return this;
     }
 
-    public Timestamp getLastChangeDate() {
+    public LocalDateTime getLastChangeDate() {
         return lastChangeDate;
     }
 
-    public Task setLastChangeDate(Timestamp lastChangeDate) {
+    public Task setLastChangeDate(LocalDateTime lastChangeDate) {
         this.lastChangeDate = lastChangeDate;
         return this;
     }
