@@ -5,9 +5,8 @@ import NotFound from "./components/Pages/NotFound";
 import Home from "./components/Pages/Home";
 import MainLayout from "./layouts/MainLayout";
 import TinyEditor from "./components/Utils/TinyEditor";
-import AddTask from "./components/Pages/AddTask";
+import AddTask from "./components/Pages/AddTask/AddTask";
 import { Test } from "./components/Pages/Test";
-import EditTask from "./components/Pages/EditTask";
 import Variant from "./components/Variant/Variant";
 import VariantResults from "./components/Variant/VariantResults";
 
@@ -23,7 +22,7 @@ function App() {
             <Route path="addtask" element={<AddTask />}></Route>
             <Route path="addtask/:id" element={<AddTask />}></Route>
             <Route path="test" element={<Test />}></Route>
-            <Route path="edit-task" element={<EditTask />}></Route>
+            <Route path="edit-task/:id" element={<AddTask />}></Route>
             <Route path="variant" element={<Variant />}></Route>
             <Route path="results" element={<VariantResults />}></Route>
             <Route path="*" element={<NotFound />}></Route>
