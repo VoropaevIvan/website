@@ -5,9 +5,8 @@ import NotFound from "./components/Pages/NotFound";
 import Home from "./components/Pages/Home";
 import MainLayout from "./layouts/MainLayout";
 import TinyEditor from "./components/Utils/TinyEditor";
-import AddTask from "./components/Pages/AddTask";
+import AddTask from "./components/Pages/AddTask/AddTask";
 import { Test } from "./components/Pages/Test";
-import EditTask from "./components/Pages/EditTask";
 import Variant from "./components/Variant/Variant";
 import VariantResults from "./components/Variant/VariantResults";
 
