@@ -15,7 +15,7 @@
 	<name>site-data-service</name>
 	<description>This project provides a service for data access on the site</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
