@@ -1,10 +1,10 @@
-package com.example.site.service.tasks;
+package com.example.site;
 
+import com.example.site.SiteDataServiceApplication;
+import com.example.site.dao.TaskRepository;
+import com.example.site.model.Task;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import static com.example.site.service.SiteDataServiceApplication.appLogger;
 
 @Configuration
 public class TaskLoader {
@@ -28,7 +28,7 @@ public class TaskLoader {
                         .setSolution("sdf")
                 );
             }
-            appLogger.info("Add " + num + " tasks");
+            SiteDataServiceApplication.appLogger.info("Add " + num + " tasks");
         };
     }
 }

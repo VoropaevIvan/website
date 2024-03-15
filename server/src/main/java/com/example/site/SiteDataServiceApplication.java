@@ -1,4 +1,4 @@
-package com.example.site.service;
+package com.example.site;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

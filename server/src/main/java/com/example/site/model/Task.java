@@ -1,4 +1,4 @@
-package com.example.site.service.tasks;
+package com.example.site.model;
 
 import jakarta.persistence.*;
 
