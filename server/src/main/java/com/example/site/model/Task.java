@@ -62,7 +62,7 @@ import java.time.LocalDateTime;
 public class Task {
 
     @Embeddable
-    public record Answer(int rowsNum, int colsNum, String data) {
+    public record Answer(int rows, int cols, String data) {
     }
 
     @Id
