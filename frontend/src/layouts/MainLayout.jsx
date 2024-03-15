@@ -4,7 +4,7 @@ import Menu from "../components/Menu/Menu";
 
 const MainLayout = () => {
   const location = useLocation();
-  console.log(location);
+
   return (
     <>
       {location.pathname !== "/variant" ? <Menu /> : ""}

@@ -1,29 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import TinyEditor from "../../Utils/TinyEditor";
-import Table from "../../Utils/Table/Table";
-import FileView from "../../Utils/FileView";
+
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  whatAnswerType,
-  getAnswerType,
-  getTableSize,
-} from "../../Utils/addTaskUtils/addTaskUtils";
+
 import { getTaskById } from "../../Utils/addTaskUtils/server";
 import "./AddTask.css";
-import {
-  ACTUAL,
-  DEFAULT_SOLVE_FOR_TASK_TEXT,
-  DEFAULT_TASK_TEXT,
-  EASY_THEN_EGE,
-  GROB,
-  LEVEL_OF_EGE,
-  LITTLE_HARD_THEN_EGE,
-  MUCH_EASY_THEN_EGE,
-  NOT_ACTUAL,
-  NUMBERS_EGE_NAMES,
-  WILL_BE_IN_EGE,
-} from "../constants";
+import { DEFAULT_SOLVE_FOR_TASK_TEXT, DEFAULT_TASK_TEXT } from "../constants";
 import { DEFAULT_ALL_TASK_DATA } from "./AddTaskConstants";
 import { curTaskId, isNewTask } from "./components/AddTaskUtils";
 import NumberEGESelect from "./components/NumberEGESelect";
@@ -111,7 +93,7 @@ const AddTask = () => {
       fetchData(curTaskId(location.pathname));
       console.log("fetch");
     } else {
-      //console.log("НЕ id" + id);
+      //console.log("!!!");
     }
   }, [location]);
 

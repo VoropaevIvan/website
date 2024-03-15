@@ -4,7 +4,7 @@ import "./Menu.css";
 const Menu = () => {
   const location = useLocation();
   const page = location.pathname.split("/")[1];
-  console.log(page);
+
   return (
     <div className="menu">
       <span>
@@ -13,6 +13,7 @@ const Menu = () => {
         </NavLink>
         <NavLink to="/bank">Банк задач</NavLink>
         <NavLink
+          reloadDocument
           to="/addtask"
           className={page === "edit-task" ? " active" : ""}
         >
