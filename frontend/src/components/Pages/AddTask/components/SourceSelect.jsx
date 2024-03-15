@@ -1,4 +1,4 @@
-const SourceSelect = ({ allTaskData, setAllTaskData }) => {
+const SourceSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <span>
       {"Откуда задача "}
@@ -6,6 +6,7 @@ const SourceSelect = ({ allTaskData, setAllTaskData }) => {
         value={allTaskData.source}
         onChange={(e) => {
           setAllTaskData({ ...allTaskData, source: e.target.value });
+          setIsSend(false);
         }}
       ></input>
     </span>

@@ -1,4 +1,4 @@
-const IsOfficialSelect = ({ allTaskData, setAllTaskData }) => {
+const IsOfficialSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <div>
       <span>
@@ -10,6 +10,7 @@ const IsOfficialSelect = ({ allTaskData, setAllTaskData }) => {
               ...allTaskData,
               isOfficial: e.target.value === "Да" ? true : false,
             });
+            setIsSend(false);
           }}
         >
           <option>Да</option>

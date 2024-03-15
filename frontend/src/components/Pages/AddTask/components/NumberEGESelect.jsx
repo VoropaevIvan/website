@@ -1,6 +1,6 @@
 import { NUMBERS_EGE_NAMES } from "../../constants";
 
-const NumberEGESelect = ({ allTaskData, setAllTaskData }) => {
+const NumberEGESelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <span>
       <p>
@@ -8,6 +8,7 @@ const NumberEGESelect = ({ allTaskData, setAllTaskData }) => {
         <select
           onChange={(e) => {
             setAllTaskData({ ...allTaskData, numberEGE: e.target.value });
+            setIsSend(false);
           }}
           value={allTaskData.numberEGE}
         >

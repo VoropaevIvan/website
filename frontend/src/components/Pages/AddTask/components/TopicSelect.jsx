@@ -1,4 +1,4 @@
-const TopicSelect = ({ allTaskData, setAllTaskData }) => {
+const TopicSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <div>
       <span>
@@ -7,6 +7,7 @@ const TopicSelect = ({ allTaskData, setAllTaskData }) => {
           value={allTaskData.topic}
           onChange={(e) => {
             setAllTaskData({ ...allTaskData, topic: e.target.value });
+            setIsSend(false);
           }}
         ></input>
       </span>

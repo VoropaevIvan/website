@@ -42,12 +42,13 @@ const AnswerSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
         <input
           type="text"
           value={allTaskData.answer.data}
-          onChange={(e) =>
+          onChange={(e) => {
             setAllTaskData({
               ...allTaskData,
               answer: { rows: 0, cols: 0, data: e.target.value },
-            })
-          }
+            });
+            setIsSend(false);
+          }}
         ></input>
       ) : (
         <div>
@@ -57,6 +58,7 @@ const AnswerSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
               value={allTaskData.answer.rows}
               onChange={(e) => {
                 setTableSize({ type: "rows", number: e.target.value });
+                setIsSend(false);
               }}
             ></input>
             <br></br>
@@ -67,6 +69,7 @@ const AnswerSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
               value={allTaskData.answer.cols}
               onChange={(e) => {
                 setTableSize({ type: "cols", number: e.target.value });
+                setIsSend(false);
               }}
             ></input>
           </span>

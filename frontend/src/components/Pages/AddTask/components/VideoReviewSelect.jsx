@@ -1,4 +1,4 @@
-const VideoReviewSelect = ({ allTaskData, setAllTaskData }) => {
+const VideoReviewSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <div className="videorazbor">
       <span>
@@ -7,6 +7,7 @@ const VideoReviewSelect = ({ allTaskData, setAllTaskData }) => {
           value={allTaskData.videoReview}
           onChange={(e) => {
             setAllTaskData({ ...allTaskData, videoReview: e.target.value });
+            setIsSend(false);
           }}
         ></input>
       </span>

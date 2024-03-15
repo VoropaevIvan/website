@@ -6,13 +6,7 @@ const SendButtons = ({ handleSendButton, isSend, location }) => {
       <button className="sendButton" onClick={handleSendButton}>
         {isNewTask(location.pathname) ? "Добавить задачу" : "Обновить задачу"}
       </button>
-      {isSend && (
-        <strong>
-          {isNewTask(location.pathname)
-            ? "Задача добавлена"
-            : "Задача обновлена"}
-        </strong>
-      )}
+      {isSend && <strong>Сохранено!</strong>}
     </span>
   );
 };

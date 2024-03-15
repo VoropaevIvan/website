@@ -1,12 +1,19 @@
 import FileView from "../../../Utils/FileView";
 
-const AddFiles = ({ setCurrentFile, delFile, files, saveFileOnServer }) => {
+const AddFiles = ({
+  setCurrentFile,
+  delFile,
+  files,
+  saveFileOnServer,
+  setIsSend,
+}) => {
   return (
     <div>
       <input
         type="file"
         onChange={(e) => {
           setCurrentFile(e.target.files[0]);
+          setIsSend(false);
         }}
       ></input>
       <button onClick={saveFileOnServer}>Отправить</button>

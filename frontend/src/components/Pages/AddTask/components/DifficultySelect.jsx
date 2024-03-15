@@ -6,7 +6,7 @@ import {
   MUCH_EASY_THEN_EGE,
 } from "../../constants";
 
-const DifficultySelect = ({ allTaskData, setAllTaskData }) => {
+const DifficultySelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <div>
       <span>
@@ -18,6 +18,7 @@ const DifficultySelect = ({ allTaskData, setAllTaskData }) => {
               ...allTaskData,
               difficulty: e.target.value,
             });
+            setIsSend(false);
           }}
         >
           <option>{GROB}</option>
