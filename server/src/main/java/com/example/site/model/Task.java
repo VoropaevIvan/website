@@ -62,7 +62,11 @@ import java.time.LocalDateTime;
 public class Task {
 
     @Embeddable
-    public record Answer(int rows, int cols, String data) {
+    public record Answer(
+            @Basic(optional = false) int rows,
+            @Basic(optional = false) int cols,
+            @Basic(optional = false) String data
+    ) {
     }
 
     @Id
@@ -72,7 +76,6 @@ public class Task {
     @Basic(optional = false)
     private String content;
 
-    @Basic(optional = false)
     private Answer answer;
 
     @Basic(optional = false)
@@ -125,11 +128,11 @@ public class Task {
         return this;
     }
 
-    public boolean isOfficial() {
+    public boolean getIsOfficial() {
         return isOfficial;
     }
 
-    public Task setOfficial(boolean official) {
+    public Task setIsOfficial(boolean official) {
         isOfficial = official;
         return this;
     }

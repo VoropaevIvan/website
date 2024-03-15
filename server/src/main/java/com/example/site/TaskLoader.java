@@ -18,7 +18,7 @@ public class TaskLoader {
                         .setContent("2 + 1 = ?")
                         .setAnswer(new Task.Answer(0, 0, "3"))
                         .setNumberEGE("6")
-                        .setOfficial(false)
+                        .setIsOfficial(false)
                         .setActuality("d")
                         .setDifficulty("f")
                         .setSource("sdf")
