@@ -17,9 +17,6 @@ public class SiteDataServiceApplication {
 
 	@Bean
 	CommandLineRunner initStorageLocation(StorageService storageService) {
-		return args -> {
-			storageService.deleteAll();
-			storageService.init();
-		};
+		return args -> storageService.init();
 	}
 }
