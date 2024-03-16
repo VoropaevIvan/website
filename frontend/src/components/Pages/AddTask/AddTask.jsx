@@ -67,6 +67,7 @@ const AddTask = () => {
       const res = await axios.post(link, {
         ...allTaskData,
         answer: answer,
+        files: JSON.stringify(allTaskData.files),
       });
 
       if (res.status === 200) {

@@ -11,6 +11,7 @@ export const getTaskById = async (
     console.log(res.data);
     if (res.data) {
       const okData = res.data;
+      okData.files = JSON.parse(okData.files);
       if (okData.answer.cols !== 0 || okData.answer.rows !== 0) {
         okData.answer = {
           ...okData.answer,
