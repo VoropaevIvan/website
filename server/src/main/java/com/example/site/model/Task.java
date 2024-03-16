@@ -65,15 +65,20 @@ public class Task {
     public record Answer(
             @Basic(optional = false) int rows,
             @Basic(optional = false) int cols,
-            @Basic(optional = false) String data
+            @Basic(optional = false)
+            @Column(length = MAX_LENGTH)
+            String data
     ) {
     }
+
+    private static final int MAX_LENGTH = 10_000;
 
     @Id
     @GeneratedValue
     private int id;
 
     @Basic(optional = false)
+    @Column(length = MAX_LENGTH)
     private String content;
 
     private Answer answer;
@@ -84,13 +89,24 @@ public class Task {
     private boolean isOfficial;
     private String actuality;
     private String difficulty;
+
+    @Column(length = MAX_LENGTH)
     private String source;
+
     private int topic;
+
+    @Column(length = MAX_LENGTH)
     private String files;
+
     private LocalDateTime addDate;
     private LocalDateTime lastChangeDate;
+
+    @Column(length = MAX_LENGTH)
     private String videoReview;
+
+    @Column(length = MAX_LENGTH)
     private String solution;
+
 
     public int getId() {
         return id;
