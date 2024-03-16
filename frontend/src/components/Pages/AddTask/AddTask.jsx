@@ -85,7 +85,7 @@ const AddTask = () => {
 
   const saveFileOnServer = () => {
     // Send to server...
-
+    axios.post("http://localhost:8080/files", currentFile);
     setFiles([...files, `file_${files.length}.txt`]);
     setIsSend(false);
   };
