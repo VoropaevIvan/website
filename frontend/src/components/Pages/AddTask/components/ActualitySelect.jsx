@@ -1,6 +1,6 @@
 import { ACTUAL, NOT_ACTUAL, WILL_BE_IN_EGE } from "../../constants";
 
-const ActualitySelect = ({ allTaskData, setAllTaskData }) => {
+const ActualitySelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <div>
       <span>
@@ -12,6 +12,7 @@ const ActualitySelect = ({ allTaskData, setAllTaskData }) => {
               ...allTaskData,
               actuality: e.target.value,
             });
+            setIsSend(false);
           }}
         >
           <option>{WILL_BE_IN_EGE}</option>

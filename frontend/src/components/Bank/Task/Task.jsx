@@ -154,16 +154,7 @@ export const Task = ({
           Проверить ответ
         </button>
       </form>
-
-      {/* <h3
-        style={
-          isSolved.decision
-            ? { backgroundColor: "green" }
-            : { backgroundColor: "grey" }
-        }
-      >
-        {isSolved.text}
-      </h3> */}
+      <a href={"http://localhost:3000/edit-task/" + id}>Редактировать задачу</a>
     </div>
   );
 };

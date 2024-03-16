@@ -33,7 +33,7 @@ const FilterFunction = (task, filtersData) => {
     decision *= 1;
   } else {
     if (
-      task.official ===
+      task.isOfficial ===
       (filtersData.isOfficial === OFFICIAL_TASK ? true : false)
     ) {
       decision *= 1;

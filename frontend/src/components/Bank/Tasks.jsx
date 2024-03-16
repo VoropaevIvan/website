@@ -12,11 +12,11 @@ const getAllTasksFromServer = async (setTasksFromServer) => {
     const res = await axios.get(process.env.REACT_APP_LINK_GET_ALL_TASK);
 
     if (res.data) {
-      let dataOk = res.data.map((e) => {
-        return { ...e, answer: JSON.parse(e.answer) };
-      });
+      console.log(res.data);
+      let dataOk = res.data;
+
       dataOk = dataOk.map((e) => {
-        return e.answer.rows !== 0
+        return e.answer.rows !== 0 || e.answer.cols !== 0
           ? {
               ...e,
               answer: { ...e.answer, data: JSON.parse(e.answer.data) },
@@ -68,7 +68,7 @@ export const Tasks = () => {
               content={task.content}
               trueAnswer={task.answer}
               numberEGE={task.numberEGE}
-              isOfficial={task.official}
+              isOfficial={task.isOfficial}
               actuality={task.actuality}
               difficulty={task.difficulty}
             />

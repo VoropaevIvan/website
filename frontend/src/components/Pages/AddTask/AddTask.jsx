@@ -48,14 +48,26 @@ const AddTask = () => {
 
   const handleSendButton = async () => {
     try {
-      let taskId = -1;
+      let answer = {
+        ...allTaskData.answer,
+      };
+      if (allTaskData.answer.cols !== 0 || allTaskData.answer.rows !== 0) {
+        answer = {
+          ...allTaskData.answer,
+          data: JSON.stringify(allTaskData.answer.data),
+        };
+      }
+      let link = process.env.REACT_APP_LINK_ADD_TASK;
 
       if (!isNewTask(location.pathname)) {
-        taskId = Number(location.pathname.split("/").reverse()[0]);
+        const taskId = Number(location.pathname.split("/").reverse()[0]);
+        link = link + "/" + String(taskId);
       }
-      const res = await axios.post(process.env.REACT_APP_LINK_ADD_TASK, {
+
+      const res = await axios.post(link, {
         ...allTaskData,
-        id: taskId,
+        answer: answer,
+        //files: files,
       });
 
       if (res.status === 200) {
@@ -75,6 +87,7 @@ const AddTask = () => {
     // Send to server...
 
     setFiles([...files, `file_${files.length}.txt`]);
+    setIsSend(false);
   };
 
   const delFile = (fileName) => {
@@ -83,6 +96,7 @@ const AddTask = () => {
         return file !== fileName;
       })
     );
+    setIsSend(false);
   };
 
   useEffect(() => {
@@ -102,25 +116,38 @@ const AddTask = () => {
       <NumberEGESelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
       />
-      <SourceSelect allTaskData={allTaskData} setAllTaskData={setAllTaskData} />
+      <SourceSelect
+        allTaskData={allTaskData}
+        setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
+      />
       <IsOfficialSelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
       />
       <ActualitySelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
       />
       <DifficultySelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
       />
-      <TopicSelect allTaskData={allTaskData} setAllTaskData={setAllTaskData} />
+      <TopicSelect
+        allTaskData={allTaskData}
+        setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
+      />
       <TaskContentSelect
         allTaskData={allTaskData}
         setText={setText}
         initialText={initialDataForEditor.content}
+        setIsSend={setIsSend}
       />
       <AnswerSelect
         setIsSend={setIsSend}
@@ -130,6 +157,7 @@ const AddTask = () => {
       <VideoReviewSelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
       />
 
       <details>
@@ -137,6 +165,7 @@ const AddTask = () => {
           allTaskData={allTaskData}
           setText={setSolution}
           initialText={initialDataForEditor.solution}
+          setIsSend={setIsSend}
         />
       </details>
 
@@ -145,6 +174,7 @@ const AddTask = () => {
         delFile={delFile}
         setCurrentFile={setCurrentFile}
         saveFileOnServer={saveFileOnServer}
+        setIsSend={setIsSend}
       />
       <SendButtons
         handleSendButton={handleSendButton}
