@@ -35,7 +35,7 @@ const AddTask = () => {
   const [isSend, setIsSend] = useState(false);
 
   const [currentFile, setCurrentFile] = useState(null);
-  const [files, setFiles] = useState([]);
+  //const [files, setFiles] = useState([]);
 
   const setText = (content) => {
     setAllTaskData({ ...allTaskData, content: content });
@@ -67,7 +67,6 @@ const AddTask = () => {
       const res = await axios.post(link, {
         ...allTaskData,
         answer: answer,
-        //files: files,
       });
 
       if (res.status === 200) {
@@ -85,17 +84,32 @@ const AddTask = () => {
 
   const saveFileOnServer = () => {
     // Send to server...
-    axios.post("http://localhost:8080/files", currentFile);
-    setFiles([...files, `file_${files.length}.txt`]);
-    setIsSend(false);
+    try {
+      var formData = new FormData();
+      formData.append("file", currentFile);
+
+      const res = axios.post("http://localhost:8080/files", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      res.then((value) => {
+        console.log(value.data.location);
+        //setFiles([...files, value.data.location]);
+        setAllTaskData({
+          ...allTaskData,
+          files: [...allTaskData.files, value.data.location],
+        });
+        setIsSend(false);
+      });
+    } catch (error) {}
   };
 
   const delFile = (fileName) => {
-    setFiles(
-      files.filter((file) => {
-        return file !== fileName;
-      })
-    );
+    const newFiles = allTaskData.files.filter((file) => {
+      return file !== fileName;
+    });
+
+    setAllTaskData({ ...allTaskData, files: newFiles });
     setIsSend(false);
   };
 
@@ -170,7 +184,7 @@ const AddTask = () => {
       </details>
 
       <AddFiles
-        files={files}
+        files={allTaskData.files}
         delFile={delFile}
         setCurrentFile={setCurrentFile}
         saveFileOnServer={saveFileOnServer}

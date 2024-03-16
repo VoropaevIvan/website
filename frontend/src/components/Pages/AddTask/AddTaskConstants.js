@@ -9,4 +9,5 @@ export const DEFAULT_ALL_TASK_DATA = {
   actuality: "Актуальна",
   difficulty: "Уровень ЕГЭ",
   topic: "",
+  files: [],
 };
