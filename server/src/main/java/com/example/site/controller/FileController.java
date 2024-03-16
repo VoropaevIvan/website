@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -21,9 +22,10 @@ public class FileController {
     private StorageService storageService;
 
     @PostMapping
-    public String uploadFile(@RequestParam MultipartFile file) {
+    public Object uploadFile(@RequestParam MultipartFile file) {
         Path filename = storageService.store(file);
-        return FileController.resolveFileUri(filename);
+        String uri = FileController.resolveFileUri(filename);
+        return Map.of("location", uri);
     }
 
     private static String resolveFileUri(Path file) {
