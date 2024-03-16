@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @Service
@@ -32,12 +33,21 @@ public class StorageService {
             if (file.isEmpty()) {
                 throw new RuntimeException("Failed to store empty file.");
             }
+            String fileExtension = file.getOriginalFilename().split("\\.", 2)[1];
+            UUID randomUUID = UUID.randomUUID();
             Path destinationFile = this.rootLocation
-                    .resolve(Path.of(file.getOriginalFilename()))
+                    .resolve(Path.of(randomUUID + "." + fileExtension))
                     .normalize().toAbsolutePath();
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 // This is a security check
                 throw new RuntimeException("Cannot store file outside current directory.");
+            }
+            if (Files.exists(destinationFile)) {
+                throw new RuntimeException(
+                        "Unsuccessful attempt to generate filename " +
+                        "because a such filename has already existed: " +
+                        destinationFile.getFileName()
+                );
             }
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
@@ -55,7 +65,6 @@ public class StorageService {
         } catch (IOException e) {
             throw new RuntimeException("Failed to read stored files", e);
         }
-
     }
 
     public Path load(String filename) {
