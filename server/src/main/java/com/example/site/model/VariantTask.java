@@ -11,19 +11,21 @@ public class VariantTask {
     private long id;
 
     @NaturalId
-    private String variantName;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    private Variant variant;
 
     @NaturalId
+    @Basic(optional = false)
     private int taskOrder;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Task task;
 
     public VariantTask() {
     }
 
-    public VariantTask(String variantName, int taskOrder, Task task) {
-        this.variantName = variantName;
+    public VariantTask(Variant variant, int taskOrder, Task task) {
+        this.variant = variant;
         this.taskOrder = taskOrder;
         this.task = task;
     }
@@ -36,12 +38,12 @@ public class VariantTask {
         this.id = id;
     }
 
-    public String getVariantName() {
-        return variantName;
+    public Variant getVariant() {
+        return variant;
     }
 
-    public void setVariantName(String variantName) {
-        this.variantName = variantName;
+    public void setVariant(Variant variant) {
+        this.variant = variant;
     }
 
     public int getTaskOrder() {
@@ -58,5 +60,17 @@ public class VariantTask {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    @Override
+    public int hashCode() {
+        return variant.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof VariantTask other &&
+               this.variant.equals(other.variant) &&
+               this.taskOrder == other.taskOrder;
     }
 }

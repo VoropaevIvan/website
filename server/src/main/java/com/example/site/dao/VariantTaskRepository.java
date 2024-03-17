@@ -6,5 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface VariantTaskRepository extends JpaRepository<VariantTask, Long> {
-    List<VariantTask> findAllByVariantName(String variantName);
 }
