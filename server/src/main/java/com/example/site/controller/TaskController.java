@@ -2,20 +2,23 @@ package com.example.site.controller;
 
 import com.example.site.model.Task;
 import com.example.site.dao.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.site.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
 @RequestMapping("tasks")
 public class TaskController {
+    private final TaskService taskService;
+    private final TaskRepository repository;
 
-    @Autowired
-    private TaskRepository repository;
+    public TaskController(TaskService taskService, TaskRepository repository) {
+        this.taskService = taskService;
+        this.repository = repository;
+    }
 
     @GetMapping
     public List<Task> getTasks() {
@@ -24,25 +27,20 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTask(@PathVariable int id) {
-        Optional<Task> optTask = repository.findById(id);
-        return optTask.map(ResponseEntity::ok)
+        return repository.findById(id)
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public int addTask(@RequestBody Task task) {
-        repository.save(task);
-        return task.getId();
+        return taskService.add(task).getId();
     }
 
     @PostMapping("/{id}")
     public ResponseEntity<Task> editTask(@PathVariable int id, @RequestBody Task task) {
-        Optional<Task> optTask = repository.findById(id);
-        if (optTask.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        task.setId(optTask.get().getId());
-        repository.save(task);
-        return ResponseEntity.ok(task);
+        return taskService.edit(id, task)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }
