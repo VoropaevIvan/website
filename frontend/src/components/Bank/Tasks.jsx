@@ -23,7 +23,11 @@ const getAllTasksFromServer = async (setTasksFromServer) => {
             }
           : e;
       });
+      dataOk = dataOk.map((task) => {
+        return { ...task, files: JSON.parse(task.files) };
+      });
       setTasksFromServer(dataOk);
+      console.log(dataOk);
     }
   } catch (error) {
     console.log(error);
@@ -71,6 +75,7 @@ export const Tasks = () => {
               isOfficial={task.isOfficial}
               actuality={task.actuality}
               difficulty={task.difficulty}
+              files={task.files}
             />
           );
         })}

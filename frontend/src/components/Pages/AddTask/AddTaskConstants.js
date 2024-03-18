@@ -1,7 +1,7 @@
 export const DEFAULT_ALL_TASK_DATA = {
-  content: "---",
+  content: "<p>---</p>",
   answer: { rows: 0, cols: 0, data: "" },
-  solution: "---",
+  solution: "<p>---</p>",
   videoReview: "",
   numberEGE: "№ 1",
   source: "",

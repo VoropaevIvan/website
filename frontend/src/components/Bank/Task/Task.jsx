@@ -13,6 +13,7 @@ export const Task = ({
   isOfficial,
   actuality,
   difficulty,
+  files,
 }) => {
   const [isSolved, setIsSolved] = useState({
     decision: false,
@@ -144,6 +145,15 @@ export const Task = ({
 
       <hr></hr>
       <div dangerouslySetInnerHTML={createMarkup(content)} />
+
+      {files.map((file, i) => {
+        return (
+          <div key={i}>
+            <a href={file}>{"Файл " + (i + 1)}</a>
+            <strong> </strong>
+          </div>
+        );
+      })}
 
       <form onSubmit={handleAnswerSubmit}>
         <label>

@@ -64,6 +64,12 @@ const AddTask = () => {
         link = link + "/" + String(taskId);
       }
 
+      console.log({
+        ...allTaskData,
+        answer: answer,
+        files: JSON.stringify(allTaskData.files),
+      });
+
       const res = await axios.post(link, {
         ...allTaskData,
         answer: answer,

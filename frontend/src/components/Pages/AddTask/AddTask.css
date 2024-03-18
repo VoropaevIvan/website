@@ -51,12 +51,12 @@ details[open] summary {
 }
 
 .videorazbor {
-  display: flex;
-  padding: 5px;
+  /* display: flex; */
+  /* padding: 5px; */
 }
 .videorazbor span {
-  display: flex;
-  margin: 5px;
+  /* display: flex; */
+  /* margin: 5px; */
 }
 
 .videorazbor input {
