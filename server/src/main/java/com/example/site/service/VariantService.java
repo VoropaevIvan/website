@@ -29,6 +29,10 @@ public class VariantService {
         this.taskService = taskService;
     }
 
+    public List<String> getAll() {
+        return variantRepository.findAll().stream().map(Variant::getName).toList();
+    }
+
     public Optional<List<Task>> get(String variantName) {
         Optional<Variant> optionalVariant = variantRepository.findByName(variantName);
         if (optionalVariant.isEmpty()) {
@@ -72,5 +76,18 @@ public class VariantService {
             tasks.set(i, updated);
         }
         return tasks;
+    }
+
+    public boolean delete(String variantName) {
+        Optional<Variant> optionalVariant = variantRepository.findByName(variantName);
+        if (optionalVariant.isEmpty()) {
+            return false;
+        }
+        Variant variant = optionalVariant.get();
+        for (VariantTask task : variant.getTasks()) {
+            variantTaskRepository.deleteById(task.getId());
+        }
+        variantRepository.deleteById(variant.getId());
+        return true;
     }
 }
