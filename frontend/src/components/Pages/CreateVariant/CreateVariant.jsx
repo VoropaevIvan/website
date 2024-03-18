@@ -1,8 +1,10 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import TinyEditor from "../../Utils/TinyEditor";
 import "./CreateVariant.css";
-import { justGetTaskById } from "../../Utils/addTaskUtils/server";
+import {
+  getVariantTasksFromServer,
+  saveFileOnServer,
+} from "../../Utils/addTaskUtils/server";
 import AnswerSelect from "../AddTask/components/AnswerSelect";
 import ActualitySelect from "../AddTask/components/ActualitySelect";
 import NumberEGESelect from "../AddTask/components/NumberEGESelect";
@@ -13,48 +15,15 @@ import TopicSelect from "../AddTask/components/TopicSelect";
 import VideoReviewSelect from "../AddTask/components/VideoReviewSelect";
 import { DEFAULT_ALL_TASK_DATA } from "../AddTask/AddTaskConstants";
 import { useLocation } from "react-router-dom";
-import { Reorder } from "framer-motion";
-
-const getVariantTasksFromServer = async ({
-  varId,
-  setTasksFromServer,
-  setTextInEditor,
-  setTextInSolutionEditor,
-  setIsOkLoad,
-}) => {
-  try {
-    //TO DO
-    console.log("Get " + varId);
-    const res = await axios.get("http://localhost:8080/variants/" + varId);
-
-    if (res.data) {
-      //console.log(res.data);
-      let dataOk = res.data;
-
-      dataOk = dataOk.map((e) => {
-        return e.answer.rows !== 0 || e.answer.cols !== 0
-          ? {
-              ...e,
-              answer: { ...e.answer, data: JSON.parse(e.answer.data) },
-            }
-          : e;
-      });
-      dataOk = dataOk.map((task) => {
-        return { ...task, files: JSON.parse(task.files) };
-      });
-      setTasksFromServer(dataOk);
-      if (dataOk.length > 0) {
-        setTextInEditor(dataOk[0].content);
-        setTextInSolutionEditor(dataOk[0].solution);
-      }
-      setIsOkLoad(1);
-    }
-  } catch (error) {
-    console.log(error.response);
-    //setTasksFromServer([{ ...DEFAULT_ALL_TASK_DATA, id: 10101 }]);
-    setIsOkLoad(-1);
-  }
-};
+import AddFiles from "../AddTask/components/AddFiles";
+import {
+  delFileFromFilesList,
+  replaceTaskByPosition,
+} from "../../Utils/addTaskUtils/addTaskUtils";
+import NavigationCVar from "./CreateVariantUtils/NavigationCVar";
+import SaveButtonCVar from "./CreateVariantUtils/SaveButtonCVar";
+import AddTaskToVariantById from "./CreateVariantUtils/AddTaskToVariantById";
+import SendToServerButton from "./CreateVariantUtils/SendToServerButton";
 
 const CreateVariant = () => {
   const [activeTask, setActiveTask] = useState(0);
@@ -65,19 +34,16 @@ const CreateVariant = () => {
   const [textInSolutionEditor, setTextInSolutionEditor] = useState("");
   const [isOkLoad, setIsOkLoad] = useState(0);
   const [countNewTasks, setCountNewTasks] = useState(1);
+  const [currentFile, setCurrentFile] = useState(null);
 
   const location = useLocation();
 
-  console.log(location.pathname);
-
-  const [tasks, setTasks] = useState(["task 0", "task 1", "task 2", "task 3"]);
-
-  const handleAddTaskById = () => {
-    justGetTaskById(Number(newTaskId)).then((value) => {
-      setTasksFromServer([...tasksFromServer, value]);
-    });
-    setNewTaskId("");
-  };
+  // const handleAddTaskById = () => {
+  //   justGetTaskById(Number(newTaskId)).then((value) => {
+  //     setTasksFromServer([...tasksFromServer, value]);
+  //   });
+  //   setNewTaskId("");
+  // };
 
   useEffect(() => {
     async function fetchData(varId) {
@@ -101,12 +67,49 @@ const CreateVariant = () => {
     setTasksFromServer([...newTasks]);
   };
 
+  const delFile = (fileName) => {
+    const newFiles = delFileFromFilesList({
+      fileNameToErase: fileName,
+      files: tasksFromServer[activeTask].files,
+    });
+
+    setTasksFromServer(
+      replaceTaskByPosition({
+        tasks: tasksFromServer,
+        position: activeTask,
+        task: {
+          ...tasksFromServer[activeTask],
+          files: newFiles,
+        },
+      })
+    );
+  };
+
+  const handleSaveFileOnServer = () => {
+    try {
+      const res = saveFileOnServer(currentFile);
+      res.then((value) => {
+        const newTasks = replaceTaskByPosition({
+          tasks: tasksFromServer,
+          position: activeTask,
+          task: {
+            ...tasksFromServer[activeTask],
+            files: [...tasksFromServer[activeTask].files, value.data.location],
+          },
+        });
+        setTasksFromServer([...newTasks]);
+      });
+    } catch (error) {}
+  };
+
   if (isOkLoad === -1) {
     return <h1>Такого варианта нет!</h1>;
   }
+
   if (isOkLoad === 0) {
     return <></>;
   }
+
   if (tasksFromServer.length === 0) {
     setTasksFromServer([
       ...tasksFromServer,
@@ -118,41 +121,14 @@ const CreateVariant = () => {
 
   return (
     <div className="createvariant">
-      <div>
-        <Reorder.Group
-          axis="x"
-          values={tasksFromServer}
-          onReorder={setTasksFromServer}
-        >
-          {tasksFromServer.map((el, i) => {
-            return (
-              <Reorder.Item key={el.id} value={el}>
-                <button
-                  key={i}
-                  className={i === activeTask ? "activebutincreatevar" : ""}
-                  onClick={() => {
-                    //setTasksFromServerNotChange(tasksFromServer);
-                    setActiveTask(i);
-                  }}
-                >
-                  {el.id}
-                </button>
-              </Reorder.Item>
-            );
-          })}
-        </Reorder.Group>
-        <button
-          onClick={() => {
-            setTasksFromServer([
-              ...tasksFromServer,
-              { ...DEFAULT_ALL_TASK_DATA, id: -countNewTasks },
-            ]);
-            setCountNewTasks(countNewTasks + 1);
-          }}
-        >
-          +
-        </button>
-      </div>
+      <NavigationCVar
+        tasksFromServer={tasksFromServer}
+        setTasksFromServer={setTasksFromServer}
+        setCountNewTasks={setCountNewTasks}
+        countNewTasks={countNewTasks}
+        activeTask={activeTask}
+        setActiveTask={setActiveTask}
+      />
 
       <NumberEGESelect
         allTaskData={tasksFromServer[activeTask]}
@@ -230,85 +206,40 @@ const CreateVariant = () => {
         </div>
       </details>
 
-      <div>
-        <button
-          disabled={
-            textInEditor === tasksFromServer[activeTask].content &&
-            textInSolutionEditor === tasksFromServer[activeTask].solution
-          }
-          onClick={() => {
-            const newData = [...tasksFromServer];
-            newData[activeTask].content = textInEditor;
-            newData[activeTask].solution = textInSolutionEditor;
-
-            setTasksFromServer(newData);
-          }}
-        >
-          Сохранить
-        </button>
+      <div
+        style={{
+          padding: "10px",
+          border: "",
+          maxWidth: "60%",
+          backgroundColor: "#FAFAD2",
+        }}
+      >
+        <AddFiles
+          files={tasksFromServer[activeTask].files}
+          delFile={delFile}
+          setCurrentFile={setCurrentFile}
+          saveFileOnServer={handleSaveFileOnServer}
+          setIsSend={() => {}}
+        />
       </div>
-      <div>
-        <input
-          value={newTaskId}
-          onChange={(e) => {
-            setNewTaskId(e.target.value);
-          }}
-        ></input>
-        <button onClick={handleAddTaskById} className="addtaskcvar">
-          Добавить задачу
-        </button>
-      </div>
-      <div>
-        <p>{tasksFromServer[activeTask].content}</p>
-      </div>
-      <div>
-        <button
-          onClick={() => {
-            const okData = tasksFromServer.map((task) => {
-              let answer = {
-                ...task.answer,
-              };
-              if (task.answer.cols !== 0 || task.answer.rows !== 0) {
-                answer = {
-                  ...task.answer,
-                  data: JSON.stringify(task.answer.data),
-                };
-              }
-              task = {
-                ...task,
-                answer: answer,
-                files: JSON.stringify(task.files),
-              };
-              return task;
-            });
-            console.log(okData);
-            const res = axios.post(
-              "http://localhost:8080/variants/" +
-                location.pathname.split("/").reverse()[0],
-              okData
-            );
-            res.then((value) => {
-              console.log("ret", value.data);
-              let dataOk = value.data;
-
-              dataOk = dataOk.map((e) => {
-                return e.answer.rows !== 0 || e.answer.cols !== 0
-                  ? {
-                      ...e,
-                      answer: { ...e.answer, data: JSON.parse(e.answer.data) },
-                    }
-                  : e;
-              });
-              dataOk = dataOk.map((task) => {
-                return { ...task, files: JSON.parse(task.files) };
-              });
-              setTasksFromServer(dataOk);
-            });
-          }}
-        >
-          Отправить на сервер
-        </button>
-      </div>
+      <SaveButtonCVar
+        tasksFromServer={tasksFromServer}
+        activeTask={activeTask}
+        setTasksFromServer={setTasksFromServer}
+        textInEditor={textInEditor}
+        textInSolutionEditor={textInSolutionEditor}
+      />
+      <AddTaskToVariantById
+        setNewTaskId={setNewTaskId}
+        newTaskId={newTaskId}
+        setTasksFromServer={setTasksFromServer}
+        tasksFromServer={tasksFromServer}
+      />
+      <SendToServerButton
+        tasksFromServer={tasksFromServer}
+        location={location}
+        setTasksFromServer={setTasksFromServer}
+      />
     </div>
   );
 };

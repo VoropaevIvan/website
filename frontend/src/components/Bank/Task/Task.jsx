@@ -136,6 +136,7 @@ export const Task = ({
         (isSolved.text === WA_DONE_TASK ? "WA" : "")
       }
     >
+      <p>{"Id: " + id}</p>
       <strong>{numberEGE}</strong>
       <p>
         <strong>Официальная:</strong> {String(isOfficial)}

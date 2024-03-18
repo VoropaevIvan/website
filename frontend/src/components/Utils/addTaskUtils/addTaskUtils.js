@@ -49,3 +49,30 @@ export const getTableSize = ({ number, type, allTaskData }) => {
     };
   }
 };
+
+export const parseTaskFromServer = (task) => {
+  let taskOk = { ...task };
+
+  if (taskOk.answer.rows !== 0 || taskOk.answer.cols !== 0) {
+    taskOk = {
+      ...taskOk,
+      answer: { ...taskOk.answer, data: JSON.parse(taskOk.answer.data) },
+    };
+  }
+
+  taskOk = { ...taskOk, files: JSON.parse(taskOk.files) };
+
+  return { ...taskOk };
+};
+
+export const delFileFromFilesList = ({ fileNameToErase, files }) => {
+  return files.filter((file) => {
+    return file !== fileNameToErase;
+  });
+};
+
+export const replaceTaskByPosition = ({ tasks, position, task }) => {
+  const newTasks = tasks;
+  newTasks[position] = task;
+  return [...newTasks];
+};

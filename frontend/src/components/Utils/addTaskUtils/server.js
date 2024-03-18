@@ -1,4 +1,5 @@
 import axios from "axios";
+import { parseTaskFromServer } from "./addTaskUtils";
 
 export const getTaskById = async (
   id,
@@ -42,11 +43,56 @@ export const justGetTaskById = async (id) => {
           data: JSON.parse(okData.answer.data),
         };
       }
+      okData.files = JSON.parse(okData.files);
 
-      return okData;
+      return { ...okData };
     }
   } catch (error) {
     //setInitialDataFromServer();
     console.log(error);
   }
+};
+
+export const getVariantTasksFromServer = async ({
+  varId,
+  setTasksFromServer,
+  setTextInEditor,
+  setTextInSolutionEditor,
+  setIsOkLoad,
+}) => {
+  try {
+    const res = await axios.get("http://localhost:8080/variants/" + varId);
+
+    if (res.data) {
+      let dataOk = res.data;
+
+      dataOk = dataOk.map((task) => {
+        return parseTaskFromServer(task);
+      });
+      console.log("Ok data", dataOk);
+
+      setTasksFromServer([...dataOk]);
+      if (dataOk.length > 0) {
+        setTextInEditor(dataOk[0].content);
+        setTextInSolutionEditor(dataOk[0].solution);
+      }
+      setIsOkLoad(1);
+    }
+  } catch (error) {
+    console.log(error.response);
+    setIsOkLoad(-1);
+  }
+};
+
+export const saveFileOnServer = async (currentFile) => {
+  try {
+    var formData = new FormData();
+    formData.append("file", currentFile);
+
+    const res = axios.post("http://localhost:8080/files", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    return res;
+  } catch (error) {}
 };
