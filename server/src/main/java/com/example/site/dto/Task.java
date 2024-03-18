@@ -1,4 +1,4 @@
-package com.example.site.model;
+package com.example.site.dto;
 
 import jakarta.persistence.*;
 

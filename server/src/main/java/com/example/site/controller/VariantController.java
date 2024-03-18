@@ -1,6 +1,6 @@
 package com.example.site.controller;
 
-import com.example.site.model.Task;
+import com.example.site.dto.Task;
 import com.example.site.service.VariantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

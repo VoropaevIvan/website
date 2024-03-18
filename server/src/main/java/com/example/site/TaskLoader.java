@@ -1,9 +1,8 @@
 package com.example.site;
 
 import com.example.site.dao.TaskRepository;
-import com.example.site.model.Task;
+import com.example.site.dto.Task;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

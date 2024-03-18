@@ -1,6 +1,6 @@
 package com.example.site.dao;
 
-import com.example.site.model.Variant;
+import com.example.site.dto.Variant;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

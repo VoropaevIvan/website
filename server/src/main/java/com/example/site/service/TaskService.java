@@ -1,7 +1,7 @@
 package com.example.site.service;
 
 import com.example.site.dao.TaskRepository;
-import com.example.site.model.Task;
+import com.example.site.dto.Task;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

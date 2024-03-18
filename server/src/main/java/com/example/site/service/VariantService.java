@@ -2,9 +2,9 @@ package com.example.site.service;
 
 import com.example.site.dao.VariantRepository;
 import com.example.site.dao.VariantTaskRepository;
-import com.example.site.model.Task;
-import com.example.site.model.Variant;
-import com.example.site.model.VariantTask;
+import com.example.site.dto.Task;
+import com.example.site.dto.Variant;
+import com.example.site.dto.VariantTask;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
