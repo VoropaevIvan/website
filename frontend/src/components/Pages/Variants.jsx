@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Variants = () => {
   const [newVariantName, setNewVariantName] = useState("");
@@ -45,12 +46,8 @@ const Variants = () => {
             return (
               <li key={varName}>
                 {"Редактировать: "}
-                <a href={"http://localhost:3000/edit-variant/" + varName}>
-                  {varName}
-                </a>{" "}
-                <a href={"http://localhost:3000/variant/" + varName}>
-                  {"Открыть"}
-                </a>
+                <Link to={"/edit-variant/" + varName}>{varName}</Link>{" "}
+                <Link to={"/variant/" + varName}>{"Открыть"}</Link>
               </li>
             );
           })}

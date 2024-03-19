@@ -35,7 +35,6 @@ const AddTask = () => {
   const [isSend, setIsSend] = useState(false);
 
   const [currentFile, setCurrentFile] = useState(null);
-  //const [files, setFiles] = useState([]);
 
   const setText = (content) => {
     setAllTaskData({ ...allTaskData, content: content });

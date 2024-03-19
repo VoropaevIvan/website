@@ -38,13 +38,6 @@ const CreateVariant = () => {
 
   const location = useLocation();
 
-  // const handleAddTaskById = () => {
-  //   justGetTaskById(Number(newTaskId)).then((value) => {
-  //     setTasksFromServer([...tasksFromServer, value]);
-  //   });
-  //   setNewTaskId("");
-  // };
-
   useEffect(() => {
     async function fetchData(varId) {
       getVariantTasksFromServer({

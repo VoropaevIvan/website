@@ -1,18 +1,37 @@
-import { useState } from "react";
-import Table from "../Utils/Table/Table";
-import { Reorder } from "framer-motion";
+import * as VKID from "@vkid/sdk";
+import { useEffect, useState } from "react";
+import "./Test.css";
 
 export const Test = () => {
-  //const [buttons, setButtons] = useState([0, 1, 2, 3]);
-  const [tasks, setTasks] = useState(["task 0", "task 1", "task 2", "task 3"]);
-  console.log(tasks);
+  const [isReady, setIsReady] = useState(false);
+
+  VKID.Config.set({
+    app: 51879792, // Идентификатор приложения.
+    redirectUrl: "https://localhost/", // Адрес для перехода после авторизации.
+  });
+
+  useEffect(() => {
+    async function fetchData() {}
+
+    // Создание экземпляра кнопки.
+    const oneTap = new VKID.OneTap();
+
+    // Получение контейнера из разметки.
+    const container = document.getElementById("VkIdSdkOneTap");
+
+    // Проверка наличия кнопки в разметке.
+    if (container) {
+      // Отрисовка кнопки в контейнере с именем приложения APP_NAME, светлой темой и на русском языке.
+      oneTap.render({ container: container });
+    }
+    fetchData();
+  }, []);
+
   return (
-    <Reorder.Group axis="y" values={tasks} onReorder={setTasks}>
-      {tasks.map((el, i) => (
-        <Reorder.Item key={tasks[i]} value={tasks[i]}>
-          <button>{el}</button>
-        </Reorder.Item>
-      ))}
-    </Reorder.Group>
+    <>
+      <div className="vk">
+        <div id="VkIdSdkOneTap"></div>
+      </div>
+    </>
   );
 };
