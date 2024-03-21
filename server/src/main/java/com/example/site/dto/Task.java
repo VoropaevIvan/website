@@ -86,6 +86,7 @@ public class Task {
     @Basic(optional = false)
     private String numberEGE;
 
+    private boolean hiddenInBank;
     private boolean isOfficial;
     private String actuality;
     private String difficulty;
@@ -141,6 +142,15 @@ public class Task {
 
     public Task setNumberEGE(String numberEGE) {
         this.numberEGE = numberEGE;
+        return this;
+    }
+
+    public boolean getHiddenInBank() {
+        return hiddenInBank;
+    }
+
+    public Task setHiddenInBank(boolean hiddenInBank) {
+        this.hiddenInBank = hiddenInBank;
         return this;
     }
 
