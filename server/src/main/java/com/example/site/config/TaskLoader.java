@@ -1,5 +1,6 @@
-package com.example.site;
+package com.example.site.config;
 
+import com.example.site.SiteDataServiceApplication;
 import com.example.site.dao.TaskRepository;
 import com.example.site.dto.Task;
 import org.springframework.boot.CommandLineRunner;
