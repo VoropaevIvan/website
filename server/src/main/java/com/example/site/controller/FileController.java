@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("files")
+@RequestMapping("/files")
 public class FileController {
 
     @Autowired
