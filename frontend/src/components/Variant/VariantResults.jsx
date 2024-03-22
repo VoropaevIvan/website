@@ -58,13 +58,13 @@ const VariantResults = () => {
                 <td
                   className={answerDecision(
                     curAnswers[i],
-                    varData[i]["answer"]
+                    varData[i]["answer"]["data"]
                   )}
                 >
                   {i + 1}
                 </td>
                 <td>{prepareAnswer(curAnswers[i], varData[i].typeAnswer)}</td>
-                <td>{varData[i]["answer"]}</td>
+                <td>{varData[i]["answer"]["data"]}</td>
               </tr>
             );
           })}

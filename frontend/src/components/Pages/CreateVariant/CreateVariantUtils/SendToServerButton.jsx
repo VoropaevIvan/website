@@ -1,4 +1,8 @@
 import axios from "axios";
+import {
+  parseTaskFromServer,
+  prepareTaskToServer,
+} from "../../../Utils/addTaskUtils/addTaskUtils";
 
 const SendToServerButton = ({
   tasksFromServer,
@@ -7,22 +11,9 @@ const SendToServerButton = ({
 }) => {
   const handleButtonClick = () => {
     const okData = tasksFromServer.map((task) => {
-      let answer = {
-        ...task.answer,
-      };
-      if (task.answer.cols !== 0 || task.answer.rows !== 0) {
-        answer = {
-          ...task.answer,
-          data: JSON.stringify(task.answer.data),
-        };
-      }
-      task = {
-        ...task,
-        answer: answer,
-        files: JSON.stringify(task.files),
-      };
-      return task;
+      return prepareTaskToServer(task);
     });
+
     console.log(okData);
     const res = axios.post(
       "http://localhost:8080/variants/" +
@@ -33,17 +24,10 @@ const SendToServerButton = ({
       console.log("ret", value.data);
       let dataOk = value.data;
 
-      dataOk = dataOk.map((e) => {
-        return e.answer.rows !== 0 || e.answer.cols !== 0
-          ? {
-              ...e,
-              answer: { ...e.answer, data: JSON.parse(e.answer.data) },
-            }
-          : e;
-      });
       dataOk = dataOk.map((task) => {
-        return { ...task, files: JSON.parse(task.files) };
+        return parseTaskFromServer(task);
       });
+
       setTasksFromServer([...dataOk]);
     });
   };

@@ -1,0 +1,12 @@
+.tablefortopusers th {
+  text-align: center;
+  padding: 10px;
+  background-color: rgb(225, 216, 216);
+}
+
+.tablefortopusers caption {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: antiquewhite;
+}

@@ -1,0 +1,42 @@
+.mainpage h1 {
+  display: inline-block;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  background-color: white;
+  padding: 10px 40px;
+  border-radius: 40px;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.mainpage h2 {
+  display: inline-block;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  background-color: white;
+  padding: 10px 40px;
+  border-radius: 40px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.mainpage div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.mainpage {
+  background-color: antiquewhite;
+}
+
+.mainpage table {
+  background-color: white;
+}
+
+/* .mainpage div {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+} */

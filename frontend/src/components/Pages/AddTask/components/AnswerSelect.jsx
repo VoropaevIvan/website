@@ -30,7 +30,9 @@ const AnswerSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
 
   return (
     <div className="answer">
-      <h3>Ответ</h3>
+      <span>
+        <strong>Ответ</strong>
+      </span>
       <select
         onChange={setAnswerType}
         value={whatAnswerType(allTaskData.answer)}
@@ -53,8 +55,9 @@ const AnswerSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
       ) : (
         <div>
           <span>
-            Количество строк
+            {"Количество строк "}
             <input
+              className="countcolsrowsinput"
               value={allTaskData.answer.rows}
               onChange={(e) => {
                 setTableSize({ type: "rows", number: e.target.value });
@@ -64,8 +67,9 @@ const AnswerSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
             <br></br>
           </span>
           <span>
-            Количество столбцов
+            {"Количество столбцов "}
             <input
+              className="countcolsrowsinput"
               value={allTaskData.answer.cols}
               onChange={(e) => {
                 setTableSize({ type: "cols", number: e.target.value });

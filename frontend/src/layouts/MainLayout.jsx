@@ -7,7 +7,7 @@ const MainLayout = () => {
 
   return (
     <>
-      {location.pathname !== "/variant" ? <Menu /> : ""}
+      {location.pathname.split("/").reverse()[1] !== "variant" ? <Menu /> : ""}
       {/* <NavBar /> */}
       <Outlet />
     </>

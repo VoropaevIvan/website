@@ -80,6 +80,7 @@ export const Task = ({
     if (trueAnswer.rows === 0 && trueAnswer.cols === 0) {
       return (
         <input
+          className="answerinbanktext"
           style={{ margin: "4px" }}
           value={userAnswer.data}
           onChange={(e) => {
@@ -136,36 +137,43 @@ export const Task = ({
         (isSolved.text === WA_DONE_TASK ? "WA" : "")
       }
     >
-      <p>{"Id: " + id}</p>
-      <strong>{numberEGE}</strong>
-      <p>
-        <strong>Официальная:</strong> {String(isOfficial)}
-      </p>
-      <p>{actuality}</p>
-      <p>{difficulty}</p>
+      <div className="taskinfo">
+        <p>
+          <strong>{numberEGE}</strong>
+          <span>{" (" + id + ")"}</span>
+        </p>
+
+        <span>{String(isOfficial) ? "Официальная" : "Не официальная"}</span>
+        <span>{", " + actuality}</span>
+        <span>{", " + difficulty}</span>
+      </div>
 
       <hr></hr>
-      <div dangerouslySetInnerHTML={createMarkup(content)} />
 
-      {files.map((file, i) => {
-        return (
-          <div key={i}>
-            <a href={file}>{"Файл " + (i + 1)}</a>
-            <strong> </strong>
-          </div>
-        );
-      })}
+      <div
+        className="taskcontent"
+        dangerouslySetInnerHTML={createMarkup(content)}
+      />
+      {files && files.length > 0 && (
+        <div className="files">
+          {files.map((file, i) => {
+            return (
+              <a key={i} href={file}>
+                {"Файл " + (i + 1) + " "}
+              </a>
+            );
+          })}
+        </div>
+      )}
 
-      <form onSubmit={handleAnswerSubmit}>
-        <label>
-          Ваш ответ
-          {trueAnswer && answerInput()}
-        </label>
-        <button style={{ margin: "5px" }} onClick={handleAnswerSubmit}>
-          Проверить ответ
-        </button>
-      </form>
-      <a href={"http://localhost:3000/edit-task/" + id}>Редактировать задачу</a>
+      <hr></hr>
+
+      <div className="answerinbank">
+        {trueAnswer && answerInput()}
+        <button onClick={handleAnswerSubmit}>Проверить ответ</button>
+      </div>
+
+      {/* <a href={"https://localhost/edit-task/" + id}>Редактировать задачу</a> */}
     </div>
   );
 };

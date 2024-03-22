@@ -69,18 +69,18 @@ export const getVariantTasksFromServer = async ({
       dataOk = dataOk.map((task) => {
         return parseTaskFromServer(task);
       });
-      console.log("Ok data", dataOk);
-
       setTasksFromServer([...dataOk]);
       if (dataOk.length > 0) {
         setTextInEditor(dataOk[0].content);
         setTextInSolutionEditor(dataOk[0].solution);
       }
       setIsOkLoad(1);
+      return [...dataOk];
     }
   } catch (error) {
     console.log(error.response);
     setIsOkLoad(-1);
+    return [];
   }
 };
 

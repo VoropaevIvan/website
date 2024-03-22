@@ -1,5 +1,5 @@
 const sortFunction = (tasks, sortingKey) => {
-  if (sortingKey === "data") {
+  if (sortingKey === "Сначала новые") {
     tasks.sort((a, b) => {
       return -(a.id - b.id);
     });

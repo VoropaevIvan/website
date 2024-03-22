@@ -10,7 +10,7 @@ const initialState = {
   isOfficial: NOT_AND_OFFICIAL_TASK,
   actuality: ALL_ACTUALITY,
   difficulty: ALL_DIFFICULTY,
-  sorting: "data",
+  sorting: "Сначала новые",
 };
 
 const bankFilterSlice = createSlice({

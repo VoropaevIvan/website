@@ -1,10 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
 import { useLocation, useNavigate } from "react-router-dom";
-
 import { getTaskById } from "../../Utils/addTaskUtils/server";
-import "./AddTask.css";
 import { DEFAULT_SOLVE_FOR_TASK_TEXT, DEFAULT_TASK_TEXT } from "../constants";
 import { DEFAULT_ALL_TASK_DATA } from "./AddTaskConstants";
 import { curTaskId, isNewTask } from "./components/AddTaskUtils";
@@ -20,6 +17,7 @@ import VideoReviewSelect from "./components/VideoReviewSelect";
 import SolutionSelect from "./components/SolutionSelect";
 import AddFiles from "./components/AddFiles";
 import SendButtons from "./components/SendButtons";
+import "./AddTask.css";
 
 const AddTask = () => {
   const navigate = useNavigate();

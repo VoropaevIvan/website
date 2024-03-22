@@ -1,8 +1,10 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import { useEffect } from "react";
+import "./MainPage.css";
+import TopUsers from "./components/TopUsers";
 
-const Home = () => {
+const MainPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,7 +23,19 @@ const Home = () => {
     fetchData();
   }, [location, navigate]);
 
-  return <h1>Главная страница</h1>;
+  return (
+    <div className="mainpage">
+      <div>
+        <h1>Лучшие пользователи сайта</h1>
+      </div>
+
+      <TopUsers />
+
+      <div>
+        <h2>Скорее иди решать задачи! 😃</h2>
+      </div>
+    </div>
+  );
 };
 
-export default Home;
+export default MainPage;

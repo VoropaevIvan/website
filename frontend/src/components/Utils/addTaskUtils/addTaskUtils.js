@@ -51,7 +51,7 @@ export const getTableSize = ({ number, type, allTaskData }) => {
 };
 
 export const parseTaskFromServer = (task) => {
-  let taskOk = { ...task };
+  let taskOk = task;
 
   if (taskOk.answer.rows !== 0 || taskOk.answer.cols !== 0) {
     taskOk = {
@@ -63,6 +63,24 @@ export const parseTaskFromServer = (task) => {
   taskOk = { ...taskOk, files: JSON.parse(taskOk.files) };
 
   return { ...taskOk };
+};
+
+export const prepareTaskToServer = (task) => {
+  let answer = {
+    ...task.answer,
+  };
+  if (task.answer.cols !== 0 || task.answer.rows !== 0) {
+    answer = {
+      ...task.answer,
+      data: JSON.stringify(task.answer.data),
+    };
+  }
+  task = {
+    ...task,
+    answer: answer,
+    files: JSON.stringify(task.files),
+  };
+  return { ...task };
 };
 
 export const delFileFromFilesList = ({ fileNameToErase, files }) => {

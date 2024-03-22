@@ -1,11 +1,11 @@
 import axios from "axios";
 import Task from "./Task/Task";
 import { useEffect, useState } from "react";
-import "./Tasks.css";
 import filterFunction from "./Filter/FilterFunction";
 import BankFilter from "./Filter/BankFilter";
 import { useSelector } from "react-redux";
 import sortFunction from "./Filter/sortFunction";
+import "./Tasks.css";
 
 const getAllTasksFromServer = async (setTasksFromServer) => {
   try {
@@ -60,9 +60,8 @@ export const Tasks = () => {
 
   return (
     <div className="bank">
-      <div>
-        <BankFilter />
-      </div>
+      <BankFilter />
+
       <div className="tasks">
         {sortedAndFilteredTasks.map((task) => {
           return (

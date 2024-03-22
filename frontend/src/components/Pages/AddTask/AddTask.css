@@ -2,6 +2,28 @@
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+
+  padding: 5px;
+}
+
+.addTask table {
+  background-color: white;
+}
+
+.addTask input {
+  padding: 1px;
+  text-align: center;
+}
+
+.addTask .answer span {
+  margin-right: 5px;
+}
+
+.addTask select {
+  margin-right: 10px;
+}
+.addTask .countcolsrowsinput {
+  width: 30px;
 }
 
 .editor {
@@ -10,79 +32,77 @@
   padding-top: 10px;
 }
 
-h2 {
+.addTask h2 {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
 }
 
-.answer label {
+.addTask .answer label {
   margin-right: 5px;
 }
 
-.answer {
-  margin-bottom: 10px;
+.addTask .answer {
+  /* margin-bottom: 10px; */
 }
 
-input {
-  /* box-sizing: border-box; */
-  /* border: 2px; */
-  /* background-color: beige; */
-}
-
-details {
+.addTask details {
   /* border: 1px solid #aaa;
   border-radius: 4px; */
   padding: 0.5em 0.5em 0;
 }
 
-summary {
+.addTask summary {
   font-weight: bold;
   margin: -0.5em -0.5em 0;
   padding: 0.5em;
 }
 
-details[open] {
+.addTask details[open] {
   padding: 0em;
 }
 
-details[open] summary {
+.addTask details[open] summary {
   margin-bottom: 0;
 }
 
-.videorazbor {
+.addTask .videorazbor {
   /* display: flex; */
   /* padding: 5px; */
 }
-.videorazbor span {
+.addTask .videorazbor span {
   /* display: flex; */
   /* margin: 5px; */
 }
 
-.videorazbor input {
+.addTask .videorazbor input {
   width: 500px;
   margin: 5px;
   align-items: center;
 }
 
-.sendButton {
-  font-size: 24px;
+.addTask .sendButton {
+  font-size: 18px;
   margin-top: 20px;
-  padding: 8px;
-  background-color: #4caf50; /* Green */
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #4caf50;
   border: none;
   color: white;
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  border-radius: 15px;
 }
-.sendButton:hover {
+
+.addTask .sendButton:hover {
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
 }
 
-.disabled {
+.addTask .disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }

@@ -30,7 +30,8 @@ const BankFilter = () => {
 
   return (
     <div className="bankfilter">
-      {"Номер ЕГЭ "}
+      <span>{"Номер ЕГЭ "}</span>
+
       <select
         onChange={(e) => {
           dispatch(setNumberEGEFilter(e.target.value));
@@ -41,7 +42,8 @@ const BankFilter = () => {
           return <option key={s}>{s}</option>;
         })}
       </select>
-      {"Официальная задача?"}
+
+      <span>{"Официальная задача?"}</span>
       <select
         onChange={(e) => {
           dispatch(setIsOfficialFilter(e.target.value));
@@ -52,7 +54,8 @@ const BankFilter = () => {
         <option>{OFFICIAL_TASK}</option>
         <option>{NOT_OFFICIAL_TASK}</option>;
       </select>
-      {"Актуальность задачи"}
+
+      <span>{"Актуальность задачи"}</span>
       <select
         onChange={(e) => {
           dispatch(setActualityFilter(e.target.value));
@@ -64,7 +67,8 @@ const BankFilter = () => {
         <option>{ACTUAL}</option>
         <option>{NOT_ACTUAL}</option>;
       </select>
-      {"Актуальность задачи"}
+
+      <span>{"Сложность задачи"}</span>
       <select
         onChange={(e) => {
           dispatch(setDifficultyFilter(e.target.value));
@@ -77,14 +81,15 @@ const BankFilter = () => {
         <option>{EASY_THEN_EGE}</option>;<option>{LITTLE_HARD_THEN_EGE}</option>
         <option>{GROB}</option>;
       </select>
-      {"Сортировка"}
+
+      <span>{"Сортировка"}</span>
       <select
         onChange={(e) => {
           dispatch(setSortingFilter(e.target.value));
         }}
         value={filtersData.sorting}
       >
-        <option>data</option>;<option>numberEGE</option>;
+        <option>Сначала новые</option>;<option>Сначала старые</option>;
       </select>
     </div>
   );
