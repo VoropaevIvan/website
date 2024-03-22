@@ -1,35 +1,55 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Tasks } from "./components/Bank/Tasks";
-import NotFound from "./components/Pages/NotFound";
+
 import MainLayout from "./layouts/MainLayout";
-import TinyEditor from "./components/Utils/TinyEditor";
-import AddTask from "./components/Pages/AddTask/AddTask";
-import { Test } from "./components/Pages/Test";
-import Variant from "./components/Variant/Variant";
-import VariantResults from "./components/Variant/VariantResults";
-import CreateVariant from "./components/Pages/CreateVariant/CreateVariant";
-import Variants from "./components/Pages/Variants";
-import "./App.css";
 import MainPage from "./components/Pages/MainPage/MainPage";
+import { useEffect } from "react";
+import { getUserInfoByJwt } from "./components/server/serverAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsAuth, setName, setSurname } from "./redux/slices/authSlice";
+import { adminRoutes, publicRoutes } from "./routes";
+import "./App.css";
 
 function App() {
+  const authData = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const isAuth = authData.isAuth;
+
+  useEffect(() => {
+    async function fetchData() {
+      if (authData.isAuth === false) {
+        if (localStorage.getItem("jwt")) {
+          const res = getUserInfoByJwt(localStorage.getItem("jwt"));
+          res.then((data) => {
+            dispatch(setName(data.name));
+            dispatch(setSurname(data.surname));
+            dispatch(setIsAuth(true));
+          });
+        }
+      }
+    }
+
+    fetchData();
+  }, [authData, dispatch]);
+
   return (
     <BrowserRouter>
       <div className="App">
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index={true} element={<MainPage />}></Route>
-            <Route path="bank" element={<Tasks />}></Route>
-            <Route path="editor" element={<TinyEditor />}></Route>
-            <Route path="addtask" element={<AddTask />}></Route>
-            <Route path="addtask/:id" element={<AddTask />}></Route>
-            <Route path="test" element={<Test />}></Route>
-            <Route path="edit-task/:id" element={<AddTask />}></Route>
-            <Route path="edit-variant/:id" element={<CreateVariant />}></Route>
-            <Route path="variants" element={<Variants />}></Route>
-            <Route path="variant/:id" element={<Variant />}></Route>
-            <Route path="results" element={<VariantResults />}></Route>
-            <Route path="*" element={<NotFound />}></Route>
+
+            {isAuth &&
+              adminRoutes.map(({ path, Component }, i) => {
+                return (
+                  <Route key={i} path={path} element={<Component />}></Route>
+                );
+              })}
+            {publicRoutes.map(({ path, Component }, i) => {
+              return (
+                <Route key={i} path={path} element={<Component />}></Route>
+              );
+            })}
           </Route>
         </Routes>
       </div>

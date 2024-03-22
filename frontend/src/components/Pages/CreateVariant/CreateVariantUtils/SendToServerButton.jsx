@@ -18,7 +18,12 @@ const SendToServerButton = ({
     const res = axios.post(
       "http://localhost:8080/variants/" +
         location.pathname.split("/").reverse()[0],
-      okData
+      okData,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }
     );
     res.then((value) => {
       console.log("ret", value.data);

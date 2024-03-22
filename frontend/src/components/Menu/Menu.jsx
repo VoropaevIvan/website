@@ -19,9 +19,7 @@ const Menu = () => {
         >
           Добавление задачи
         </NavLink>
-        <NavLink to="/variant">Вариант</NavLink>
         <NavLink to="/variants">Варианты</NavLink>
-        <NavLink to="/edit-variant">Редактировать вариант</NavLink>
         <NavLink to="/test">Тест</NavLink>
       </span>
     </div>
