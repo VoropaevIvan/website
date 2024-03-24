@@ -18,7 +18,7 @@ public class VariantTask {
     @Basic(optional = false)
     private int taskOrder;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Task task;
 
     public VariantTask() {

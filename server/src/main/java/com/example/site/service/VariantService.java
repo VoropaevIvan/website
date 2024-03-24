@@ -47,6 +47,12 @@ public class VariantService {
 
     @Transactional
     public List<Task> post(String variantName, List<Task> tasks) {
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            Task updated = taskService.edit(task.getId(), task)
+                    .orElseGet(() -> taskService.add(task));
+            tasks.set(i, updated);
+        }
         Variant variant;
         List<VariantTask> variantTasks;
         Optional<Variant> optionalVariant = variantRepository.findByName(variantName);
@@ -58,22 +64,15 @@ public class VariantService {
             variantTasks = variant.getTasks();
             variantTasks.sort(Comparator.comparingInt(VariantTask::getTaskOrder));
         }
-
-        // delete last tasks if a new variant has less than previous one
-        for (int i = tasks.size(); i < variantTasks.size(); i++) {
-            variantTaskRepository.deleteById(variantTasks.get(i).getId());
-        }
-
         for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            Task updated = taskService.edit(task.getId(), task)
-                    .orElseGet(() -> taskService.add(task));
-            VariantTask variantTask = new VariantTask(variant, i, updated);
-            if (variantTasks.size() > i) {
+            VariantTask variantTask = new VariantTask(variant, i, tasks.get(i));
+            if (i < variantTasks.size()) {
                 variantTask.setId(variantTasks.get(i).getId());
             }
             variantTaskRepository.save(variantTask);
-            tasks.set(i, updated);
+        }
+        for (int i = tasks.size(); i < variantTasks.size(); i++) {
+            variantTaskRepository.deleteById(variantTasks.get(i).getId());
         }
         return tasks;
     }
