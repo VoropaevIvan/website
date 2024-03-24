@@ -5,7 +5,7 @@ import com.example.site.dto.Task;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,6 +14,14 @@ public class TaskService {
 
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
+    }
+
+    public List<Task> getTasks() {
+        return taskRepository.findAll();
+    }
+
+    public Optional<Task> findTaskById(int id) {
+        return taskRepository.findById(id);
     }
 
     public Task add(Task task) {

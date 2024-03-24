@@ -1,7 +1,6 @@
 package com.example.site.controller;
 
 import com.example.site.dto.Task;
-import com.example.site.dao.TaskRepository;
 import com.example.site.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,21 +12,19 @@ import java.util.List;
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
-    private final TaskRepository repository;
 
-    public TaskController(TaskService taskService, TaskRepository repository) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
-        this.repository = repository;
     }
 
     @GetMapping
     public List<Task> getTasks() {
-        return repository.findAll();
+        return taskService.getTasks();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTask(@PathVariable int id) {
-        return repository.findById(id)
+        return taskService.findTaskById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
