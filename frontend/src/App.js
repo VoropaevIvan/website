@@ -5,7 +5,13 @@ import MainPage from "./components/Pages/MainPage/MainPage";
 import { useEffect } from "react";
 import { getUserInfoByJwt } from "./components/server/serverAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsAuth, setName, setSurname } from "./redux/slices/authSlice";
+import {
+  setImg,
+  setIsAdmin,
+  setIsAuth,
+  setName,
+  setSurname,
+} from "./redux/slices/authSlice";
 import { adminRoutes, publicRoutes } from "./routes";
 import "./App.css";
 
@@ -20,11 +26,11 @@ function App() {
       if (authData.isAuth === false) {
         if (localStorage.getItem("jwt")) {
           const res = getUserInfoByJwt(localStorage.getItem("jwt"));
-          res.then((data) => {
-            dispatch(setName(data.name));
-            dispatch(setSurname(data.surname));
-            dispatch(setIsAuth(true));
-          });
+          dispatch(setName(res.name));
+          dispatch(setSurname(res.surname));
+          dispatch(setIsAdmin(res.isAdmin));
+          dispatch(setImg(res.img));
+          dispatch(setIsAuth(true));
         }
       }
     }

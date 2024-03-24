@@ -90,7 +90,10 @@ export const saveFileOnServer = async (currentFile) => {
     formData.append("file", currentFile);
 
     const res = axios.post("http://localhost:8080/files", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
     });
 
     return res;

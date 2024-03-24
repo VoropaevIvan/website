@@ -67,11 +67,19 @@ const AddTask = () => {
         files: JSON.stringify(allTaskData.files),
       });
 
-      const res = await axios.post(link, {
-        ...allTaskData,
-        answer: answer,
-        files: JSON.stringify(allTaskData.files),
-      });
+      const res = await axios.post(
+        link,
+        {
+          ...allTaskData,
+          answer: answer,
+          files: JSON.stringify(allTaskData.files),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+          },
+        }
+      );
 
       if (res.status === 200) {
         setIsSend(true);
@@ -93,7 +101,10 @@ const AddTask = () => {
       formData.append("file", currentFile);
 
       const res = axios.post("http://localhost:8080/files", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
       });
 
       res.then((value) => {

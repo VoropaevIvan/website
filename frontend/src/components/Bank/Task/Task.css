@@ -53,11 +53,15 @@
   margin-top: 7px;
   margin-bottom: 7px;
   background-color: white;
+
+  max-width: 70%;
 }
 
 .answerinbanktext {
   padding: 5px;
   font-size: 17px;
+
+  max-width: 70%;
 }
 
 .task .files {

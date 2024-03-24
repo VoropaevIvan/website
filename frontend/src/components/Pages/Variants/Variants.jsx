@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CreateVariant from "./CreateVariant";
 import "./Variants.css";
+import { useSelector } from "react-redux";
 
 const Variants = () => {
   const [variantsNames, setVariantsNames] = useState([]);
+  const authData = useSelector((state) => state.auth);
+  const isAdmin = authData.isAdmin;
 
   useEffect(() => {
     async function fetchData(varId) {
@@ -17,7 +20,6 @@ const Variants = () => {
     fetchData();
   }, []);
 
-  const isAdmin = true;
   return (
     <div className="variantspage">
       {isAdmin && <CreateVariant setVariantsNames={setVariantsNames} />}

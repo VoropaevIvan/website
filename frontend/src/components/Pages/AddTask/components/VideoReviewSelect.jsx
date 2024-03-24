@@ -2,7 +2,7 @@ const VideoReviewSelect = ({ allTaskData, setAllTaskData, setIsSend }) => {
   return (
     <div className="videorazbor">
       <span>
-        Видеоразбор
+        {"Видеоразбор "}
         <input
           value={allTaskData.videoReview}
           onChange={(e) => {

@@ -14,7 +14,7 @@ const AddTaskToVariantById = ({
   };
 
   return (
-    <div>
+    <div className="addtaskbyid">
       <input
         value={newTaskId}
         onChange={(e) => {
