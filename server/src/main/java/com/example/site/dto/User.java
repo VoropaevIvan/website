@@ -21,6 +21,15 @@ public class User implements UserDetails {
     @Id
     private Long id;
 
+    @Basic(optional = false)
+    private String name;
+
+    @Basic(optional = false)
+    private String surname;
+
+    @Basic(optional = false)
+    private String photoUrl;
+
     @Enumerated(EnumType.STRING)
     @Basic(optional = false)
     private Role role;
@@ -41,16 +50,28 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    // not actual now
-    @Override
-    public String getUsername() {
-        return String.valueOf(id);
+    public String getName() {
+        return name;
     }
 
-    // not actual now
-    @Override
-    public String getPassword() {
-        return getUsername();
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public Role getRole() {
@@ -69,6 +90,18 @@ public class User implements UserDetails {
     @Override
     public boolean equals(Object obj) {
         return obj instanceof User other && this.id.equals(other.id);
+    }
+
+    // not actual now
+    @Override
+    public String getUsername() {
+        return String.valueOf(id);
+    }
+
+    // not actual now
+    @Override
+    public String getPassword() {
+        return getUsername();
     }
 
     @Override

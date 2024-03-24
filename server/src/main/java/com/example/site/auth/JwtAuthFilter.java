@@ -57,7 +57,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         long id = jwtService.extractUserId(jwt);
         User user;
         try {
-            user = userService.findById(id).orElseThrow();
+            user = userService.findUser(id).orElseThrow();
         } catch (NoSuchElementException e) {
             logger.warn("User(id = " + id + ") doesn't exist.");
             return;

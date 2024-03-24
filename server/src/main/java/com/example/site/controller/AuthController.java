@@ -1,22 +1,21 @@
 package com.example.site.controller;
 
-import com.example.site.dto.auth.VkSilentToken;
-import com.example.site.service.AuthService;
-import org.springframework.http.ResponseEntity;
+import com.example.site.dto.vk.VkSilentToken;
+import com.example.site.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/auth")
 public class AuthController {
-    private final AuthService authService;
+    private final UserService userService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    public AuthController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping
-    public ResponseEntity<String> giveJwt(@RequestBody VkSilentToken vkSilentToken) {
-        return authService.giveJwt(vkSilentToken);
+    public String authorizeUser(@RequestBody VkSilentToken vkSilentToken) {
+        return userService.authorizeUser(vkSilentToken);
     }
 }

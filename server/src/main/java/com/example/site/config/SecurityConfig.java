@@ -28,7 +28,7 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
     private static final String ADMIN = Role.ADMIN.toString();
-    private static final String[] adminAccessPatterns = {
+    private static final String[] commonAccessPatterns = {
             "/files/**",
             "/tasks/**",
             "/variants/**"
@@ -56,11 +56,10 @@ public class SecurityConfig {
                 }))
                 // Настройка доступа к конечным точкам
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.POST, adminAccessPatterns).hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.PUT, adminAccessPatterns).hasRole(ADMIN)
-                        .requestMatchers(HttpMethod.DELETE, adminAccessPatterns).hasRole(ADMIN)
-//                        .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().permitAll())
+                        .requestMatchers(HttpMethod.GET, commonAccessPatterns).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/users/**").authenticated() // must be changed!
+                        .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+                        .anyRequest().hasRole(ADMIN))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

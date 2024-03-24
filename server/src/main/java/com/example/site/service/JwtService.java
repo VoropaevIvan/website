@@ -4,8 +4,6 @@ import com.example.site.dto.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +15,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     private static final String USER_ID = "userId";
-
-    private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
+    private static final String USER_NAME = "userName";
+    private static final String USER_SURNAME = "userSurname";
+    private static final String USER_PHOTO_URL = "userPhotoUrl";
 
     private final SecretKey key;
     private final long jwtValidityDuration;
@@ -38,6 +37,9 @@ public class JwtService {
     public String generateToken(User user) {
         return Jwts.builder()
                 .claim(USER_ID, user.getId())
+                .claim(USER_NAME, user.getName())
+                .claim(USER_SURNAME, user.getSurname())
+                .claim(USER_PHOTO_URL, user.getPhotoUrl())
                 .expiration(new Date(System.currentTimeMillis() + jwtValidityDuration))
                 .signWith(key)
                 .compact();
@@ -47,20 +49,13 @@ public class JwtService {
         try {
             return extractUserId(token) != null &&
                    extractClaim(token, Claims::getExpiration) != null;
-        } catch (UnsupportedJwtException e) {
-            logger.warn("JWT isn't signed: " + token);
-            return false;
-        } catch (ExpiredJwtException e) {
-            logger.warn("JWT is expired: " + token);
-            return false;
         } catch (JwtException e) {
-            logger.warn("JWT can't be parsed: " + token);
             return false;
         }
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        Claims claims = jwtParser.parseSignedClaims(token).getPayload();;
+        Claims claims = jwtParser.parseSignedClaims(token).getPayload();
         return claimsResolver.apply(claims);
     }
 

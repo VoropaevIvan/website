@@ -3,6 +3,9 @@ package com.example.site.service;
 import com.example.site.dao.UserRepository;
 import com.example.site.dto.User;
 import com.example.site.dto.User.Role;
+import com.example.site.dto.vk.VkAccessToken;
+import com.example.site.dto.vk.VkUser;
+import com.example.site.dto.vk.VkSilentToken;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -13,24 +16,41 @@ import java.util.Optional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final JwtService jwtService;
+    private final VkService vkService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, JwtService jwtService, VkService vkService) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
+        this.vkService = vkService;
     }
 
-    public boolean existsById(long id) {
-        return userRepository.existsById(id);
+    public String authorizeUser(VkSilentToken vkSilentToken) {
+        VkAccessToken vkAccessToken = vkService.getAccessToken(vkSilentToken);
+        long userId = vkAccessToken.userId();
+        User user = findUser(userId).orElseGet(() -> new User(userId, Role.USER));
+        updateUser(user);
+        return jwtService.generateToken(user);
     }
 
-    public Optional<User> findById(long id) {
+    public Optional<User> findUser(long id) {
         return userRepository.findById(id);
     }
 
-    public User createUser(long id) {
-        if (existsById(id)) {
-            throw new RuntimeException("User(id = " + id + ") has already been created.");
+    private void updateUser(User user) {
+        VkUser vkUser = vkService.getVkUser(user.getId());
+        user.setName(vkUser.firstName());
+        user.setSurname(vkUser.lastName());
+        user.setPhotoUrl(vkUser.photoUrl());
+        userRepository.save(user);
+    }
+
+    public void updateUser(long userId) {
+        Optional<User> optUser = findUser(userId);
+        if (optUser.isEmpty()) {
+            return;
         }
-        return userRepository.save(new User(id, Role.ADMIN));
+        updateUser(optUser.get());
     }
 
     public UserDetailsService userDetailsService() {
@@ -42,5 +62,18 @@ public class UserService {
                 throw new UsernameNotFoundException("User(username = " + username + ") doesn't exist.");
             }
         };
+    }
+
+    public User createStubUser(long id, Role role) {
+        Optional<User> optUser = findUser(id);
+        if (optUser.isPresent()) {
+            return optUser.get();
+        }
+        User user = new User(id, role);
+        user.setName("none");
+        user.setSurname("none");
+        user.setPhotoUrl("none");
+        userRepository.save(user);
+        return user;
     }
 }
