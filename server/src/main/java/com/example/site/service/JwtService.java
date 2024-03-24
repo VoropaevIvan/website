@@ -1,6 +1,7 @@
 package com.example.site.service;
 
 import com.example.site.dto.User;
+import com.example.site.dto.User.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,6 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     private static final String USER_ID = "userId";
+    private static final String USER_ROLE = "userRole";
     private static final String USER_NAME = "userName";
     private static final String USER_SURNAME = "userSurname";
     private static final String USER_PHOTO_URL = "userPhotoUrl";
@@ -37,6 +39,7 @@ public class JwtService {
     public String generateToken(User user) {
         return Jwts.builder()
                 .claim(USER_ID, user.getId())
+                .claim(USER_ROLE, user.getRole())
                 .claim(USER_NAME, user.getName())
                 .claim(USER_SURNAME, user.getSurname())
                 .claim(USER_PHOTO_URL, user.getPhotoUrl())
@@ -61,5 +64,12 @@ public class JwtService {
 
     public Long extractUserId(String token) {
         return extractClaim(token, claims -> claims.get(USER_ID, Long.class));
+    }
+
+    public Role extractUserRole(String token) {
+        return extractClaim(token, claims -> {
+            String role = claims.get(USER_ROLE, String.class);
+            return Role.valueOf(role);
+        });
     }
 }

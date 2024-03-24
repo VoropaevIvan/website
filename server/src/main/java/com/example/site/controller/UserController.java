@@ -1,8 +1,10 @@
 package com.example.site.controller;
 
+import com.example.site.auth.JwtAuthFilter;
 import com.example.site.dto.User;
-import com.example.site.dto.vk.VkSilentToken;
 import com.example.site.service.UserService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +19,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id) {
+    public ResponseEntity<User> getUser(
+            @PathVariable long id,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String jwt
+    ) {
+        String token = jwt.substring(JwtAuthFilter.BEARER_PREFIX.length());
+        if (!userService.hasPermission(id, token)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return userService.findUser(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

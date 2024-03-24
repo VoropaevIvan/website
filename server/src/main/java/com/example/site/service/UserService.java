@@ -76,4 +76,13 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+    public boolean hasPermission(long id, String jwt) {
+        if (!jwtService.isTokenValid(jwt)) {
+            return false;
+        }
+        Role role = jwtService.extractUserRole(jwt);
+        long jwtId = jwtService.extractUserId(jwt);
+        return role == Role.ADMIN || jwtId == id;
+    }
 }

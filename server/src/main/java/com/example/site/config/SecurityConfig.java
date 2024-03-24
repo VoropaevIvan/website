@@ -57,7 +57,7 @@ public class SecurityConfig {
                 // Настройка доступа к конечным точкам
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.GET, commonAccessPatterns).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users/**").authenticated() // must be changed!
+                        .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .anyRequest().hasRole(ADMIN))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
