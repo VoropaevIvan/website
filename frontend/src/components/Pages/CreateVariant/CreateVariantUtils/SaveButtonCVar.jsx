@@ -6,7 +6,7 @@ const SaveButtonCVar = ({
   textInSolutionEditor,
 }) => {
   return (
-    <div>
+    <div className="saveeditorbutton">
       <button
         disabled={
           textInEditor === tasksFromServer[activeTask].content &&

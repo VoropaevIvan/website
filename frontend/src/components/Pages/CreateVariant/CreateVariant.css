@@ -1,8 +1,9 @@
 .createvariant {
-  margin: 10px;
+  margin: 15px;
+  margin-bottom: 0px;
 }
 
-.createvariant button {
+.createvariant .navigationbuttons button {
   padding: 10px;
   margin-bottom: 10px;
   margin-right: 4px;
@@ -10,15 +11,59 @@
   font-size: 17px;
 }
 
+.createvariant input {
+  padding: 1px;
+  text-align: center;
+}
+
 .activebutincreatevar {
   background: greenyellow;
 }
-.taskincvar {
+.createvariant .taskincvar {
+  margin: 20px;
   width: 60%;
+}
+
+.createvariant .answer * {
+  margin: 2px;
+}
+
+.createvariant .answer table {
+  background-color: white;
+  width: 300px;
 }
 
 .addtaskcvar {
   padding: 5px;
+}
+
+.createvariant .addfiles {
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+.createvariant .addfiles button {
+  padding: 2px;
+  margin: 8px;
+}
+
+.createvariant .saveeditorbutton button {
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.createvariant .addtaskbyid input {
+  padding: 4px;
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.createvariant .savetoserverbutton button {
+  margin: 20px;
+  padding: 10px;
+  margin-left: 0px;
 }
 
 .createvariant li {

@@ -10,7 +10,7 @@ const NavigationCVar = ({
   activeTask,
 }) => {
   return (
-    <div>
+    <div className="navigationbuttons">
       <Reorder.Group
         axis="x"
         values={tasksFromServer}

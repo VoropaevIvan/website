@@ -37,7 +37,7 @@ const SendToServerButton = ({
     });
   };
   return (
-    <div>
+    <div className="savetoserverbutton">
       <button onClick={handleButtonClick}>Отправить на сервер</button>
     </div>
   );

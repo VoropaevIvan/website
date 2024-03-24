@@ -174,17 +174,23 @@ const CreateVariant = () => {
         />
       </div>
 
-      <div>
-        <AnswerSelect
-          setIsSend={() => {}}
-          allTaskData={tasksFromServer[activeTask]}
-          setAllTaskData={(task) => {
-            const newTasks = tasksFromServer;
-            newTasks[activeTask] = task;
-            setTasksFromServer([...newTasks]);
-          }}
-        />
-      </div>
+      <SaveButtonCVar
+        tasksFromServer={tasksFromServer}
+        activeTask={activeTask}
+        setTasksFromServer={setTasksFromServer}
+        textInEditor={textInEditor}
+        textInSolutionEditor={textInSolutionEditor}
+      />
+
+      <AnswerSelect
+        setIsSend={() => {}}
+        allTaskData={tasksFromServer[activeTask]}
+        setAllTaskData={(task) => {
+          const newTasks = tasksFromServer;
+          newTasks[activeTask] = task;
+          setTasksFromServer([...newTasks]);
+        }}
+      />
 
       <details>
         <summary>Решение</summary>
@@ -199,29 +205,14 @@ const CreateVariant = () => {
         </div>
       </details>
 
-      <div
-        style={{
-          padding: "10px",
-          border: "",
-          maxWidth: "60%",
-          backgroundColor: "#FAFAD2",
-        }}
-      >
-        <AddFiles
-          files={tasksFromServer[activeTask].files}
-          delFile={delFile}
-          setCurrentFile={setCurrentFile}
-          saveFileOnServer={handleSaveFileOnServer}
-          setIsSend={() => {}}
-        />
-      </div>
-      <SaveButtonCVar
-        tasksFromServer={tasksFromServer}
-        activeTask={activeTask}
-        setTasksFromServer={setTasksFromServer}
-        textInEditor={textInEditor}
-        textInSolutionEditor={textInSolutionEditor}
+      <AddFiles
+        files={tasksFromServer[activeTask].files}
+        delFile={delFile}
+        setCurrentFile={setCurrentFile}
+        saveFileOnServer={handleSaveFileOnServer}
+        setIsSend={() => {}}
       />
+
       <AddTaskToVariantById
         setNewTaskId={setNewTaskId}
         newTaskId={newTaskId}

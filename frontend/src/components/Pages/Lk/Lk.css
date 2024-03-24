@@ -1,0 +1,33 @@
+.lk {
+  margin: 10px;
+}
+
+.lk table {
+  background-color: white;
+}
+
+.lk table thead {
+  background-color: rgb(211, 211, 211);
+}
+
+.lk .variantsresults .capt {
+  text-align: center;
+}
+.lk .statbynumber .capt {
+  text-align: center;
+}
+
+.lk .tablevar {
+  max-width: 100%;
+  overflow: auto;
+}
+
+.lk .tablevar .wa {
+  background-color: rgb(255, 113, 113);
+}
+.lk .tablevar .ok {
+  background-color: rgb(103, 255, 118);
+}
+.lk .tablevar .na {
+  background-color: rgb(241, 248, 154);
+}

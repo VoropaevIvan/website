@@ -8,7 +8,7 @@ const AddFiles = ({
   setIsSend,
 }) => {
   return (
-    <div>
+    <div className="addfiles">
       <input
         type="file"
         onChange={(e) => {
