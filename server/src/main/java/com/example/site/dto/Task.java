@@ -2,7 +2,9 @@ package com.example.site.dto;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * This class contains information about the exam task.
@@ -99,8 +101,8 @@ public class Task {
     @Column(length = MAX_LENGTH)
     private String files;
 
-    private LocalDateTime addDate;
-    private LocalDateTime lastChangeDate;
+    private Instant addDate;
+    private Instant lastChangeDate;
 
     @Column(length = MAX_LENGTH)
     private String videoReview;
@@ -208,20 +210,20 @@ public class Task {
         return this;
     }
 
-    public LocalDateTime getAddDate() {
+    public Instant getAddDate() {
         return addDate;
     }
 
-    public Task setAddDate(LocalDateTime addDate) {
+    public Task setAddDate(Instant addDate) {
         this.addDate = addDate;
         return this;
     }
 
-    public LocalDateTime getLastChangeDate() {
+    public Instant getLastChangeDate() {
         return lastChangeDate;
     }
 
-    public Task setLastChangeDate(LocalDateTime lastChangeDate) {
+    public Task setLastChangeDate(Instant lastChangeDate) {
         this.lastChangeDate = lastChangeDate;
         return this;
     }

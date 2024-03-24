@@ -4,6 +4,7 @@ import com.example.site.dao.TaskRepository;
 import com.example.site.dto.Task;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -16,9 +17,9 @@ public class TaskService {
     }
 
     public Task add(Task task) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        task.setAddDate(localDateTime);
-        task.setLastChangeDate(localDateTime);
+        Instant instant = Instant.now();
+        task.setAddDate(instant);
+        task.setLastChangeDate(instant);
         return taskRepository.save(task);
     }
 
@@ -26,7 +27,7 @@ public class TaskService {
         return taskRepository.findById(id).map(oldTask -> {
             task.setId(id);
             task.setAddDate(oldTask.getAddDate());
-            task.setLastChangeDate(LocalDateTime.now());
+            task.setLastChangeDate(Instant.now());
             return taskRepository.save(task);
         });
     }
