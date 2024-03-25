@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { logOut } from "../../../redux/slices/authSlice";
+import { logOut } from "../../../../redux/slices/authSlice";
 
 const DropDownMenu = ({
   showDropDownMenu,

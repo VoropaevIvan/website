@@ -11,26 +11,32 @@ const VariantsResults = ({ variantsHistory }) => {
     }
     return "";
   };
-  const showVariant = (variant) => {
+  const showVariant = (variant, i) => {
     return (
-      <div className="tablevar">
+      <div key={i} className="tablevar">
         <h3>{variant.name}</h3>
         <table>
           <thead>
             <tr>
               <td>№</td>
               {variant.tasksResults.map((task, i) => {
-                return <td>{i + 1}</td>;
+                return <td key={i}>{i + 1}</td>;
               })}
               <td>Итого</td>
             </tr>
           </thead>
           <tbody>
-            <td>Результат</td>
-            {variant.tasksResults.map((task, i) => {
-              return <td className={decisionClass(task)}>{task}</td>;
-            })}
-            <td>{variant.score}</td>
+            <tr>
+              <td>Результат</td>
+              {variant.tasksResults.map((task, i) => {
+                return (
+                  <td key={i} className={decisionClass(task)}>
+                    {task}
+                  </td>
+                );
+              })}
+              <td>{variant.score}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -43,8 +49,8 @@ const VariantsResults = ({ variantsHistory }) => {
       </div>
 
       {variantsHistory &&
-        variantsHistory.map((variant) => {
-          return showVariant(variant);
+        variantsHistory.map((variant, i) => {
+          return showVariant(variant, i);
         })}
     </div>
   );
