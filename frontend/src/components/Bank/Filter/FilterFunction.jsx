@@ -1,4 +1,3 @@
-import { all } from "axios";
 import {
   ALL_ACTUALITY,
   ALL_DIFFICULTY,
@@ -8,13 +7,6 @@ import {
 import { ALL_VARIANTS_TASK_NUMBER } from "./constants";
 
 const FilterFunction = (task, filtersData) => {
-  console.log(
-    task,
-    filtersData,
-    task.official,
-    filtersData.isOfficial === OFFICIAL_TASK ? true : false
-  );
-
   let decision = 1;
 
   // Number EGE

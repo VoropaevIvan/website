@@ -35,6 +35,17 @@ const authSlice = createSlice({
       localStorage.removeItem("jwt");
       return { ...initialState };
     },
+    setDataFromToken: (state, action) => {
+      const isAdminUser = action.payload.userRole === "ADMIN" ? true : false;
+      return {
+        ...state,
+        name: action.payload.userName,
+        surname: action.payload.userSurname,
+        img: action.payload.userPhotoUrl,
+        isAuth: true,
+        isAdmin: isAdminUser,
+      };
+    },
   },
 });
 
@@ -45,5 +56,6 @@ export const setImg = authSlice.actions.setImg;
 export const setHasToken = authSlice.actions.setHasToken;
 export const setIsAdmin = authSlice.actions.setIsAdmin;
 export const logOut = authSlice.actions.logOut;
+export const setDataFromToken = authSlice.actions.setDataFromToken;
 
 export default authSlice.reducer;

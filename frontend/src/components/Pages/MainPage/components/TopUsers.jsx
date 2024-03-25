@@ -23,9 +23,13 @@ const TopUsers = () => {
   }, []);
 
   return (
-    <div>
-      <TableForTopUsers title={"Топ за неделю"} users={topUsersByWeek} />
-      <TableForTopUsers title={"Топ за месяц"} users={topUsersByMonth} />
+    <div className="topusers">
+      {topUsersByWeek.length > 0 && (
+        <TableForTopUsers title={"Топ за неделю"} users={topUsersByWeek} />
+      )}
+      {topUsersByMonth.length > 0 && (
+        <TableForTopUsers title={"Топ за месяц"} users={topUsersByMonth} />
+      )}
     </div>
   );
 };

@@ -1,18 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import MainLayout from "./layouts/MainLayout";
 import MainPage from "./components/Pages/MainPage/MainPage";
 import { useEffect } from "react";
-import { getUserInfoByJwt } from "./components/server/serverAuth";
+import { useJwt } from "react-jwt";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setImg,
-  setIsAdmin,
-  setIsAuth,
-  setName,
-  setSurname,
-} from "./redux/slices/authSlice";
-import { adminRoutes, publicRoutes } from "./routes";
+import { setDataFromToken } from "./redux/slices/authSlice";
+import { adminRoutes, authRoutes, publicRoutes } from "./routes";
 import "./App.css";
 
 function App() {
@@ -20,23 +13,19 @@ function App() {
   const dispatch = useDispatch();
 
   const isAuth = authData.isAuth;
+  const isAdmin = authData.isAdmin;
+  const jwt = localStorage.getItem("jwt");
+  const { decodedToken } = useJwt(jwt);
 
   useEffect(() => {
     async function fetchData() {
-      if (authData.isAuth === false) {
-        if (localStorage.getItem("jwt")) {
-          const res = getUserInfoByJwt(localStorage.getItem("jwt"));
-          dispatch(setName(res.name));
-          dispatch(setSurname(res.surname));
-          dispatch(setIsAdmin(res.isAdmin));
-          dispatch(setImg(res.img));
-          dispatch(setIsAuth(true));
-        }
+      if (decodedToken) {
+        dispatch(setDataFromToken(decodedToken));
       }
     }
 
     fetchData();
-  }, [authData, dispatch]);
+  }, [decodedToken, dispatch]);
 
   return (
     <BrowserRouter>
@@ -45,12 +34,20 @@ function App() {
           <Route path="/" element={<MainLayout />}>
             <Route index={true} element={<MainPage />}></Route>
 
-            {isAuth &&
+            {isAdmin &&
               adminRoutes.map(({ path, Component }, i) => {
                 return (
                   <Route key={i} path={path} element={<Component />}></Route>
                 );
               })}
+
+            {isAuth &&
+              authRoutes.map(({ path, Component }, i) => {
+                return (
+                  <Route key={i} path={path} element={<Component />}></Route>
+                );
+              })}
+
             {publicRoutes.map(({ path, Component }, i) => {
               return (
                 <Route key={i} path={path} element={<Component />}></Route>

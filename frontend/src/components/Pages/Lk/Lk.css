@@ -10,10 +10,7 @@
   background-color: rgb(211, 211, 211);
 }
 
-.lk .variantsresults .capt {
-  text-align: center;
-}
-.lk .statbynumber .capt {
+.lk .capt {
   text-align: center;
 }
 
@@ -30,4 +27,12 @@
 }
 .lk .tablevar .na {
   background-color: rgb(241, 248, 154);
+}
+
+.lk .topusers {
+  text-align: center;
+}
+
+.lk table {
+  max-width: 100%;
 }

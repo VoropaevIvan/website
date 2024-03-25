@@ -128,7 +128,6 @@ export const Task = ({
       <></>
     );
   };
-
   return (
     <div
       className={
@@ -143,7 +142,7 @@ export const Task = ({
           <span>{" (" + id + ")"}</span>
         </p>
 
-        <span>{String(isOfficial) ? "Официальная" : "Не официальная"}</span>
+        <span>{isOfficial ? "Официальная" : "Не официальная"}</span>
         <span>{", " + actuality}</span>
         <span>{", " + difficulty}</span>
       </div>

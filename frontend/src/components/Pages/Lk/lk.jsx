@@ -6,6 +6,7 @@ import {
 import "./Lk.css";
 import StatByNumber from "./components/StatByNumber";
 import VariantsResults from "./components/VariantsResults";
+import TopUsers from "../MainPage/components/TopUsers";
 
 const Lk = () => {
   const [statByNumberEGE, setStatByNumberEGE] = useState([]);
@@ -25,6 +26,12 @@ const Lk = () => {
     <div className="lk">
       <VariantsResults variantsHistory={variantsHistory} />
       <StatByNumber statByNumberEGE={statByNumberEGE} />
+
+      <div className="capt">
+        <h1>Лучшие пользователи сайта</h1>
+      </div>
+
+      <TopUsers />
     </div>
   );
 };

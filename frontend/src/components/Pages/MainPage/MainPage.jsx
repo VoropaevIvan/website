@@ -1,15 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import { useEffect } from "react";
-import "./MainPage.css";
 import TopUsers from "./components/TopUsers";
 import { getTokenByVkId } from "../../server/serverAuth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setHasToken } from "../../../redux/slices/authSlice";
+import "./MainPage.css";
 
 const MainPage = () => {
-  const authData = useSelector((state) => state.auth);
-
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -20,14 +18,16 @@ const MainPage = () => {
       if (parsed?.payload) {
         const payload = JSON.parse(parsed.payload);
         if (payload) {
-          getTokenByVkId({
+          const data = await getTokenByVkId({
             silentToken: payload.token,
             uuid: payload.uuid,
-          }).then((data) => {
+          });
+
+          try {
             localStorage.setItem("jwt", data.data);
             dispatch(setHasToken(true));
             navigate("./", { relative: "path" });
-          });
+          } catch (error) {}
         }
       }
     }
@@ -35,15 +35,8 @@ const MainPage = () => {
     fetchData();
   }, [location, navigate, dispatch]);
 
-  const jwt = localStorage.getItem("jwt");
-  const name = authData.name;
   return (
     <div className="mainpage">
-      {/* <div>
-        <p>{jwt ? jwt : "токена нет"}</p>
-        <p>{name ? name : "имени нет"}</p>
-      </div> */}
-
       <div>
         <h1>Лучшие пользователи сайта</h1>
       </div>

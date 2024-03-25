@@ -19,9 +19,11 @@ export const publicRoutes = [
   { path: "variant/:id", Component: Variant },
   { path: "results", Component: VariantResults },
   { path: "variant/:id", Component: Variant },
-  { path: "lk", Component: Lk },
+
   { path: "*", Component: NotFound },
 ];
+
+export const authRoutes = [{ path: "lk", Component: Lk }];
 
 export const adminRoutes = [
   { path: "addtask", Component: AddTask },

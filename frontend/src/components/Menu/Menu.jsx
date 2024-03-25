@@ -1,21 +1,28 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserInfoByJwt } from "../server/serverAuth";
-
-import "./Menu.css";
-import { logOut } from "../../redux/slices/authSlice";
 import { useState } from "react";
+import DropDownMenu from "./components/DropDownMenu";
+import "./Menu.css";
 
 const Menu = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const page = location.pathname.split("/")[1];
-  const dispatch = useDispatch();
+
   const authData = useSelector((state) => state.auth);
-  const isAuth = authData.isAuth;
-  const isAdmin = authData.isAdmin;
-  const img = authData.img;
+  const { isAuth, isAdmin, img } = authData;
 
   const [showDropDownMenu, setShowDropDownMenu] = useState(false);
+
+  const jwt = localStorage.getItem("jwt");
+  if (jwt && !isAuth) {
+    return (
+      <div className="menu">
+        <span></span>
+      </div>
+    );
+  }
+
   return (
     <div className="menu">
       <span>
@@ -23,7 +30,6 @@ const Menu = () => {
           На главную
         </NavLink>
         <NavLink to="/bank">Банк задач</NavLink>
-
         <NavLink to="/variants">Варианты</NavLink>
 
         {isAdmin && (
@@ -35,44 +41,20 @@ const Menu = () => {
             Добавление задачи
           </NavLink>
         )}
+
         {isAuth ? (
-          <div className="drop">
-            <img
-              onClick={() => {
-                setShowDropDownMenu(!showDropDownMenu);
-              }}
-              className="photo"
-              src={img}
-              alt=""
-            ></img>
-            {showDropDownMenu && (
-              <ul className="ul">
-                <li>
-                  <NavLink
-                    onClick={() => {
-                      setShowDropDownMenu(false);
-                    }}
-                    to="lk"
-                  >
-                    Личный кабинет
-                  </NavLink>
-                </li>
-                <li
-                  className="exit"
-                  onClick={() => {
-                    dispatch(logOut());
-                  }}
-                >
-                  Выйти
-                </li>
-              </ul>
-            )}
-          </div>
+          <DropDownMenu
+            showDropDownMenu={showDropDownMenu}
+            setShowDropDownMenu={setShowDropDownMenu}
+            dispatch={dispatch}
+            img={img}
+          />
         ) : (
           <NavLink className="login" to="/auth">
             Войти
           </NavLink>
         )}
+
         {/* <NavLink to="/test">Тест</NavLink> */}
       </span>
     </div>
