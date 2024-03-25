@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import {
   eraseEmptyRowsFromTable,
   tableToTags,
-} from "../Utils/addTaskUtils/variantUtils";
+} from "../../Utils/addTaskUtils/variantUtils";
 import "./VariantResults.css";
 const VariantResults = () => {
   const varData = useSelector((state) => state.variant.data);

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { clearAnswer, setAnswer } from "../../../redux/slices/variantSlice";
+import { clearAnswer, setAnswer } from "../../../../redux/slices/variantSlice";
 
 const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
   //const [valueInAnswerInput, setValueInAnswerInput] = useState("");

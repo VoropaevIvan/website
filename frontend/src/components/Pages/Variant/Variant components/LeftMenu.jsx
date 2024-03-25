@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
+import { setCurrentTask } from "../../../../redux/slices/variantSlice";
+import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
 import "./LeftMenu.css";
-import { setCurrentTask } from "../../../redux/slices/variantSlice";
-import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
 
 function LeftMenu({ setValueInAnswerInput, setValueInAnswerTable }) {
   const curAnswers = useSelector((state) => state.variant.answers);

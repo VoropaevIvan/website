@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { clearAnswer, setAnswer } from "../../../redux/slices/variantSlice";
-import Table from "../../Utils/Table/Table";
-import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
+import { clearAnswer, setAnswer } from "../../../../redux/slices/variantSlice";
+import Table from "../../../Utils/Table/Table";
+import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
 
 const TableForAnswer = ({
   rows,

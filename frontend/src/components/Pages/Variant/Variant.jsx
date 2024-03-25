@@ -5,11 +5,11 @@ import InputForAnswer from "./Variant components/InputForAnswer";
 import "./Variant.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setData } from "../../redux/slices/variantSlice";
-import { createDataForTable } from "../Utils/addTaskUtils/addTaskUtils";
+import { setData } from "../../../redux/slices/variantSlice";
+import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
 import TableForAnswer from "./Variant components/TableForAnswer";
-import { prepareAnswerFields } from "../Utils/addTaskUtils/variantUtils";
-import { getVariantTasksFromServer } from "../Utils/addTaskUtils/server";
+import { prepareAnswerFields } from "../../Utils/addTaskUtils/variantUtils";
+import { getVariantTasksFromServer } from "../../Utils/addTaskUtils/server";
 import { addTypeAnswerField } from "./Variant components/VariantUtils";
 import { useLocation } from "react-router-dom";
 
