@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ALL_VARIANTS_TASK_NUMBER } from "../../components/Bank/Filter/constants";
+import { ALL_VARIANTS_TASK_NUMBER } from "../../components/Pages/Bank/Filter/constants";
 import {
   ALL_ACTUALITY,
   ALL_DIFFICULTY,

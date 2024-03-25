@@ -1,4 +1,4 @@
-import { Tasks } from "./components/Bank/Tasks";
+import { Tasks } from "./components/Pages/Bank/Tasks";
 import AddTask from "./components/Pages/AddTask/AddTask";
 import Auth from "./components/Pages/Auth/Auth";
 import CreateVariant from "./components/Pages/CreateVariant/CreateVariant";

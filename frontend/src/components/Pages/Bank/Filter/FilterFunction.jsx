@@ -3,7 +3,7 @@ import {
   ALL_DIFFICULTY,
   NOT_AND_OFFICIAL_TASK,
   OFFICIAL_TASK,
-} from "../../Pages/constants";
+} from "../../../Pages/constants";
 import { ALL_VARIANTS_TASK_NUMBER } from "./constants";
 
 const FilterFunction = (task, filtersData) => {

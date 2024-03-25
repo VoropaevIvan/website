@@ -5,7 +5,7 @@ import {
   setIsOfficialFilter,
   setNumberEGEFilter,
   setSortingFilter,
-} from "../../../redux/slices/bankFilterSlice";
+} from "../../../../redux/slices/bankFilterSlice";
 import { TASK_NUMBERS_NAMES } from "./constants";
 import "./BankFilter.css";
 import {
@@ -22,7 +22,7 @@ import {
   NOT_OFFICIAL_TASK,
   OFFICIAL_TASK,
   WILL_BE_IN_EGE,
-} from "../../Pages/constants";
+} from "../../../Pages/constants";
 
 const BankFilter = () => {
   const filtersData = useSelector((state) => state.bankFilter);
