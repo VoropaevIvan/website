@@ -30,67 +30,77 @@ const BankFilter = () => {
 
   return (
     <div className="bankfilter">
-      <span>{"Номер ЕГЭ "}</span>
+      <div className="block">
+        <span>{"Номер ЕГЭ "}</span>
+        <select
+          onChange={(e) => {
+            dispatch(setNumberEGEFilter(e.target.value));
+          }}
+          value={filtersData.numberEGE}
+        >
+          {TASK_NUMBERS_NAMES.map((s) => {
+            return <option key={s}>{s}</option>;
+          })}
+        </select>
+      </div>
 
-      <select
-        onChange={(e) => {
-          dispatch(setNumberEGEFilter(e.target.value));
-        }}
-        value={filtersData.numberEGE}
-      >
-        {TASK_NUMBERS_NAMES.map((s) => {
-          return <option key={s}>{s}</option>;
-        })}
-      </select>
+      <div className="block">
+        <span>{"Официальная задача? "}</span>
+        <select
+          onChange={(e) => {
+            dispatch(setIsOfficialFilter(e.target.value));
+          }}
+          value={filtersData.isOfficial}
+        >
+          <option>{NOT_AND_OFFICIAL_TASK}</option>
+          <option>{OFFICIAL_TASK}</option>
+          <option>{NOT_OFFICIAL_TASK}</option>;
+        </select>
+      </div>
 
-      <span>{"Официальная задача?"}</span>
-      <select
-        onChange={(e) => {
-          dispatch(setIsOfficialFilter(e.target.value));
-        }}
-        value={filtersData.isOfficial}
-      >
-        <option>{NOT_AND_OFFICIAL_TASK}</option>
-        <option>{OFFICIAL_TASK}</option>
-        <option>{NOT_OFFICIAL_TASK}</option>;
-      </select>
+      <div className="block">
+        <span>{"Актуальность задачи "}</span>
+        <select
+          onChange={(e) => {
+            dispatch(setActualityFilter(e.target.value));
+          }}
+          value={filtersData.actuality}
+        >
+          <option>{ALL_ACTUALITY}</option>
+          <option>{WILL_BE_IN_EGE}</option>
+          <option>{ACTUAL}</option>
+          <option>{NOT_ACTUAL}</option>;
+        </select>
+      </div>
 
-      <span>{"Актуальность задачи"}</span>
-      <select
-        onChange={(e) => {
-          dispatch(setActualityFilter(e.target.value));
-        }}
-        value={filtersData.actuality}
-      >
-        <option>{ALL_ACTUALITY}</option>
-        <option>{WILL_BE_IN_EGE}</option>
-        <option>{ACTUAL}</option>
-        <option>{NOT_ACTUAL}</option>;
-      </select>
+      <div className="block">
+        <span>{"Сложность задачи "}</span>
+        <select
+          onChange={(e) => {
+            dispatch(setDifficultyFilter(e.target.value));
+          }}
+          value={filtersData.difficulty}
+        >
+          <option>{ALL_DIFFICULTY}</option>
+          <option>{LEVEL_OF_EGE}</option>
+          <option>{MUCH_EASY_THEN_EGE}</option>
+          <option>{EASY_THEN_EGE}</option>;
+          <option>{LITTLE_HARD_THEN_EGE}</option>
+          <option>{GROB}</option>;
+        </select>
+      </div>
 
-      <span>{"Сложность задачи"}</span>
-      <select
-        onChange={(e) => {
-          dispatch(setDifficultyFilter(e.target.value));
-        }}
-        value={filtersData.difficulty}
-      >
-        <option>{ALL_DIFFICULTY}</option>
-        <option>{LEVEL_OF_EGE}</option>
-        <option>{MUCH_EASY_THEN_EGE}</option>
-        <option>{EASY_THEN_EGE}</option>;<option>{LITTLE_HARD_THEN_EGE}</option>
-        <option>{GROB}</option>;
-      </select>
-
-      <span>{"Сортировка"}</span>
-      <select
-        onChange={(e) => {
-          dispatch(setSortingFilter(e.target.value));
-        }}
-        value={filtersData.sorting}
-      >
-        <option>Сначала новые</option>;<option>Сначала старые</option>;
-      </select>
+      <div className="block">
+        <span>{"Сортировка "}</span>
+        <select
+          onChange={(e) => {
+            dispatch(setSortingFilter(e.target.value));
+          }}
+          value={filtersData.sorting}
+        >
+          <option>Сначала новые</option>;<option>Сначала старые</option>;
+        </select>
+      </div>
     </div>
   );
 };

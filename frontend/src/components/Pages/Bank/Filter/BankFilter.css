@@ -1,17 +1,28 @@
 .bankfilter {
-  background-color: rgb(205, 201, 255);
-  margin: 20px;
+  margin: 20px 40px 20px 40px;
   padding: 20px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px 10px;
+  background-color: rgb(205, 201, 255);
+  /* margin: 20px;
+  padding: 20px; */
   border-radius: 20px;
   color: rgb(0, 0, 0);
+  overflow: auto;
 }
 
 .bankfilter select {
   margin-right: 6px;
   padding: 3px;
-  border-radius: 10px;
+  border-radius: 8px;
+}
+
+.bankfilter select:focus {
+  outline: none;
 }
 
 .bankfilter span {
-  padding: 5px;
+  /* padding: 5px; */
 }

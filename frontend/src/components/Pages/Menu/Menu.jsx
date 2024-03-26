@@ -25,38 +25,36 @@ const Menu = () => {
 
   return (
     <div className="menu">
-      <span>
-        <NavLink to="/" end>
-          На главную
+      <NavLink to="/" end>
+        На главную
+      </NavLink>
+      <NavLink to="/bank">Банк задач</NavLink>
+      <NavLink to="/variants">Варианты</NavLink>
+
+      {isAdmin && (
+        <NavLink
+          // reloadDocument
+          to="/addtask"
+          className={page === "edit-task" ? " active" : ""}
+        >
+          Добавление задачи
         </NavLink>
-        <NavLink to="/bank">Банк задач</NavLink>
-        <NavLink to="/variants">Варианты</NavLink>
+      )}
 
-        {isAdmin && (
-          <NavLink
-            // reloadDocument
-            to="/addtask"
-            className={page === "edit-task" ? " active" : ""}
-          >
-            Добавление задачи
-          </NavLink>
-        )}
+      {isAuth ? (
+        <DropDownMenu
+          showDropDownMenu={showDropDownMenu}
+          setShowDropDownMenu={setShowDropDownMenu}
+          dispatch={dispatch}
+          img={img}
+        />
+      ) : (
+        <NavLink className="login" to="/auth">
+          Войти
+        </NavLink>
+      )}
 
-        {isAuth ? (
-          <DropDownMenu
-            showDropDownMenu={showDropDownMenu}
-            setShowDropDownMenu={setShowDropDownMenu}
-            dispatch={dispatch}
-            img={img}
-          />
-        ) : (
-          <NavLink className="login" to="/auth">
-            Войти
-          </NavLink>
-        )}
-
-        {/* <NavLink to="/test">Тест</NavLink> */}
-      </span>
+      <NavLink to="/test">Тест</NavLink>
     </div>
   );
 };
