@@ -34,7 +34,7 @@ const Menu = () => {
 
         {isAdmin && (
           <NavLink
-            reloadDocument
+            // reloadDocument
             to="/addtask"
             className={page === "edit-task" ? " active" : ""}
           >

@@ -6,10 +6,12 @@ const AddFiles = ({
   files,
   saveFileOnServer,
   setIsSend,
+  reload,
 }) => {
   return (
     <div className="addfiles">
       <input
+        key={reload}
         type="file"
         onChange={(e) => {
           setCurrentFile(e.target.files[0]);

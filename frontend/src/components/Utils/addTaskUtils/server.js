@@ -25,9 +25,11 @@ export const getTaskById = async (
         solution: res.data.solution,
       });
     }
+    return res;
   } catch (error) {
     //setInitialDataFromServer();
     console.log(error);
+    return { status: 404 };
   }
 };
 

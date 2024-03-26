@@ -33,6 +33,8 @@ const AddTask = () => {
   const [isSend, setIsSend] = useState(false);
 
   const [currentFile, setCurrentFile] = useState(null);
+  const [isOkLoad, setIsOkLoad] = useState(true);
+  const [reload, setReload] = useState(0);
 
   const setText = (content) => {
     setAllTaskData({ ...allTaskData, content: content });
@@ -87,15 +89,36 @@ const AddTask = () => {
 
   useEffect(() => {
     async function fetchData(taskId) {
-      getTaskById(taskId, setAllTaskData, setInitialDataForEditor);
+      const res = await getTaskById(
+        taskId,
+        setAllTaskData,
+        setInitialDataForEditor
+      );
+      return res;
     }
     if (!isNewTask(location.pathname)) {
-      fetchData(curTaskId(location.pathname));
+      const res = fetchData(curTaskId(location.pathname));
+      res.then((res) => {
+        if (res.status !== 200) {
+          setIsOkLoad(false);
+        }
+      });
       console.log("fetch");
     } else {
-      //console.log("!!!");
+      setAllTaskData(DEFAULT_ALL_TASK_DATA);
+      setCurrentFile(null);
+      setIsOkLoad(true);
+      setReload(Math.random());
     }
   }, [location]);
+
+  if (!isOkLoad) {
+    return (
+      <div>
+        <h1>Такой задачи нет</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="addTask">
@@ -134,6 +157,7 @@ const AddTask = () => {
         setText={setText}
         initialText={initialDataForEditor.content}
         setIsSend={setIsSend}
+        reload={reload}
       />
       <AnswerSelect
         setIsSend={setIsSend}
@@ -152,6 +176,7 @@ const AddTask = () => {
           setText={setSolution}
           initialText={initialDataForEditor.solution}
           setIsSend={setIsSend}
+          reload={reload}
         />
       </details>
 
@@ -161,6 +186,7 @@ const AddTask = () => {
         setCurrentFile={setCurrentFile}
         saveFileOnServer={saveFileOnServer}
         setIsSend={setIsSend}
+        reload={reload}
       />
       <SendButtons
         handleSendButton={handleSendButton}
