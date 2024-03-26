@@ -1,5 +1,6 @@
 import axios from "axios";
 import { parseTaskFromServer } from "./addTaskUtils";
+import { isNewTask } from "../../Pages/AddTask/components/AddTaskUtils";
 
 export const getTaskById = async (
   id,
@@ -7,7 +8,6 @@ export const getTaskById = async (
   setInitialDataForEditor
 ) => {
   try {
-    //const res = await axios.get(`http://localhost:5000/api/task/${id}`);
     const res = await axios.get(process.env.REACT_APP_LINK_GET_TASK_BY_ID + id);
     console.log(res.data);
     if (res.data) {
@@ -96,6 +96,42 @@ export const saveFileOnServer = async (currentFile) => {
       },
     });
 
+    return res;
+  } catch (error) {}
+};
+
+export const saveTaskOnServer = async ({ allTaskData, locationPath }) => {
+  try {
+    let answer = {
+      ...allTaskData.answer,
+    };
+    if (allTaskData.answer.cols !== 0 || allTaskData.answer.rows !== 0) {
+      answer = {
+        ...allTaskData.answer,
+        data: JSON.stringify(allTaskData.answer.data),
+      };
+    }
+
+    let link = process.env.REACT_APP_LINK_ADD_TASK;
+
+    if (!isNewTask(locationPath)) {
+      const taskId = Number(locationPath.split("/").reverse()[0]);
+      link = link + "/" + String(taskId);
+    }
+
+    const res = await axios.post(
+      link,
+      {
+        ...allTaskData,
+        answer: answer,
+        files: JSON.stringify(allTaskData.files),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }
+    );
     return res;
   } catch (error) {}
 };

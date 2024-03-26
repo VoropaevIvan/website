@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getTaskById } from "../../Utils/addTaskUtils/server";
+import { getTaskById, saveTaskOnServer } from "../../Utils/addTaskUtils/server";
 import { DEFAULT_SOLVE_FOR_TASK_TEXT, DEFAULT_TASK_TEXT } from "../constants";
 import { DEFAULT_ALL_TASK_DATA } from "./AddTaskConstants";
 import { curTaskId, isNewTask } from "./components/AddTaskUtils";
@@ -17,6 +16,7 @@ import VideoReviewSelect from "./components/VideoReviewSelect";
 import SolutionSelect from "./components/SolutionSelect";
 import AddFiles from "./components/AddFiles";
 import SendButtons from "./components/SendButtons";
+import { saveFileOnServer as saveFile } from "../../Utils/addTaskUtils/server";
 import "./AddTask.css";
 
 const AddTask = () => {
@@ -45,41 +45,10 @@ const AddTask = () => {
 
   const handleSendButton = async () => {
     try {
-      let answer = {
-        ...allTaskData.answer,
-      };
-      if (allTaskData.answer.cols !== 0 || allTaskData.answer.rows !== 0) {
-        answer = {
-          ...allTaskData.answer,
-          data: JSON.stringify(allTaskData.answer.data),
-        };
-      }
-      let link = process.env.REACT_APP_LINK_ADD_TASK;
-
-      if (!isNewTask(location.pathname)) {
-        const taskId = Number(location.pathname.split("/").reverse()[0]);
-        link = link + "/" + String(taskId);
-      }
-
-      console.log({
-        ...allTaskData,
-        answer: answer,
-        files: JSON.stringify(allTaskData.files),
+      const res = await saveTaskOnServer({
+        allTaskData,
+        locationPath: location.pathname,
       });
-
-      const res = await axios.post(
-        link,
-        {
-          ...allTaskData,
-          answer: answer,
-          files: JSON.stringify(allTaskData.files),
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-          },
-        }
-      );
 
       if (res.status === 200) {
         setIsSend(true);
@@ -94,29 +63,17 @@ const AddTask = () => {
     }
   };
 
-  const saveFileOnServer = () => {
-    // Send to server...
+  const saveFileOnServer = async () => {
     try {
-      var formData = new FormData();
-      formData.append("file", currentFile);
-
-      const res = axios.post("http://localhost:8080/files", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-        },
+      const res = await saveFile(currentFile);
+      setAllTaskData({
+        ...allTaskData,
+        files: [...allTaskData.files, res.data.location],
       });
-
-      res.then((value) => {
-        console.log(value.data.location);
-        //setFiles([...files, value.data.location]);
-        setAllTaskData({
-          ...allTaskData,
-          files: [...allTaskData.files, value.data.location],
-        });
-        setIsSend(false);
-      });
-    } catch (error) {}
+      setIsSend(false);
+    } catch (error) {
+      alert("Файл не сохранён.");
+    }
   };
 
   const delFile = (fileName) => {
