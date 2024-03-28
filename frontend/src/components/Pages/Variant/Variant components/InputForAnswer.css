@@ -1,0 +1,103 @@
+.varAnswer {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: flex-end;
+  align-items: center;
+  /* align-items: center; */
+  /* margin: 10px; */
+
+  margin-right: 10px;
+  /* margin-left: 50px; */
+}
+
+.varAnswer .clearsavebut {
+  /* margin-right: 20px;
+  margin-left: 20px; */
+}
+/* Save button */
+.varAnswer .savebutton {
+  margin: 5px;
+
+  padding: 10px;
+  border-radius: 5px;
+  border: 0px;
+  color: black;
+  background-color: #00e2a5;
+}
+
+.varAnswer .savebutton:hover {
+  /* background-color: rgb(0, 136, 255); */
+  cursor: pointer;
+}
+
+.varAnswer .savebuttondis {
+  cursor: default;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0px;
+  color: black;
+  border: 1px solid #00e2a5;
+  color: #00e2a5;
+  background-color: white;
+}
+
+/* Clear button */
+.varAnswer .clearbutton {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+.varAnswer .clearbutton:hover {
+  cursor: pointer;
+  border: 1px solid #f54f36;
+  background-color: #f54f36;
+  color: #ffffff;
+}
+.varAnswer .clearbutton:active {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
+.varAnswer .disabledclear:hover {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+.varAnswer .disabledclear:active {
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
+/* Input */
+.varAnswer input {
+  margin: 5px 5px 5px 5px;
+  padding: 5px;
+  font-size: 22px;
+  width: 40%;
+  min-width: 20%;
+
+  border: 1px solid grey;
+  border-radius: 5px;
+  outline: none;
+  background: #ffffff !important;
+}
+
+@media (orientation: portrait) {
+  .varAnswer {
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    justify-content: center;
+  }
+  .clearsavebut {
+    display: flex;
+    /* flex-direction: column; */
+  }
+}

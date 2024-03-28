@@ -17,7 +17,10 @@ function TaskTextForVariant() {
       <p className="varNumberEGE">
         <strong>{"Задание " + (curTaskNumber + 1)}</strong>
       </p>
-      <div dangerouslySetInnerHTML={createMarkup(curTaskContent)} />
+      <div
+        className="taskcontent"
+        dangerouslySetInnerHTML={createMarkup(curTaskContent)}
+      />
     </div>
   );
 }

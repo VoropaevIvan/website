@@ -38,23 +38,23 @@ function LeftMenu({ setValueInAnswerInput, setValueInAnswerTable }) {
   };
 
   const goToAnotherTask = (num) => {
-    const newAns = curAnswers[num];
-    if (newAns) {
-      if (varData[num].typeAnswer === "text") {
-        setValueInAnswerInput(curAnswers[num]);
-        setValueInAnswerTable(createTable(num));
-      } else {
-        setValueInAnswerTable(curAnswers[num]);
-        setValueInAnswerInput("");
-      }
-    } else {
-      setValueInAnswerInput("");
-      setValueInAnswerTable(createTable(num));
-    }
+    // const newAns = curAnswers[num];
+    // if (newAns) {
+    //   if (varData[num].typeAnswer === "text") {
+    //     setValueInAnswerInput(curAnswers[num]);
+    //     setValueInAnswerTable(createTable(num));
+    //   } else {
+    //     setValueInAnswerTable(curAnswers[num]);
+    //     setValueInAnswerInput("");
+    //   }
+    // } else {
+    //   setValueInAnswerInput("");
+    //   setValueInAnswerTable(createTable(num));
+    // }
   };
 
   return (
-    <>
+    <div className="leftmenu">
       <button onClick={handleScrollUp}>up</button>
 
       <div ref={divRef} className="leftmenubuttons">
@@ -78,7 +78,7 @@ function LeftMenu({ setValueInAnswerInput, setValueInAnswerTable }) {
           })}
       </div>
       <button onClick={handleScrollDown}>down</button>
-    </>
+    </div>
   );
 }
 

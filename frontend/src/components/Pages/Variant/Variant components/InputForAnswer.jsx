@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearAnswer, setAnswer } from "../../../../redux/slices/variantSlice";
+import "./InputForAnswer.css";
 
 const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
   //const [valueInAnswerInput, setValueInAnswerInput] = useState("");
@@ -17,6 +18,10 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
     dispatch(clearAnswer(curTaskNumber));
     setValueInAnswerInput("");
   };
+  const disabledSaveBut =
+    (valueInAnswerInput.length === 0) | (curAnswer.length > 0);
+
+  const isSavedAnswer = curAnswer.length > 0;
 
   return (
     <>
@@ -27,13 +32,23 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
         }}
         disabled={curAnswer.length > 0}
       ></input>
-      <button
-        onClick={handleSaveButtonClick}
-        disabled={(valueInAnswerInput.length === 0) | (curAnswer.length > 0)}
-      >
-        Сохранить
-      </button>
-      <button onClick={handleClearAnswerButtonClick}>Очистить</button>
+      <div className="clearsavebut">
+        {isSavedAnswer && (
+          <button
+            className="clearbutton "
+            onClick={handleClearAnswerButtonClick}
+          >
+            Очистить
+          </button>
+        )}
+        <button
+          className={disabledSaveBut ? "savebuttondis" : "savebutton"}
+          onClick={handleSaveButtonClick}
+          disabled={disabledSaveBut}
+        >
+          {isSavedAnswer ? "Ответ сохранён" : "Сохранить ответ"}
+        </button>
+      </div>
     </>
   );
 };
