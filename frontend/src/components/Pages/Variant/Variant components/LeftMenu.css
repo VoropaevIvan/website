@@ -1,42 +1,81 @@
 .varNavigate {
   grid-area: leftmenu;
+  display: flex;
   background-color: #e7edf9;
-  align-content: center;
+
+  justify-content: flex-start;
 }
 
 .varNavigate .leftmenu {
-  margin: 0px 15px 0px 15px;
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0px 10px 0px;
+  /* max-width: 100%; */
 }
 
+.leftmenubuttons {
+  overflow: auto;
+  /* overflow: hidden; */
+  /* max-height: 50vh; */
+}
+
+.varNavigate .scrollbut,
 .leftmenubutton {
   display: block;
   margin-left: auto;
   margin-right: auto;
 
-  padding: 5px;
-  margin-bottom: 20px;
-  /* overflow: auto; */
-  /* min-width: 10px; */
-  /* border-radius: 5px; */
-  width: 30px;
+  padding: 10px;
+  margin-bottom: 10px;
+
   background-color: #ffffff;
   border: 0px;
   border-radius: 4px;
+
+  font-size: 16px;
+
+  width: 40px;
+  height: 40px;
+}
+
+.varNavigate .scrollbut {
+  font-size: 17px;
+  background-color: #0d325c;
+  color: white;
+  /* padding: 0px 0px 3px 0px; */
+  width: 40px;
+  height: 40px;
+}
+.varNavigate .scrollbut:hover {
+  cursor: pointer;
+}
+
+.leftmenubutton {
+}
+
+.leftmenubutton:focus {
+  outline: none;
 }
 
 .leftmenubutton:hover {
   cursor: pointer;
 }
 
-.leftmenubuttons {
-  /* display: block; */
-  overflow: auto;
-  /* max-width: 20%; */
-  max-height: 100%;
-  /* padding-top: 20px; */
-}
-
 .activevartask {
   color: rgb(255, 255, 255);
   background-color: #0d325c;
+}
+
+.varNavigate .lmheader {
+  padding: 5px 10px 0px 10px;
+  text-align: center;
+  color: rgb(102, 102, 102);
+}
+
+.varNavigate .lmcount {
+  text-align: center;
+  color: #12264f;
+  font-size: 20px;
+  margin: 0px 0px 20px 0px;
+  padding: 0px 10px 0px 10px;
 }

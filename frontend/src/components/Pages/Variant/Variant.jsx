@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTask, setData } from "../../../redux/slices/variantSlice";
 import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
 import TableForAnswer from "./Variant components/TableForAnswer";
-import { prepareAnswerFields } from "../../Utils/addTaskUtils/variantUtils";
 import { getVariantTasksFromServer } from "../../Utils/addTaskUtils/server";
 import { addTypeAnswerField } from "./Variant components/VariantUtils";
 import { useLocation } from "react-router-dom";
@@ -31,7 +30,7 @@ const Variant = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = getVariantTasksFromServer({
+      getVariantTasksFromServer({
         varId: location.pathname.split("/").reverse()[0],
         setTasksFromServer: (tasks) => {
           const tasksWithTypeAnswer = tasks.map((task) => {
@@ -50,7 +49,6 @@ const Variant = () => {
 
   useEffect(() => {
     if (varData[curTaskNumber]) {
-      console.log("QQQ", varData[curTaskNumber]);
       if (curAnswers[curTaskNumber]) {
         if (varData[curTaskNumber].typeAnswer === "text") {
           setValueInAnswerInput(curAnswers[curTaskNumber]);
@@ -79,16 +77,28 @@ const Variant = () => {
     }
   }, [curTaskNumber, varData, curAnswers]);
 
-  // prepareAnswerFields({
-  //   curTaskNumber,
-  //   curAnswers,
-  //   varData,
-  //   setValueInAnswerInput,
-  //   valueInAnswerTable,
-  //   valueInAnswerInput,
-  //   createDataForTable,
-  //   setValueInAnswerTable,
-  // });
+  useEffect(() => {
+    const onKeypress = (e) => {
+      if (e.key === "ArrowLeft") {
+        if (curTaskNumber > 0) {
+          dispatch(setCurrentTask(curTaskNumber - 1));
+        }
+      }
+      if (e.key === "ArrowRight") {
+        if (varData) {
+          if (curTaskNumber + 1 < varData.length) {
+            dispatch(setCurrentTask(curTaskNumber + 1));
+          }
+        }
+      }
+    };
+
+    document.addEventListener("keydown", onKeypress);
+
+    return () => {
+      document.removeEventListener("keydown", onKeypress);
+    };
+  }, [dispatch, curTaskNumber, varData]);
 
   const handlePrevTaskBut = () => {
     if (curTaskNumber > 0) {
@@ -108,8 +118,6 @@ const Variant = () => {
     return <h2>Пустой вариант</h2>;
   }
 
-  console.log("inp", valueInAnswerInput);
-  console.log("table", valueInAnswerTable);
   return (
     <div className="container">
       <div className="varHeader">
