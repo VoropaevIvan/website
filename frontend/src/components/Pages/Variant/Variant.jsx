@@ -11,8 +11,10 @@ import { getVariantTasksFromServer } from "../../Utils/addTaskUtils/server";
 import { addTypeAnswerField } from "./Variant components/VariantUtils";
 import { useLocation } from "react-router-dom";
 
+import { LiaFileDownloadSolid } from "react-icons/lia";
 import "./Variant.css";
 import "./Variant components/VarFooter.css";
+import { fileImgInVar } from "../constants";
 
 const Variant = () => {
   const location = useLocation();
@@ -144,26 +146,29 @@ const Variant = () => {
             <TaskTextForVariant />
           </div>
 
-          <div>
-            {varData &&
-              varData[curTaskNumber] &&
-              varData[curTaskNumber]["typeAnswer"] &&
-              (varData[curTaskNumber]["typeAnswer"] === "table" ||
-                varData[curTaskNumber]["typeAnswer"] === "two") && (
-                <TableForAnswer
-                  rows={valueInAnswerTable.rows}
-                  cols={valueInAnswerTable.cols}
-                  data={valueInAnswerTable.data}
-                  setNotFinalAnswer={setValueInAnswerTable}
-                  disabled={
-                    (curAnswer.length > 0) | (curAnswer?.data?.length > 0)
-                  }
-                  valueInAnswerTable={valueInAnswerTable}
-                  curAnswer={curAnswer}
-                  curTaskNumber={curTaskNumber}
-                />
-              )}
-          </div>
+          {varData &&
+            varData[curTaskNumber] &&
+            varData[curTaskNumber]["typeAnswer"] &&
+            (varData[curTaskNumber]["typeAnswer"] === "table" ||
+              varData[curTaskNumber]["typeAnswer"] === "two") && (
+              <div className="tableanswercont">
+                <div className="tableanswer">
+                  <p>Введите свой ответ</p>
+                  <TableForAnswer
+                    rows={valueInAnswerTable.rows}
+                    cols={valueInAnswerTable.cols}
+                    data={valueInAnswerTable.data}
+                    setNotFinalAnswer={setValueInAnswerTable}
+                    disabled={
+                      (curAnswer.length > 0) | (curAnswer?.data?.length > 0)
+                    }
+                    valueInAnswerTable={valueInAnswerTable}
+                    curAnswer={curAnswer}
+                    curTaskNumber={curTaskNumber}
+                  />
+                </div>
+              </div>
+            )}
         </div>
       </div>
 
@@ -176,7 +181,19 @@ const Variant = () => {
       <div className="varfooter">
         <div className="varfiles">
           {["9.xls", "9.txt", "9.xslx", "9.ods"].map((file, i) => {
-            return <div key={i}>{file}</div>;
+            return (
+              <div
+                onClick={() => {
+                  console.log("download");
+                }}
+                className="fileandimg"
+                key={i}
+              >
+                <LiaFileDownloadSolid className="fileimg" />
+                {/* <img alt="" src={fileImgInVar}></img> */}
+                {file}
+              </div>
+            );
           })}
         </div>
         <div className="varAnswer">

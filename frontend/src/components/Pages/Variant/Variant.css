@@ -88,12 +88,16 @@
 }
 
 .varTaskText {
-  /* display: flex; */
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  /* flex-wrap: wrap; */
   background-color: rgb(255, 255, 255);
   /* margin: 20px; */
   padding: 10px;
-  max-width: 90%;
+  max-width: 80%;
   font-size: 15px;
   max-height: 100%;
 }
@@ -119,13 +123,135 @@
   /* width: 0px; */
 }
 
+.fileandimg {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  align-items: center;
+  padding-right: 5px;
+  color: #496484;
+  font-size: 17px;
+  user-select: none;
+}
+.fileimg {
+  font-size: 40px;
+  font-weight: 200;
+}
+.fileandimg:hover {
+  cursor: pointer;
+}
+
+/* Table answer */
+.varTask .tableanswercont {
+  padding-bottom: 20px;
+}
+.varTask .tableanswer {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: stretch;
+  margin: 20px 0px 0px 0px;
+  border: 2px solid #22355b;
+  width: 300px;
+  max-width: 90%;
+}
+.varTask .tableanswer p {
+  display: inline-block;
+  min-width: 100%;
+  font-size: 10px;
+  text-align: center;
+  padding: 5px 0px 5px 0px;
+  margin: 0px 0px 0px 0px;
+  background-color: #22355b;
+  color: white;
+}
+.varTask .clearsavebuttons {
+  display: flex;
+  justify-content: center;
+}
+.varTask .tablediv {
+  display: flex;
+  justify-content: center;
+}
+.varTask .tableanswer table {
+  /* width: 80%; */
+  /* margin: 0px; */
+}
+
+/* Save button table*/
+.varTask .tableanswer .savebutton {
+  font-size: 11px;
+  margin: 5px;
+
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #00e2a5;
+  color: black;
+  background-color: #00e2a5;
+  width: 40%;
+}
+
+.varTask .tableanswer .savebutton:hover {
+  /* background-color: rgb(0, 136, 255); */
+  cursor: pointer;
+}
+
+.varTask .tableanswer .savebuttondis {
+  cursor: default;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0px;
+  color: black;
+  border: 1px solid #00e2a5;
+  color: #00e2a5;
+  background-color: white;
+}
+
+/* Clear button */
+.varTask .tableanswer .clearbutton {
+  width: 40%;
+  font-size: 11px;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+.varTask .tableanswer .clearbutton:hover {
+  cursor: pointer;
+  border: 1px solid #f54f36;
+  background-color: #f54f36;
+  color: #ffffff;
+}
+.varTask .tableanswer .clearbutton:active {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
+.varTask .tableanswer .disabledclear:hover {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+.varTask .tableanswer .disabledclear:active {
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
 /* Скрываем scrollbar для IE, Edge и Firefox */
 /* .leftmenubuttons {
   -ms-overflow-style: none;
   scrollbar-width: none;
 } */
 
-@media (orientation: portrait) {
+/* @media (orientation: portrait) { */
+@media (max-aspect-ratio: 1.6) {
   .container {
     grid-template-areas:
       "header   header"

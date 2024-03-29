@@ -30,17 +30,28 @@ const TableForAnswer = ({
 
   return (
     <>
-      <Table
-        rows={rows}
-        cols={cols}
-        data={data}
-        setAnswer={setNotFinalAnswer}
-        disabled={disabled}
-      />
-      <button onClick={handleSaveButtonClick} disabled={disabled}>
-        Сохранить ответ
-      </button>
-      <button onClick={handleClearAnswerButtonClick}>Очистить</button>
+      <div className="tablediv">
+        <Table
+          rows={rows}
+          cols={cols}
+          data={data}
+          setAnswer={setNotFinalAnswer}
+          disabled={disabled}
+        />
+      </div>
+
+      <div className="clearsavebuttons">
+        <button className="clearbutton" onClick={handleClearAnswerButtonClick}>
+          Очистить
+        </button>
+        <button
+          className="savebutton"
+          onClick={handleSaveButtonClick}
+          disabled={disabled}
+        >
+          Сохранить ответ
+        </button>
+      </div>
     </>
   );
 };

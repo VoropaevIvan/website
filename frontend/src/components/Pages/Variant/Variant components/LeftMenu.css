@@ -61,7 +61,11 @@
   cursor: pointer;
 }
 
-.activevartask {
+.varNavigate .withans {
+  background-color: #e7edf9;
+  border: 1px solid #12264f;
+}
+.varNavigate .activevartask {
   color: rgb(255, 255, 255);
   background-color: #0d325c;
 }
