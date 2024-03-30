@@ -11,8 +11,8 @@ const Variants = () => {
   const isAdmin = authData.isAdmin;
 
   useEffect(() => {
-    async function fetchData(varId) {
-      const link = process.env.REACT_APP_LINK_VARIANT;
+    async function fetchData() {
+      const link = process.env.REACT_APP_LINK_VARIANTS;
       const res = axios.get(link);
       res.then((value) => {
         setVariantsNames(value.data);
