@@ -1,5 +1,5 @@
 .tasks {
-  width: 60%;
+  width: 65%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 1px;
@@ -9,4 +9,16 @@
 .bank {
   background-color: antiquewhite;
   padding-bottom: 20px;
+}
+
+@media (max-width: 800px) {
+  .tasks {
+    width: 90%;
+  }
+}
+
+@media (orientation: portrait) {
+  .tasks {
+    width: 90%;
+  }
 }

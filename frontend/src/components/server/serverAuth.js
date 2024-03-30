@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const getTokenByVkId = async ({ silentToken, uuid }) => {
   try {
-    const res = await axios.post("http://localhost:8080/auth", {
+    const link = process.env.REACT_APP_AUTH;
+    const res = await axios.post(link, {
       token: silentToken,
       uuid: uuid,
     });

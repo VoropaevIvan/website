@@ -12,7 +12,8 @@ const Variants = () => {
 
   useEffect(() => {
     async function fetchData(varId) {
-      const res = axios.get("http://localhost:8080/variants");
+      const link = process.env.REACT_APP_LINK_VARIANT;
+      const res = axios.get(link);
       res.then((value) => {
         setVariantsNames(value.data);
       });

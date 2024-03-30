@@ -13,18 +13,16 @@ const CreateVariant = ({ setVariantsNames }) => {
       ></input>
       <button
         onClick={() => {
-          const res = axios.post(
-            "http://localhost:8080/variants/" + newVariantName,
-            [],
-            {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-              },
-            }
-          );
+          const link = process.env.REACT_APP_LINK_VARIANT;
+          const res = axios.post(link + newVariantName, [], {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            },
+          });
 
           res.then(() => {
-            const res1 = axios.get("http://localhost:8080/variants");
+            const link = process.env.REACT_APP_LINK_VARIANT;
+            const res1 = axios.get(link);
             res1.then((value) => {
               setVariantsNames(value.data);
             });

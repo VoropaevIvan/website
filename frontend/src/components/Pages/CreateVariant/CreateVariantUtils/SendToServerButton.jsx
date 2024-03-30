@@ -15,9 +15,9 @@ const SendToServerButton = ({
     });
 
     console.log(okData);
+    const link = process.env.REACT_APP_VARIANT;
     const res = axios.post(
-      "http://localhost:8080/variants/" +
-        location.pathname.split("/").reverse()[0],
+      link + location.pathname.split("/").reverse()[0],
       okData,
       {
         headers: {

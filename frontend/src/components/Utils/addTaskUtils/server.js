@@ -35,7 +35,6 @@ export const getTaskById = async (
 
 export const justGetTaskById = async (id) => {
   try {
-    //const res = await axios.get(`http://localhost:5000/api/task/${id}`);
     const res = await axios.get(process.env.REACT_APP_LINK_GET_TASK_BY_ID + id);
     if (res.data) {
       const okData = res.data;
@@ -63,7 +62,8 @@ export const getVariantTasksFromServer = async ({
   setIsOkLoad,
 }) => {
   try {
-    const res = await axios.get("http://localhost:8080/variants/" + varId);
+    const link = process.env.REACT_APP_LINK_VARIANT;
+    const res = await axios.get(link + varId);
 
     if (res.data) {
       let dataOk = res.data;
@@ -91,7 +91,8 @@ export const saveFileOnServer = async (currentFile) => {
     var formData = new FormData();
     formData.append("file", currentFile);
 
-    const res = axios.post("http://localhost:8080/files", formData, {
+    const link = process.env.REACT_APP_LINK_LOAD_FILE;
+    const res = axios.post(link, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,

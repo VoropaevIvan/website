@@ -5,7 +5,7 @@ import "./Auth.css";
 const Auth = () => {
   VKID.Config.set({
     app: 51879792, // Идентификатор приложения.
-    redirectUrl: "https://localhost/", // Адрес для перехода после авторизации.
+    redirectUrl: process.env.REACT_APP_AUTH_REDIRECT, // Адрес для перехода после авторизации.
   });
 
   useEffect(() => {
