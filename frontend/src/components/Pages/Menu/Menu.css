@@ -1,5 +1,5 @@
 .menu {
-  font-size: 18px;
+  font-size: 1.1rem;
   position: sticky;
   width: 100%;
   top: 0px;
@@ -56,10 +56,10 @@
 .menu .ul {
   position: absolute;
   background-color: rgb(247, 247, 247);
-  margin-top: 5.8px;
+  margin-top: 3px;
 
   list-style-type: none;
-  font-size: 15px;
+  font-size: 0.9rem;
   padding: 5px 5px 5px 5px;
 }
 .menu .exit {

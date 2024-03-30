@@ -29,7 +29,7 @@
 }
 
 .taskbut {
-  font-size: 27px;
+  font-size: 1.7rem;
   display: flex;
 
   justify-content: center;
@@ -89,22 +89,23 @@
 
 .varTaskText {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 50px;
   /* flex-wrap: wrap; */
   background-color: rgb(255, 255, 255);
   /* margin: 20px; */
   padding: 10px;
-  max-width: 80%;
-  font-size: 15px;
+  max-width: 90%;
+  font-size: 1rem;
   max-height: 100%;
 }
 
 .varTask .taskcontent {
-  font-size: 18px;
+  font-size: 1rem;
   padding: 0px;
+  margin-bottom: 10px;
   /* font-family: inherit; */
 }
 
@@ -130,11 +131,11 @@
   align-items: center;
   padding-right: 5px;
   color: #496484;
-  font-size: 17px;
+  font-size: 1rem;
   user-select: none;
 }
 .fileimg {
-  font-size: 40px;
+  font-size: 2.2rem;
   font-weight: 200;
 }
 .fileandimg:hover {
@@ -144,7 +145,10 @@
 /* Table answer */
 .varTask .tableanswercont {
   padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
 }
+
 .varTask .tableanswer {
   display: flex;
   flex-direction: column;
@@ -153,12 +157,12 @@
   margin: 20px 0px 0px 0px;
   border: 2px solid #22355b;
   width: 300px;
-  max-width: 90%;
+  max-width: 70%;
 }
 .varTask .tableanswer p {
   display: inline-block;
   min-width: 100%;
-  font-size: 10px;
+  font-size: 0.8rem;
   text-align: center;
   padding: 5px 0px 5px 0px;
   margin: 0px 0px 0px 0px;
@@ -180,7 +184,7 @@
 
 /* Save button table*/
 .varTask .tableanswer .savebutton {
-  font-size: 11px;
+  font-size: 0.7rem;
   margin: 5px;
 
   padding: 10px;
@@ -211,7 +215,7 @@
 /* Clear button */
 .varTask .tableanswer .clearbutton {
   width: 40%;
-  font-size: 11px;
+  font-size: 0.7rem;
   margin: 5px;
   padding: 10px;
   border-radius: 5px;
@@ -250,7 +254,24 @@
   scrollbar-width: none;
 } */
 
-/* @media (orientation: portrait) { */
+/* @media (max-width: 900px) {
+  * {
+    background-color: #f54f36;
+  }
+} */
+
+@media (orientation: portrait) {
+  .taskcontent * {
+    /* font-size: 0.7rem; */
+  }
+}
+@media (max-aspect-ratio: 1.9), (max-width: 1200px) {
+  .varTaskText {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
 @media (max-aspect-ratio: 1.6) {
   .container {
     grid-template-areas:
@@ -271,7 +292,7 @@
     padding: 10px;
     min-width: 95%;
     max-width: 95%;
-    font-size: 15px;
+    font-size: 1rem;
   }
   .varNavigate .leftmenu {
     margin: 0px 5px 0px 5px;

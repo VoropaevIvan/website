@@ -32,14 +32,14 @@
   border: 0px;
   border-radius: 4px;
 
-  font-size: 16px;
+  font-size: 1rem;
 
   width: 40px;
   height: 40px;
 }
 
 .varNavigate .scrollbut {
-  font-size: 17px;
+  font-size: 1rem;
   background-color: #0d325c;
   color: white;
   /* padding: 0px 0px 3px 0px; */
@@ -79,7 +79,7 @@
 .varNavigate .lmcount {
   text-align: center;
   color: #12264f;
-  font-size: 20px;
+  font-size: 1.25rem;
   margin: 0px 0px 20px 0px;
   padding: 0px 10px 0px 10px;
 }
