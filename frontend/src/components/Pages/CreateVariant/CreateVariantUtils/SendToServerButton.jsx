@@ -15,7 +15,8 @@ const SendToServerButton = ({
     });
 
     console.log(okData);
-    const link = process.env.REACT_APP_VARIANT;
+    const link = process.env.REACT_APP_LINK_VARIANT;
+    console.log(link);
     const res = axios.post(
       link + location.pathname.split("/").reverse()[0],
       okData,
