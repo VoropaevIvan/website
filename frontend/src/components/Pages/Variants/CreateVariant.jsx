@@ -21,7 +21,7 @@ const CreateVariant = ({ setVariantsNames }) => {
           });
 
           res.then(() => {
-            const link = process.env.REACT_APP_LINK_VARIANT;
+            const link = process.env.REACT_APP_LINK_VARIANTS;
             const res1 = axios.get(link);
             res1.then((value) => {
               setVariantsNames(value.data);
