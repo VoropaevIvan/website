@@ -1,0 +1,76 @@
+.varTask .tablediv {
+  display: flex;
+  justify-content: center;
+}
+
+.varTask .clearsavebuttons {
+  display: flex;
+  justify-content: center;
+}
+
+/* Save button */
+.tsavebutton,
+.tsavebuttondis,
+.tclearbutton,
+.tclearbuttondis {
+  width: 40%;
+
+  font-size: 0.7rem;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.tsavebutton {
+  color: black;
+  background-color: #00e2a5;
+  border: 1px solid #00e2a5;
+}
+
+.tsavebutton:hover {
+  cursor: pointer;
+}
+
+.tsavebuttondis {
+  color: black;
+  border: 1px solid #00e2a5;
+  color: #00e2a5;
+  background-color: white;
+}
+
+/* Clear button */
+.tclearbutton {
+  border: 1px solid #f54f36;
+  background-color: #f54f36;
+  color: white;
+}
+.tclearbutton:hover {
+  cursor: pointer;
+  border: 1px solid #f54f36;
+  background-color: #f54f36;
+  color: #ffffff;
+}
+.tclearbutton:active {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
+.tclearbuttondis {
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+.tclearbuttondis:hover {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
+/* .tclearbuttondis:active {
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+} */

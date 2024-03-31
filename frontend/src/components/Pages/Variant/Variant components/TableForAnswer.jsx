@@ -1,7 +1,11 @@
 import { useDispatch } from "react-redux";
+
 import { clearAnswer, setAnswer } from "../../../../redux/slices/variantSlice";
 import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
 import Table from "../../../Utils/Table/Table";
+
+import "./TableForAnswer.css";
+import { emptyAnswerTable } from "../../../Utils/variant/variantUtils";
 
 const TableForAnswer = ({
   rows,
@@ -13,6 +17,8 @@ const TableForAnswer = ({
   curTaskNumber,
 }) => {
   const dispatch = useDispatch();
+
+  const disabledSaveBut = disabled | emptyAnswerTable(valueInAnswerTable);
 
   const handleSaveButtonClick = () => {
     dispatch(
@@ -29,6 +35,7 @@ const TableForAnswer = ({
     });
   };
 
+  console.log(valueInAnswerTable);
   return (
     <>
       <div className="tablediv">
@@ -42,15 +49,23 @@ const TableForAnswer = ({
       </div>
 
       <div className="clearsavebuttons">
-        <button className="clearbutton" onClick={handleClearAnswerButtonClick}>
+        <button
+          className={
+            emptyAnswerTable(valueInAnswerTable)
+              ? "tclearbuttondis"
+              : "tclearbutton"
+          }
+          disabled={emptyAnswerTable(valueInAnswerTable)}
+          onClick={handleClearAnswerButtonClick}
+        >
           Очистить
         </button>
         <button
-          className="savebutton"
+          className={disabledSaveBut ? "tsavebuttondis" : "tsavebutton"}
           onClick={handleSaveButtonClick}
-          disabled={disabled}
+          disabled={disabledSaveBut}
         >
-          Сохранить ответ
+          {disabled ? "Ответ сохранён" : "Сохранить ответ"}
         </button>
       </div>
     </>

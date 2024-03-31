@@ -122,17 +122,6 @@
   cursor: pointer;
 }
 
-/* Table answer */
-
-.varTask .clearsavebuttons {
-  display: flex;
-  justify-content: center;
-}
-.varTask .tablediv {
-  display: flex;
-  justify-content: center;
-}
-
 /* Скрываем scrollbar для IE, Edge и Firefox */
 /* .leftmenubuttons {
   -ms-overflow-style: none;
