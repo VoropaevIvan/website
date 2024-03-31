@@ -12,7 +12,6 @@ const getAllTasksFromServer = async (setTasksFromServer) => {
     const res = await axios.get(process.env.REACT_APP_LINK_GET_ALL_TASK);
 
     if (res.data) {
-      console.log(res.data);
       let dataOk = res.data;
 
       dataOk = dataOk.map((e) => {
@@ -27,7 +26,6 @@ const getAllTasksFromServer = async (setTasksFromServer) => {
         return { ...task, files: JSON.parse(task.files) };
       });
       setTasksFromServer(dataOk);
-      console.log(dataOk);
     }
   } catch (error) {
     console.log(error);

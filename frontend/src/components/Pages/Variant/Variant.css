@@ -1,0 +1,305 @@
+.container {
+  background-color: #e8eef9;
+  display: grid;
+  grid-template-areas:
+    "header   header      header header"
+    "leftmenu taskbutdivl task   taskbutdivr"
+    "leftmenu answer      answer answer";
+  grid-template-rows: 1fr 14fr 2.5fr;
+  grid-template-columns: 1.5fr 1fr 18fr 1fr;
+  /* background-color: rgb(0, 0, 0); */
+
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+.taskbutdivl,
+.taskbutdivr {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 10px 0px 10px;
+  background-color: white;
+  margin-top: 10px;
+  user-select: none;
+}
+.taskbutdivr {
+  margin-right: 10px;
+}
+
+.taskbut {
+  font-size: 1.7rem;
+  display: flex;
+
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: rgb(120, 181, 255);
+  border: 1px solid rgb(120, 181, 255);
+  border-radius: 50%;
+
+  color: #a8c7f6;
+  border: 1px solid #a8c7f6;
+
+  align-content: center;
+  text-align: center;
+}
+
+.taskbut:hover {
+  cursor: pointer;
+}
+
+.taskwithbut {
+  display: flex;
+}
+
+.varHeader {
+  grid-area: header;
+
+  display: flex;
+  gap: 10px 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0px 10px 0px;
+
+  /* background-color: aqua; */
+  background-color: #22355b;
+  color: white;
+}
+
+.varCentre {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.varTask {
+  grid-area: task;
+  background-color: white;
+  /* background-color: burlywood; */
+  overflow: auto;
+  margin-top: 10px;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.varTaskText {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 50px;
+  /* flex-wrap: wrap; */
+  background-color: rgb(255, 255, 255);
+  /* margin: 20px; */
+  padding: 10px;
+  max-width: 90%;
+  font-size: 1rem;
+  max-height: 100%;
+}
+
+.varTask .taskcontent {
+  font-size: 1rem;
+  padding: 0px;
+  margin-bottom: 10px;
+  /* font-family: inherit; */
+}
+
+.enable {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.enable img {
+  pointer-events: none;
+}
+
+.leftmenubuttons::-webkit-scrollbar {
+  display: none;
+  /* width: 0px; */
+}
+
+.fileandimg {
+  display: flex;
+  /* flex-wrap: wrap; */
+  flex-direction: column;
+  align-items: center;
+  padding-right: 5px;
+  color: #496484;
+  font-size: 1rem;
+  user-select: none;
+}
+.fileimg {
+  font-size: 2.2rem;
+  font-weight: 200;
+}
+.fileandimg:hover {
+  cursor: pointer;
+}
+
+/* Table answer */
+.varTask .tableanswercont {
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.varTask .tableanswer {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: stretch;
+  margin: 20px 0px 0px 0px;
+  border: 2px solid #22355b;
+  width: 300px;
+  max-width: 70%;
+}
+.varTask .tableanswer p {
+  display: inline-block;
+  min-width: 100%;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 5px 0px 5px 0px;
+  margin: 0px 0px 0px 0px;
+  background-color: #22355b;
+  color: white;
+}
+.varTask .clearsavebuttons {
+  display: flex;
+  justify-content: center;
+}
+.varTask .tablediv {
+  display: flex;
+  justify-content: center;
+}
+.varTask .tableanswer table {
+  /* width: 80%; */
+  /* margin: 0px; */
+}
+
+/* Save button table*/
+.varTask .tableanswer .savebutton {
+  font-size: 0.7rem;
+  margin: 5px;
+
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #00e2a5;
+  color: black;
+  background-color: #00e2a5;
+  width: 40%;
+}
+
+.varTask .tableanswer .savebutton:hover {
+  /* background-color: rgb(0, 136, 255); */
+  cursor: pointer;
+}
+
+.varTask .tableanswer .savebuttondis {
+  cursor: default;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0px;
+  color: black;
+  border: 1px solid #00e2a5;
+  color: #00e2a5;
+  background-color: white;
+}
+
+/* Clear button */
+.varTask .tableanswer .clearbutton {
+  width: 40%;
+  font-size: 0.7rem;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+.varTask .tableanswer .clearbutton:hover {
+  cursor: pointer;
+  border: 1px solid #f54f36;
+  background-color: #f54f36;
+  color: #ffffff;
+}
+.varTask .tableanswer .clearbutton:active {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
+.varTask .tableanswer .disabledclear:hover {
+  cursor: initial;
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+.varTask .tableanswer .disabledclear:active {
+  border: 1px solid #f54f36;
+  background-color: white;
+  color: #f54f36;
+}
+
+/* Скрываем scrollbar для IE, Edge и Firefox */
+/* .leftmenubuttons {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+} */
+
+/* @media (max-width: 900px) {
+  * {
+    background-color: #f54f36;
+  }
+} */
+
+@media (orientation: portrait) {
+  .taskcontent * {
+    /* font-size: 0.7rem; */
+  }
+}
+@media (max-aspect-ratio: 1.9), (max-width: 1200px) {
+  .varTaskText {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+@media (max-aspect-ratio: 1.6) {
+  .container {
+    grid-template-areas:
+      "header   header"
+      "leftmenu  task"
+      "leftmenu answer";
+    grid-template-rows: 1fr 14fr 1.5fr;
+    grid-template-columns: 1fr 20fr;
+  }
+  .varTask {
+    margin-right: 10px;
+  }
+  .varTaskText {
+    /* display: flex; */
+
+    background-color: rgb(255, 255, 255);
+    margin: 0px;
+    padding: 10px;
+    min-width: 95%;
+    max-width: 95%;
+    font-size: 1rem;
+  }
+  .varNavigate .leftmenu {
+    margin: 0px 5px 0px 5px;
+  }
+  .taskbutdivl,
+  .taskbutdivr {
+    display: none;
+    margin: 0;
+  }
+}

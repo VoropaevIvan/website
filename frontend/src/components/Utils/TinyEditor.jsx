@@ -19,7 +19,7 @@ const TinyEditor = ({ setText, initialText, height }) => {
         }
         init={{
           file_picker_types: "file image media",
-          images_upload_url: "http://localhost:8080/files",
+          images_upload_url: process.env.REACT_APP_LINK_LOAD_FILE,
           height: height || 500,
           menubar: "file edit insert view format table tools help",
           plugins: [

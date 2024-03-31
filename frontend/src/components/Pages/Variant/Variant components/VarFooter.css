@@ -1,0 +1,34 @@
+.varfooter {
+  grid-area: answer;
+  display: flex;
+  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  align-content: center;
+
+  /* background-color: brown; */
+  background-color: white;
+  /* min-height: 8vh; */
+
+  margin-top: 4px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.varfooter .varfiles {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.varfooter .varfiles div {
+  align-content: center;
+  margin: 5px;
+}
+
+@media (orientation: portrait) {
+  .varfooter {
+    flex-direction: column;
+  }
+}

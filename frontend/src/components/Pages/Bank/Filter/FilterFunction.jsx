@@ -1,20 +1,12 @@
-import { all } from "axios";
 import {
   ALL_ACTUALITY,
   ALL_DIFFICULTY,
   NOT_AND_OFFICIAL_TASK,
   OFFICIAL_TASK,
-} from "../../Pages/constants";
+} from "../../../Pages/constants";
 import { ALL_VARIANTS_TASK_NUMBER } from "./constants";
 
 const FilterFunction = (task, filtersData) => {
-  console.log(
-    task,
-    filtersData,
-    task.official,
-    filtersData.isOfficial === OFFICIAL_TASK ? true : false
-  );
-
   let decision = 1;
 
   // Number EGE

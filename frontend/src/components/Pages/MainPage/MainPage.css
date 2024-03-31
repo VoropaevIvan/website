@@ -2,12 +2,15 @@
   display: inline-block;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 30px;
+
   background-color: white;
   padding: 10px 40px;
   border-radius: 40px;
-  font-size: 25px;
+  font-size: 1.5rem;
   font-weight: 600;
+
+  margin: 20px;
+  margin-top: 30px;
 }
 
 .mainpage h2 {
@@ -18,8 +21,10 @@
   background-color: white;
   padding: 10px 40px;
   border-radius: 40px;
-  font-size: 20px;
+  font-size: 1.4rem;
   font-weight: 600;
+
+  margin: 20px;
 }
 
 .mainpage div {
@@ -34,9 +39,3 @@
 .mainpage table {
   background-color: white;
 }
-
-/* .mainpage div {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-} */

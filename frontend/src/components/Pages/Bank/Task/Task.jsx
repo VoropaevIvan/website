@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./Task.css";
-import Table from "../../Utils/Table/Table";
-import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
-import { eraseEmptyRowsFromTable } from "../../Utils/addTaskUtils/variantUtils";
+import Table from "../../../Utils/Table/Table";
+import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
+import { eraseEmptyRowsFromTable } from "../../../Utils/addTaskUtils/variantUtils";
 import { NOT_DONE_TASK, OK_DONE_TASK, WA_DONE_TASK } from "./constantsTask";
 
 export const Task = ({
@@ -128,7 +128,6 @@ export const Task = ({
       <></>
     );
   };
-
   return (
     <div
       className={
@@ -143,7 +142,7 @@ export const Task = ({
           <span>{" (" + id + ")"}</span>
         </p>
 
-        <span>{String(isOfficial) ? "Официальная" : "Не официальная"}</span>
+        <span>{isOfficial ? "Официальная" : "Не официальная"}</span>
         <span>{", " + actuality}</span>
         <span>{", " + difficulty}</span>
       </div>

@@ -1,0 +1,9 @@
+.varHeader a {
+  color: rgb(255, 255, 255);
+  font-size: 1rem;
+  text-decoration: none;
+}
+
+.varHeader a:hover {
+  color: rgb(255, 255, 255);
+}

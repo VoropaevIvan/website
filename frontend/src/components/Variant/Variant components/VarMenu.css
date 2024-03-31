@@ -1,9 +1,0 @@
-.varMenuSpan {
-  display: flex;
-  justify-content: center;
-  /* margin: 10px; */
-}
-.varMenuSpan a {
-  padding-right: 10px;
-  color: rgb(0, 0, 0);
-}

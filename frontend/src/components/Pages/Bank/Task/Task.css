@@ -10,6 +10,7 @@
 
 .taskcontent {
   padding: 15px;
+  font-size: 0.95rem;
 }
 
 .taskinfo {
@@ -59,7 +60,7 @@
 
 .answerinbanktext {
   padding: 5px;
-  font-size: 17px;
+  font-size: 1.1rem;
 
   max-width: 70%;
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { parseTaskFromServer } from "./addTaskUtils";
+import { isNewTask } from "../../Pages/AddTask/components/AddTaskUtils";
 
 export const getTaskById = async (
   id,
@@ -7,7 +8,6 @@ export const getTaskById = async (
   setInitialDataForEditor
 ) => {
   try {
-    //const res = await axios.get(`http://localhost:5000/api/task/${id}`);
     const res = await axios.get(process.env.REACT_APP_LINK_GET_TASK_BY_ID + id);
     console.log(res.data);
     if (res.data) {
@@ -25,15 +25,16 @@ export const getTaskById = async (
         solution: res.data.solution,
       });
     }
+    return res;
   } catch (error) {
     //setInitialDataFromServer();
     console.log(error);
+    return { status: 404 };
   }
 };
 
 export const justGetTaskById = async (id) => {
   try {
-    //const res = await axios.get(`http://localhost:5000/api/task/${id}`);
     const res = await axios.get(process.env.REACT_APP_LINK_GET_TASK_BY_ID + id);
     if (res.data) {
       const okData = res.data;
@@ -61,7 +62,8 @@ export const getVariantTasksFromServer = async ({
   setIsOkLoad,
 }) => {
   try {
-    const res = await axios.get("http://localhost:8080/variants/" + varId);
+    const link = process.env.REACT_APP_LINK_VARIANT;
+    const res = await axios.get(link + varId);
 
     if (res.data) {
       let dataOk = res.data;
@@ -89,13 +91,50 @@ export const saveFileOnServer = async (currentFile) => {
     var formData = new FormData();
     formData.append("file", currentFile);
 
-    const res = axios.post("http://localhost:8080/files", formData, {
+    const link = process.env.REACT_APP_LINK_LOAD_FILE;
+    const res = axios.post(link, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
 
+    return res;
+  } catch (error) {}
+};
+
+export const saveTaskOnServer = async ({ allTaskData, locationPath }) => {
+  try {
+    let answer = {
+      ...allTaskData.answer,
+    };
+    if (allTaskData.answer.cols !== 0 || allTaskData.answer.rows !== 0) {
+      answer = {
+        ...allTaskData.answer,
+        data: JSON.stringify(allTaskData.answer.data),
+      };
+    }
+
+    let link = process.env.REACT_APP_LINK_ADD_TASK;
+
+    if (!isNewTask(locationPath)) {
+      const taskId = Number(locationPath.split("/").reverse()[0]);
+      link = link + "/" + String(taskId);
+    }
+
+    const res = await axios.post(
+      link,
+      {
+        ...allTaskData,
+        answer: answer,
+        files: JSON.stringify(allTaskData.files),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        },
+      }
+    );
     return res;
   } catch (error) {}
 };
