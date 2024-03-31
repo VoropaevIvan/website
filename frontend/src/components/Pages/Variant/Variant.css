@@ -78,13 +78,15 @@
   grid-area: task;
   background-color: white;
   /* background-color: burlywood; */
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   margin-top: 10px;
 
   display: flex;
 
   justify-content: center;
   align-items: center;
+  padding: 0px 10px 0px 10px;
 }
 
 .varTaskText {

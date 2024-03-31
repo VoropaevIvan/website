@@ -14,7 +14,6 @@ import { useLocation } from "react-router-dom";
 import { LiaFileDownloadSolid } from "react-icons/lia";
 import "./Variant.css";
 import "./Variant components/VarFooter.css";
-import { fileImgInVar } from "../constants";
 
 const Variant = () => {
   const location = useLocation();
@@ -27,6 +26,7 @@ const Variant = () => {
   const [valueInAnswerTable, setValueInAnswerTable] = useState({});
 
   const [isOkLoad, setIsOkLoad] = useState(false);
+  const [fontScale, setFontScale] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -128,11 +128,7 @@ const Variant = () => {
       </div>
 
       <div className="varNavigate">
-        <LeftMenu
-          valueInAnswerInput={valueInAnswerInput}
-          setValueInAnswerInput={setValueInAnswerInput}
-          setValueInAnswerTable={setValueInAnswerTable}
-        />
+        <LeftMenu fontScale={fontScale} setFontScale={setFontScale} />
       </div>
 
       <div className="taskbutdivl">
@@ -144,7 +140,7 @@ const Variant = () => {
       <div className="varTask">
         <div className="varTaskText enable">
           <div className="taskwithbut">
-            <TaskTextForVariant />
+            <TaskTextForVariant fontScale={fontScale} />
           </div>
 
           {varData &&

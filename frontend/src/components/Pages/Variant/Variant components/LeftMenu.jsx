@@ -4,7 +4,7 @@ import { setCurrentTask } from "../../../../redux/slices/variantSlice";
 
 import "./LeftMenu.css";
 
-function LeftMenu({ setValueInAnswerInput, setValueInAnswerTable }) {
+function LeftMenu({ fontScale, setFontScale }) {
   const curTask = useSelector((state) => state.variant.currentTask);
   const varData = useSelector((state) => state.variant.data);
   const curAnswers = useSelector((state) => state.variant.answers);
@@ -29,6 +29,18 @@ function LeftMenu({ setValueInAnswerInput, setValueInAnswerTable }) {
     }
     return count;
   };
+
+  const handleFontUp = () => {
+    if (fontScale < 0.5) {
+      setFontScale(fontScale + 0.05);
+    }
+  };
+  const handleFontDown = () => {
+    if (fontScale > -0.5) {
+      setFontScale(fontScale - 0.05);
+    }
+  };
+
   return (
     <div className="leftmenu">
       <div>
@@ -62,6 +74,12 @@ function LeftMenu({ setValueInAnswerInput, setValueInAnswerTable }) {
       </div>
       <button className="scrollbut" onClick={handleScrollDown}>
         ↓
+      </button>
+      <button className="leftmenubutton" onClick={handleFontUp}>
+        +
+      </button>
+      <button className="leftmenubutton" onClick={handleFontDown}>
+        -
       </button>
     </div>
   );
