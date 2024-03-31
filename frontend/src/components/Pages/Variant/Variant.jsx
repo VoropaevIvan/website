@@ -120,6 +120,7 @@ const Variant = () => {
     return <h2>Пустой вариант</h2>;
   }
 
+  console.log("vat", valueInAnswerTable);
   return (
     <div className="container">
       <div className="varHeader">
