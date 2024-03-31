@@ -1,3 +1,18 @@
+.varHeader {
+  grid-area: header;
+
+  display: flex;
+  gap: 10px 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0px 10px 0px;
+
+  /* background-color: aqua; */
+  background-color: #22355b;
+  color: white;
+}
+
 .varHeader a {
   color: rgb(255, 255, 255);
   font-size: 1rem;

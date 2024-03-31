@@ -5,7 +5,7 @@
     "header   header      header header"
     "leftmenu taskbutdivl task   taskbutdivr"
     "leftmenu answer      answer answer";
-  grid-template-rows: 1fr 14fr 2.5fr;
+  grid-template-rows: 1.3fr 14fr 2.5fr;
   grid-template-columns: 1.5fr 1fr 18fr 1fr;
   /* background-color: rgb(0, 0, 0); */
 
@@ -54,21 +54,6 @@
   display: flex;
 }
 
-.varHeader {
-  grid-area: header;
-
-  display: flex;
-  gap: 10px 10px;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 10px 0px 10px 0px;
-
-  /* background-color: aqua; */
-  background-color: #22355b;
-  color: white;
-}
-
 .varCentre {
   max-height: 100%;
   max-width: 100%;
@@ -102,13 +87,6 @@
   max-width: 90%;
   font-size: 1rem;
   max-height: 100%;
-}
-
-.varTask .taskcontent {
-  font-size: 1rem;
-  padding: 0px;
-  margin-bottom: 10px;
-  /* font-family: inherit; */
 }
 
 .enable {
@@ -145,32 +123,7 @@
 }
 
 /* Table answer */
-.varTask .tableanswercont {
-  padding-bottom: 20px;
-  display: flex;
-  justify-content: center;
-}
 
-.varTask .tableanswer {
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: stretch;
-  margin: 20px 0px 0px 0px;
-  border: 2px solid #22355b;
-  width: 300px;
-  max-width: 70%;
-}
-.varTask .tableanswer p {
-  display: inline-block;
-  min-width: 100%;
-  font-size: 0.8rem;
-  text-align: center;
-  padding: 5px 0px 5px 0px;
-  margin: 0px 0px 0px 0px;
-  background-color: #22355b;
-  color: white;
-}
 .varTask .clearsavebuttons {
   display: flex;
   justify-content: center;
@@ -179,76 +132,6 @@
   display: flex;
   justify-content: center;
 }
-.varTask .tableanswer table {
-  /* width: 80%; */
-  /* margin: 0px; */
-}
-
-/* Save button table*/
-.varTask .tableanswer .savebutton {
-  font-size: 0.7rem;
-  margin: 5px;
-
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #00e2a5;
-  color: black;
-  background-color: #00e2a5;
-  width: 40%;
-}
-
-.varTask .tableanswer .savebutton:hover {
-  /* background-color: rgb(0, 136, 255); */
-  cursor: pointer;
-}
-
-.varTask .tableanswer .savebuttondis {
-  cursor: default;
-  margin: 5px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 0px;
-  color: black;
-  border: 1px solid #00e2a5;
-  color: #00e2a5;
-  background-color: white;
-}
-
-/* Clear button */
-.varTask .tableanswer .clearbutton {
-  width: 40%;
-  font-size: 0.7rem;
-  margin: 5px;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #f54f36;
-  background-color: white;
-  color: #f54f36;
-}
-.varTask .tableanswer .clearbutton:hover {
-  cursor: pointer;
-  border: 1px solid #f54f36;
-  background-color: #f54f36;
-  color: #ffffff;
-}
-.varTask .tableanswer .clearbutton:active {
-  cursor: initial;
-  border: 1px solid #f54f36;
-  background-color: white;
-  color: #f54f36;
-}
-
-.varTask .tableanswer .disabledclear:hover {
-  cursor: initial;
-  border: 1px solid #f54f36;
-  background-color: white;
-  color: #f54f36;
-}
-.varTask .tableanswer .disabledclear:active {
-  border: 1px solid #f54f36;
-  background-color: white;
-  color: #f54f36;
-}
 
 /* Скрываем scrollbar для IE, Edge и Firefox */
 /* .leftmenubuttons {
@@ -256,17 +139,39 @@
   scrollbar-width: none;
 } */
 
-/* @media (max-width: 900px) {
-  * {
-    background-color: #f54f36;
-  }
-} */
+/* Var Fotter */
+.varfooter {
+  grid-area: answer;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+
+  background-color: white;
+
+  margin-top: 4px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.varfooter .varfiles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.varfooter .varfiles div {
+  align-content: center;
+  margin: 5px;
+}
 
 @media (orientation: portrait) {
-  .taskcontent * {
-    /* font-size: 0.7rem; */
+  .varfooter {
+    flex-direction: column;
   }
 }
+
+/* Media */
 @media (max-aspect-ratio: 1.9), (max-width: 1200px) {
   .varTaskText {
     flex-direction: column;
@@ -280,7 +185,7 @@
       "header   header"
       "leftmenu  task"
       "leftmenu answer";
-    grid-template-rows: 1fr 14fr 1.5fr;
+    grid-template-rows: 1.3fr 14fr 1.5fr;
     grid-template-columns: 1fr 20fr;
   }
   .varTask {

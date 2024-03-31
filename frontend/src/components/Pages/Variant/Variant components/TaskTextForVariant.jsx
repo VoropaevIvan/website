@@ -4,18 +4,19 @@ import "./TaskTextForVariant.css";
 function TaskTextForVariant({ fontScale }) {
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const varData = useSelector((state) => state.variant.data);
+
   const curTaskContent = varData[curTaskNumber]
     ? varData[curTaskNumber].content
     : "";
-
-  function createMarkup(myContent) {
-    return { __html: myContent };
-  }
 
   if (!fontScale) {
     fontScale = 0;
   }
   const font = 1 + fontScale;
+
+  function createMarkup(myContent) {
+    return { __html: myContent };
+  }
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { clearAnswer, setAnswer } from "../../../../redux/slices/variantSlice";
-import Table from "../../../Utils/Table/Table";
 import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
+import Table from "../../../Utils/Table/Table";
 
 const TableForAnswer = ({
   rows,
@@ -10,15 +10,16 @@ const TableForAnswer = ({
   setNotFinalAnswer,
   disabled,
   valueInAnswerTable,
-  curAnswer,
   curTaskNumber,
 }) => {
   const dispatch = useDispatch();
+
   const handleSaveButtonClick = () => {
     dispatch(
       setAnswer({ taskNumber: curTaskNumber, newAnswer: valueInAnswerTable })
     );
   };
+
   const handleClearAnswerButtonClick = () => {
     dispatch(clearAnswer(curTaskNumber));
     setNotFinalAnswer({

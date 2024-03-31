@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./VarMenu.css";
+
 function VarMenu() {
   return (
     <>

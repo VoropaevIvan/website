@@ -1,33 +1,27 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { setCurrentTask } from "../../../../redux/slices/variantSlice";
 
+import { countUserAns } from "../../../Utils/variant/variantUtils";
+
+import { SlMagnifierAdd } from "react-icons/sl";
+import { SlMagnifierRemove } from "react-icons/sl";
 import "./LeftMenu.css";
 
 function LeftMenu({ fontScale, setFontScale }) {
+  const divRef = useRef(null);
+  const dispatch = useDispatch();
+
   const curTask = useSelector((state) => state.variant.currentTask);
   const varData = useSelector((state) => state.variant.data);
   const curAnswers = useSelector((state) => state.variant.answers);
 
-  const dispatch = useDispatch();
-  const divRef = useRef(null);
-
   const handleScrollUp = () => {
     divRef.current.scrollBy(0, -200);
   };
-
   const handleScrollDown = () => {
     divRef.current.scrollBy(0, 200);
-  };
-
-  const countUserAns = (curAnswers) => {
-    let count = 0;
-    for (let i = 0; i < varData.length; i++) {
-      if (curAnswers[i]) {
-        count++;
-      }
-    }
-    return count;
   };
 
   const handleFontUp = () => {
@@ -45,7 +39,9 @@ function LeftMenu({ fontScale, setFontScale }) {
     <div className="leftmenu">
       <div>
         <div className="lmheader">{"Дано ответов"}</div>
-        <div className="lmcount">{countUserAns(curAnswers) + " / 27"}</div>
+        <div className="lmcount">
+          {countUserAns(curAnswers, varData.length) + " / 27"}
+        </div>
       </div>
 
       <button className="scrollbut" onClick={handleScrollUp}>
@@ -72,14 +68,16 @@ function LeftMenu({ fontScale, setFontScale }) {
             );
           })}
       </div>
+
       <button className="scrollbut" onClick={handleScrollDown}>
         ↓
       </button>
+
       <button className="leftmenubutton" onClick={handleFontUp}>
-        +
+        <SlMagnifierAdd />
       </button>
       <button className="leftmenubutton" onClick={handleFontDown}>
-        -
+        <SlMagnifierRemove />
       </button>
     </div>
   );
