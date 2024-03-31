@@ -54,9 +54,6 @@ public class SecurityConfig {
                     corsConfiguration.setAllowCredentials(true);
                     return corsConfiguration;
                 }))
-                // Enable https
-                .requiresChannel(channel -> channel
-                        .anyRequest().requiresSecure())
                 // Настройка доступа к конечным точкам
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.GET, commonAccessPatterns).permitAll()
