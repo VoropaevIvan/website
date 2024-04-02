@@ -1,13 +1,12 @@
 package com.example.site.dto;
 
-import com.example.site.dto.Task.Answer;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
-public class TaskSolution {
-
+public class SolvedVariant {
     @Id
     @GeneratedValue
     private long id;
@@ -16,12 +15,22 @@ public class TaskSolution {
     private User user;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Task task;
+    private Variant variant;
 
-    private Answer answer;
+    @OneToMany(mappedBy = "variant")
+    private List<SolvedVariantAnswer> answers;
 
     @Basic(optional = false)
     private Instant instant;
+
+    public SolvedVariant() {
+    }
+
+    public SolvedVariant(User user, Variant variant) {
+        this.user = user;
+        this.variant = variant;
+        this.instant = Instant.now();
+    }
 
     public long getId() {
         return id;
@@ -39,20 +48,20 @@ public class TaskSolution {
         this.user = user;
     }
 
-    public Task getTask() {
-        return task;
+    public Variant getVariant() {
+        return variant;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public void setVariant(Variant variant) {
+        this.variant = variant;
     }
 
-    public Answer getAnswer() {
-        return answer;
+    public List<SolvedVariantAnswer> getAnswers() {
+        return answers;
     }
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
+    public void setAnswers(List<SolvedVariantAnswer> answers) {
+        this.answers = answers;
     }
 
     public Instant getInstant() {

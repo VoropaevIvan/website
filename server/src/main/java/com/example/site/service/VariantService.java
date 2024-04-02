@@ -5,13 +5,11 @@ import com.example.site.dao.VariantTaskRepository;
 import com.example.site.dto.Task;
 import com.example.site.dto.Variant;
 import com.example.site.dto.VariantTask;
+import com.example.site.dto.rest.TaskRest;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class VariantService {
@@ -29,52 +27,66 @@ public class VariantService {
         this.taskService = taskService;
     }
 
-    public List<String> getAll() {
-        return variantRepository.findAll().stream().map(Variant::getName).toList();
+    public List<String> getAllNames() {
+        return variantRepository.findAll().stream()
+                .map(Variant::getName)
+                .toList();
     }
 
-    public Optional<List<Task>> get(String variantName) {
-        Optional<Variant> optionalVariant = variantRepository.findByName(variantName);
+    public Optional<List<TaskRest>> getTasks(String name) {
+        Optional<Variant> optionalVariant = variantRepository.findByName(name);
         if (optionalVariant.isEmpty()) {
             return Optional.empty();
         }
+
         List<VariantTask> tasks = optionalVariant.get().getTasks();
         tasks.sort(Comparator.comparingInt(VariantTask::getTaskOrder));
-        return Optional.of(
-                tasks.stream().map(VariantTask::getTask).toList()
-        );
+
+        List<TaskRest> taskRestList = tasks.stream()
+                .map(VariantTask::getTask)
+                .map(TaskRest::fromTask)
+                .toList();
+
+        return Optional.of(taskRestList);
     }
 
     @Transactional
-    public List<Task> post(String variantName, List<Task> tasks) {
+    public List<TaskRest> post(String variantName, List<TaskRest> taskRestList) {
+        List<Task> tasks = taskRestList.stream()
+                .map(TaskRest::toTask)
+                .map(task -> taskService.edit(task.getId(), task)
+                        .orElseGet(() -> taskService.add(task)))
+                .toList();
+
+        Variant variant = variantRepository.findByName(variantName)
+                .orElseGet(() -> variantRepository.save(new Variant(variantName)));
+
+        List<VariantTask> variantTasks = Optional.ofNullable(variant.getTasks())
+                .orElse(new ArrayList<>());
+
+        variantTasks.sort(Comparator.comparingInt(VariantTask::getTaskOrder));
+
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            Task updated = taskService.edit(task.getId(), task)
-                    .orElseGet(() -> taskService.add(task));
-            tasks.set(i, updated);
-        }
-        Variant variant;
-        List<VariantTask> variantTasks;
-        Optional<Variant> optionalVariant = variantRepository.findByName(variantName);
-        if (optionalVariant.isEmpty()) {
-            variant = variantRepository.save(new Variant(variantName));
-            variantTasks = Collections.emptyList();
-        } else {
-            variant = optionalVariant.get();
-            variantTasks = variant.getTasks();
-            variantTasks.sort(Comparator.comparingInt(VariantTask::getTaskOrder));
-        }
-        for (int i = 0; i < tasks.size(); i++) {
-            VariantTask variantTask = new VariantTask(variant, i, tasks.get(i));
+            VariantTask variantTask;
+
             if (i < variantTasks.size()) {
-                variantTask.setId(variantTasks.get(i).getId());
+                variantTask = variantTasks.get(i);
+                variantTask.setTask(task);
+            } else {
+                variantTask = new VariantTask(variant, i, task);
             }
+
             variantTaskRepository.save(variantTask);
         }
+
         for (int i = tasks.size(); i < variantTasks.size(); i++) {
             variantTaskRepository.deleteById(variantTasks.get(i).getId());
         }
-        return tasks;
+
+        return tasks.stream()
+                .map(TaskRest::fromTask)
+                .toList();
     }
 
     public boolean delete(String variantName) {
@@ -82,11 +94,26 @@ public class VariantService {
         if (optionalVariant.isEmpty()) {
             return false;
         }
+
         Variant variant = optionalVariant.get();
         for (VariantTask task : variant.getTasks()) {
             variantTaskRepository.deleteById(task.getId());
         }
+
         variantRepository.deleteById(variant.getId());
+
         return true;
+    }
+
+    public Optional<Variant> findById(long id) {
+        return variantRepository.findById(id);
+    }
+
+    public Variant save(Variant variant) {
+        return variantRepository.save(variant);
+    }
+
+    public Optional<Variant> findByName(String name) {
+        return variantRepository.findByName(name);
     }
 }

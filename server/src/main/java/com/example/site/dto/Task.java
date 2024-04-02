@@ -3,70 +3,15 @@ package com.example.site.dto;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
 
-/**
- * This class contains information about the exam task.
- * <p>
- * <table>
- *   <tr>
- *       <th>Field</th>
- *       <th>Description</th>
- *   </tr>
- *   <tr>
- *     <th>num</th>
- *     <td>The number of task in the exam.</td>
- *   </tr>
- *   <tr>
- *     <th>dsc</th>
- *     <td>The condition text of the task.</td>
- *   </tr>
- *   <tr>
- *     <th>ans</th>
- *     <td>The answer is JSON that represents a number or a table of numbers.</td>
- *   </tr>
- *   <tr>
- *     <th>topic</th>
- *     <td>The topic of the task.</td>
- *   </tr>
- *   <tr>
- *     <th>src</th>
- *     <td>URL of the source.</td>
- *   </tr>
- *   <tr>
- *     <th>lvl</th>
- *     <td>The difficulty of the task.</td>
- *   </tr>
- *   <tr>
- *     <th>isRelevant</th>
- *     <td>Is the task a relevant exam task?</td>
- *   </tr>
- *   <tr>
- *     <th>isOfficial</th>
- *     <td>Is the task an official exam task?</td>
- *   </tr>
- *   <tr>
- *     <th>files</th>
- *     <td>JSON list of files related to the task.</td>
- *   </tr>
- *   <tr>
- *     <th>dateOfAdd</th>
- *     <td>The date of the task appearance.</td>
- *   </tr>
- *   <tr>
- *     <th>videoReview</th>
- *     <td>VideoReview URL of the task video review.</td>
- *   </tr>
- * </table>
- */
 @Entity
 public class Task {
-
     @Embeddable
     public record Answer(
-            @Basic(optional = false) int rows,
-            @Basic(optional = false) int cols,
+            @Basic(optional = false)
+            Integer rows,
+            @Basic(optional = false)
+            Integer cols,
             @Basic(optional = false)
             @Column(length = MAX_LENGTH)
             String data
@@ -77,7 +22,7 @@ public class Task {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     @Basic(optional = false)
     @Column(length = MAX_LENGTH)
@@ -86,11 +31,14 @@ public class Task {
     private Answer answer;
 
     @Basic(optional = false)
-    private String numberEGE;
+    private String number;
 
-    private boolean hiddenInBank;
-    private boolean isOfficial;
+    private boolean hidden;
+
+    private boolean official;
+
     private String actuality;
+
     private String difficulty;
 
     @Column(length = MAX_LENGTH)
@@ -101,8 +49,9 @@ public class Task {
     @Column(length = MAX_LENGTH)
     private String files;
 
-    private Instant addDate;
-    private Instant lastChangeDate;
+    private Instant createDate;
+
+    private Instant editDate;
 
     @Column(length = MAX_LENGTH)
     private String videoReview;
@@ -110,139 +59,133 @@ public class Task {
     @Column(length = MAX_LENGTH)
     private String solution;
 
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public Task setId(int id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getContent() {
         return content;
     }
 
-    public Task setContent(String content) {
+    public void setContent(String content) {
         this.content = content;
-        return this;
     }
 
     public Answer getAnswer() {
         return answer;
     }
 
-    public Task setAnswer(Answer answer) {
+    public void setAnswer(Answer answer) {
         this.answer = answer;
-        return this;
     }
 
-    public String getNumberEGE() {
-        return numberEGE;
+    public String getNumber() {
+        return number;
     }
 
-    public Task setNumberEGE(String numberEGE) {
-        this.numberEGE = numberEGE;
-        return this;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public boolean getHiddenInBank() {
-        return hiddenInBank;
+    public boolean isHidden() {
+        return hidden;
     }
 
-    public Task setHiddenInBank(boolean hiddenInBank) {
-        this.hiddenInBank = hiddenInBank;
-        return this;
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 
-    public boolean getIsOfficial() {
-        return isOfficial;
+    public boolean isOfficial() {
+        return official;
     }
 
-    public Task setIsOfficial(boolean official) {
-        isOfficial = official;
-        return this;
+    public void setOfficial(boolean official) {
+        this.official = official;
     }
 
     public String getActuality() {
         return actuality;
     }
 
-    public Task setActuality(String actuality) {
+    public void setActuality(String actuality) {
         this.actuality = actuality;
-        return this;
     }
 
     public String getDifficulty() {
         return difficulty;
     }
 
-    public Task setDifficulty(String difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
-        return this;
     }
 
     public String getSource() {
         return source;
     }
 
-    public Task setSource(String source) {
+    public void setSource(String source) {
         this.source = source;
-        return this;
     }
 
     public int getTopic() {
         return topic;
     }
 
-    public Task setTopic(int topic) {
+    public void setTopic(int topic) {
         this.topic = topic;
-        return this;
     }
 
     public String getFiles() {
         return files;
     }
 
-    public Task setFiles(String files) {
+    public void setFiles(String files) {
         this.files = files;
-        return this;
     }
 
-    public Instant getAddDate() {
-        return addDate;
+    public Instant getCreateDate() {
+        return createDate;
     }
 
-    public Task setAddDate(Instant addDate) {
-        this.addDate = addDate;
-        return this;
+    public void setCreateDate(Instant createDate) {
+        this.createDate = createDate;
     }
 
-    public Instant getLastChangeDate() {
-        return lastChangeDate;
+    public Instant getEditDate() {
+        return editDate;
     }
 
-    public Task setLastChangeDate(Instant lastChangeDate) {
-        this.lastChangeDate = lastChangeDate;
-        return this;
+    public void setEditDate(Instant editDate) {
+        this.editDate = editDate;
     }
 
     public String getVideoReview() {
         return videoReview;
     }
 
-    public Task setVideoReview(String videoReview) {
+    public void setVideoReview(String videoReview) {
         this.videoReview = videoReview;
-        return this;
     }
 
     public String getSolution() {
         return solution;
     }
 
-    public Task setSolution(String solution) {
+    public void setSolution(String solution) {
         this.solution = solution;
-        return this;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Task other && id.equals(other.id);
     }
 }

@@ -1,30 +1,33 @@
 package com.example.site.controller;
 
-import com.example.site.dto.TaskSolution;
-import com.example.site.service.SolutionService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
+import com.example.site.dto.rest.SolvedTaskSubmission;
+import com.example.site.dto.rest.SolvedVariantSubmission;
+import com.example.site.service.TaskSolutionService;
+import com.example.site.service.VariantSolutionService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/solves")
 public class SolutionController {
-    private static final Logger logger = LoggerFactory.getLogger(SolutionController.class);
+    private final TaskSolutionService taskSolutionService;
+    private final VariantSolutionService variantSolutionService;
 
-    private final SolutionService solutionService;
-
-    public SolutionController(SolutionService solutionService) {
-        this.solutionService = solutionService;
+    public SolutionController(
+            TaskSolutionService taskSolutionService,
+            VariantSolutionService variantSolutionService
+    ) {
+        this.taskSolutionService = taskSolutionService;
+        this.variantSolutionService = variantSolutionService;
     }
 
     @PostMapping("/task")
-    public ResponseEntity<?> solveTask(@RequestBody TaskSolution taskSolution) {
-        logger.info("Solve task request.");
-        if (solutionService.solve(taskSolution)) {
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    public void solveTask(@RequestBody SolvedTaskSubmission submission) {
+        taskSolutionService.solve(submission);
+    }
+
+    @PostMapping("/variant")
+    public void solveVariant(@RequestBody SolvedVariantSubmission submission) {
+        variantSolutionService.solve(submission);
     }
 }

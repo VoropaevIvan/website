@@ -1,7 +1,6 @@
 package com.example.site.controller;
 
-import com.example.site.dto.Task;
-import com.example.site.dto.Variant;
+import com.example.site.dto.rest.TaskRest;
 import com.example.site.service.VariantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,26 +17,26 @@ public class VariantController {
         this.variantService = variantService;
     }
 
-    @GetMapping("/{variantName}")
-    public ResponseEntity<List<Task>> getVariant(@PathVariable String variantName) {
-        return variantService.get(variantName)
+    @GetMapping("/{name}")
+    public ResponseEntity<List<TaskRest>> getTasks(@PathVariable String name) {
+        return variantService.getTasks(name)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public List<String> getAllVariantNames() {
-        return variantService.getAll();
+    public List<String> getAllNames() {
+        return variantService.getAllNames();
     }
 
-    @PostMapping("/{variantName}")
-    public List<Task> postVariant(@PathVariable String variantName, @RequestBody List<Task> tasks) {
-        return variantService.post(variantName, tasks);
+    @PostMapping("/{name}")
+    public List<TaskRest> postVariant(@PathVariable String name, @RequestBody List<TaskRest> tasks) {
+        return variantService.post(name, tasks);
     }
 
-    @DeleteMapping("/{variantName}")
-    public ResponseEntity<?> deleteVariant(@PathVariable String variantName) {
-        if (variantService.delete(variantName)) {
+    @DeleteMapping("/{name}")
+    public ResponseEntity<?> deleteVariant(@PathVariable String name) {
+        if (variantService.delete(name)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
