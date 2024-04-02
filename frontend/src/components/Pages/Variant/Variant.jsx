@@ -1,34 +1,36 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
 import LeftMenu from "./Variant components/LeftMenu";
 import TaskTextForVariant from "./Variant components/TaskTextForVariant";
 import VarMenu from "./Variant components/VarMenu";
 import InputForAnswer from "./Variant components/InputForAnswer";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import TableContainer from "./Variant components/TableContainer";
+import VarFooter from "./Variant components/VarFooter";
+import NotFound from "../NotFound";
+
 import { setCurrentTask, setData } from "../../../redux/slices/variantSlice";
 import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
-import TableForAnswer from "./Variant components/TableForAnswer";
 import { getVariantTasksFromServer } from "../../Utils/addTaskUtils/server";
 import { addTypeAnswerField } from "./Variant components/VariantUtils";
-import { useLocation } from "react-router-dom";
 
-import { LiaFileDownloadSolid } from "react-icons/lia";
 import "./Variant.css";
-import "./Variant components/VarFooter.css";
-import { fileImgInVar } from "../constants";
 
 const Variant = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
-  const varData = useSelector((state) => state.variant.data);
 
+  const varData = useSelector((state) => state.variant.data);
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const curAnswers = useSelector((state) => state.variant.answers);
-  const curAnswer = curAnswers[curTaskNumber] ? curAnswers[curTaskNumber] : "";
+
   const [valueInAnswerInput, setValueInAnswerInput] = useState("");
   const [valueInAnswerTable, setValueInAnswerTable] = useState({});
-
   const [isOkLoad, setIsOkLoad] = useState(false);
+  const [fontScale, setFontScale] = useState(0);
 
-  const dispatch = useDispatch();
+  const curAnswer = curAnswers[curTaskNumber] ? curAnswers[curTaskNumber] : "";
 
   useEffect(() => {
     async function fetchData() {
@@ -39,13 +41,13 @@ const Variant = () => {
             return addTypeAnswerField(task);
           });
           dispatch(setData(tasksWithTypeAnswer));
-          console.log(tasksWithTypeAnswer);
         },
         setTextInEditor: () => {},
         setTextInSolutionEditor: () => {},
         setIsOkLoad: setIsOkLoad,
       });
     }
+
     fetchData();
   }, [dispatch, location]);
 
@@ -114,10 +116,10 @@ const Variant = () => {
   };
 
   if (!isOkLoad) {
-    return <></>;
+    return <NotFound />;
   }
   if (varData.length === 0) {
-    return <h2>Пустой вариант</h2>;
+    return <NotFound />;
   }
 
   return (
@@ -127,11 +129,7 @@ const Variant = () => {
       </div>
 
       <div className="varNavigate">
-        <LeftMenu
-          valueInAnswerInput={valueInAnswerInput}
-          setValueInAnswerInput={setValueInAnswerInput}
-          setValueInAnswerTable={setValueInAnswerTable}
-        />
+        <LeftMenu fontScale={fontScale} setFontScale={setFontScale} />
       </div>
 
       <div className="taskbutdivl">
@@ -143,31 +141,21 @@ const Variant = () => {
       <div className="varTask">
         <div className="varTaskText enable">
           <div className="taskwithbut">
-            <TaskTextForVariant />
+            <TaskTextForVariant fontScale={fontScale} />
           </div>
 
+          {/* Table answer */}
           {varData &&
             varData[curTaskNumber] &&
             varData[curTaskNumber]["typeAnswer"] &&
             (varData[curTaskNumber]["typeAnswer"] === "table" ||
               varData[curTaskNumber]["typeAnswer"] === "two") && (
-              <div className="tableanswercont">
-                <div className="tableanswer">
-                  <p>Введите свой ответ</p>
-                  <TableForAnswer
-                    rows={valueInAnswerTable.rows}
-                    cols={valueInAnswerTable.cols}
-                    data={valueInAnswerTable.data}
-                    setNotFinalAnswer={setValueInAnswerTable}
-                    disabled={
-                      (curAnswer.length > 0) | (curAnswer?.data?.length > 0)
-                    }
-                    valueInAnswerTable={valueInAnswerTable}
-                    curAnswer={curAnswer}
-                    curTaskNumber={curTaskNumber}
-                  />
-                </div>
-              </div>
+              <TableContainer
+                valueInAnswerTable={valueInAnswerTable}
+                curAnswer={curAnswer}
+                curTaskNumber={curTaskNumber}
+                setValueInAnswerTable={setValueInAnswerTable}
+              />
             )}
         </div>
       </div>
@@ -179,34 +167,13 @@ const Variant = () => {
       </div>
 
       <div className="varfooter">
-        <div className="varfiles">
-          {["9.xls", "9.txt", "9.xslx", "9.ods"].map((file, i) => {
-            return (
-              <div
-                onClick={() => {
-                  console.log("download");
-                }}
-                className="fileandimg"
-                key={i}
-              >
-                <LiaFileDownloadSolid className="fileimg" />
-                {/* <img alt="" src={fileImgInVar}></img> */}
-                {file}
-              </div>
-            );
-          })}
-        </div>
-        <div className="varAnswer">
-          {varData &&
-            varData[curTaskNumber] &&
-            varData[curTaskNumber]["typeAnswer"] &&
-            varData[curTaskNumber]["typeAnswer"] === "text" && (
-              <InputForAnswer
-                valueInAnswerInput={valueInAnswerInput}
-                setValueInAnswerInput={setValueInAnswerInput}
-              ></InputForAnswer>
-            )}
-        </div>
+        <VarFooter
+          valueInAnswerInput={valueInAnswerInput}
+          varData={varData}
+          curTaskNumber={curTaskNumber}
+          InputForAnswer={InputForAnswer}
+          setValueInAnswerInput={setValueInAnswerInput}
+        />
       </div>
     </div>
   );

@@ -3,12 +3,17 @@ import { clearAnswer, setAnswer } from "../../../../redux/slices/variantSlice";
 import "./InputForAnswer.css";
 
 const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
-  //const [valueInAnswerInput, setValueInAnswerInput] = useState("");
+  const dispatch = useDispatch();
+
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const curAnswers = useSelector((state) => state.variant.answers);
-  const curAnswer = curAnswers[curTaskNumber] ? curAnswers[curTaskNumber] : "";
 
-  const dispatch = useDispatch();
+  const curAnswer = curAnswers[curTaskNumber] ? curAnswers[curTaskNumber] : "";
+  const disabledSaveBut =
+    (valueInAnswerInput.length === 0) | (curAnswer.length > 0);
+
+  const isSavedAnswer = curAnswer.length > 0;
+
   const handleSaveButtonClick = () => {
     dispatch(
       setAnswer({ taskNumber: curTaskNumber, newAnswer: valueInAnswerInput })
@@ -18,10 +23,6 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
     dispatch(clearAnswer(curTaskNumber));
     setValueInAnswerInput("");
   };
-  const disabledSaveBut =
-    (valueInAnswerInput.length === 0) | (curAnswer.length > 0);
-
-  const isSavedAnswer = curAnswer.length > 0;
 
   return (
     <>

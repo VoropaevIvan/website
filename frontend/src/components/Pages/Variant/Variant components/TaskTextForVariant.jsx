@@ -1,12 +1,18 @@
 import { useSelector } from "react-redux";
 import "./TaskTextForVariant.css";
 
-function TaskTextForVariant() {
+function TaskTextForVariant({ fontScale }) {
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const varData = useSelector((state) => state.variant.data);
+
   const curTaskContent = varData[curTaskNumber]
     ? varData[curTaskNumber].content
     : "";
+
+  if (!fontScale) {
+    fontScale = 0;
+  }
+  const font = 1 + fontScale;
 
   function createMarkup(myContent) {
     return { __html: myContent };
@@ -18,6 +24,7 @@ function TaskTextForVariant() {
         <strong>{"Задание " + (curTaskNumber + 1)}</strong>
       </p>
       <div
+        style={{ fontSize: font + "rem" }}
         className="taskcontent"
         dangerouslySetInnerHTML={createMarkup(curTaskContent)}
       />
