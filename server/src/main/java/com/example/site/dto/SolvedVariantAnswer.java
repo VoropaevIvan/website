@@ -1,7 +1,5 @@
 package com.example.site.dto;
 
-import com.example.site.dto.Task.Answer;
-
 import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
 

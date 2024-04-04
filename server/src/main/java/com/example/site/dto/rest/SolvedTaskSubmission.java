@@ -1,6 +1,6 @@
 package com.example.site.dto.rest;
 
-import com.example.site.dto.Task.Answer;
+import com.example.site.dto.Answer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 

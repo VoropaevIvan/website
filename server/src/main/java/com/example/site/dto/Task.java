@@ -6,19 +6,7 @@ import java.time.Instant;
 
 @Entity
 public class Task {
-    @Embeddable
-    public record Answer(
-            @Basic(optional = false)
-            Integer rows,
-            @Basic(optional = false)
-            Integer cols,
-            @Basic(optional = false)
-            @Column(length = MAX_LENGTH)
-            String data
-    ) {
-    }
-
-    private static final int MAX_LENGTH = 10_000;
+    static final int MAX_LENGTH = 10_000;
 
     @Id
     @GeneratedValue

@@ -1,5 +1,6 @@
 package com.example.site.dto.rest;
 
+import com.example.site.dto.Answer;
 import com.example.site.dto.Task;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ public record TaskRest(
 
         @JsonProperty("answer")
         @NotNull
-        Task.Answer answer,
+        Answer answer,
 
         @JsonProperty("numberEGE")
         @NotNull

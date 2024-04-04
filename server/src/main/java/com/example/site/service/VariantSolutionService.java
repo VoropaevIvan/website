@@ -3,7 +3,6 @@ package com.example.site.service;
 import com.example.site.dao.SolvedVariantRepository;
 import com.example.site.dao.SolvedVariantAnswerRepository;
 import com.example.site.dto.*;
-import com.example.site.dto.Task.Answer;
 import com.example.site.dto.rest.SolvedVariantSubmission;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
