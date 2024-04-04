@@ -1,8 +1,10 @@
 package com.example.site.service;
 
-import com.example.site.dao.SolvedTaskRepository;
+import com.example.site.dao.SolvedTaskAnswerRepository;
+import com.example.site.dao.SolvedTaskCaseRepository;
 import com.example.site.dto.*;
 import com.example.site.dto.rest.SolvedTaskSubmission;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -14,18 +16,22 @@ import java.util.Optional;
 public class TaskSolutionService {
     private final UserService userService;
     private final TaskService taskService;
-    private final SolvedTaskRepository solvedTaskRepository;
+    private final SolvedTaskCaseRepository solvedTaskCaseRepository;
+    private final SolvedTaskAnswerRepository solvedTaskAnswerRepository;
 
     public TaskSolutionService(
             UserService userService,
             TaskService taskService,
-            SolvedTaskRepository solvedTaskRepository
+            SolvedTaskCaseRepository solvedTaskCaseRepository,
+            SolvedTaskAnswerRepository solvedTaskAnswerRepository
     ) {
-        this.solvedTaskRepository = solvedTaskRepository;
         this.userService = userService;
         this.taskService = taskService;
+        this.solvedTaskCaseRepository = solvedTaskCaseRepository;
+        this.solvedTaskAnswerRepository = solvedTaskAnswerRepository;
     }
 
+    @Transactional
     public void solve(Long userId, @Valid SolvedTaskSubmission submission) {
         Optional<User> optUser = userService.findUser(userId);
         if (optUser.isEmpty()) {
@@ -38,11 +44,29 @@ public class TaskSolutionService {
             throw new RuntimeException("Task(id=" + taskId + ") doesn't exist");
         }
 
-        SolvedTask solution = new SolvedTask(
+        SolvedTaskAnswer answer = new SolvedTaskAnswer(
                 optUser.get(),
                 optTask.get(),
-                submission.solved());
+                submission.answer());
+        solvedTaskAnswerRepository.save(answer);
 
-        solvedTaskRepository.save(solution);
+        Optional<SolvedTaskCase> optTaskCase = solvedTaskCaseRepository
+                .findByUserAndTask(optUser.get(), optTask.get());
+
+        SolvedTaskCase taskCase;
+        if (optTaskCase.isPresent()) {
+            taskCase = optTaskCase.get();
+            taskCase.addAttempt();
+            if (!taskCase.getSolved()) {
+                taskCase.setSolved(submission.solved());
+            }
+        } else {
+            taskCase = new SolvedTaskCase(
+                    optUser.get(),
+                    optTask.get(),
+                    submission.solved());
+        }
+
+        solvedTaskCaseRepository.save(taskCase);
     }
 }

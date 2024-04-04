@@ -1,41 +1,30 @@
 package com.example.site.dto;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.NaturalId;
 
 import java.time.Instant;
 
-@Entity
+@MappedSuperclass
 public class SolvedTask {
     @Id
     @GeneratedValue
-    Long id;
+    protected Long id;
 
-    @NaturalId
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    User user;
+    protected User user;
 
-    @NaturalId
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    Task task;
+    protected Task task;
 
     @Basic(optional = false)
-    Integer attempts;
-
-    @Basic(optional = false)
-    Boolean solved;
-
-    @Basic(optional = false)
-    private Instant instant;
+    protected Instant instant;
 
     public SolvedTask() {
     }
 
-    public SolvedTask(User user, Task task, Boolean solved) {
+    public SolvedTask(User user, Task task) {
         this.user = user;
         this.task = task;
-        this.solved = solved;
-        this.attempts = 1;
         this.instant = Instant.now();
     }
 
@@ -61,26 +50,6 @@ public class SolvedTask {
 
     public void setTask(Task task) {
         this.task = task;
-    }
-
-    public Integer getAttempts() {
-        return attempts;
-    }
-
-    public void setAttempts(Integer attempts) {
-        this.attempts = attempts;
-    }
-
-    public void addAttempt() {
-        attempts++;
-    }
-
-    public Boolean getSolved() {
-        return solved;
-    }
-
-    public void setSolved(Boolean solved) {
-        this.solved = solved;
     }
 
     public Instant getInstant() {
