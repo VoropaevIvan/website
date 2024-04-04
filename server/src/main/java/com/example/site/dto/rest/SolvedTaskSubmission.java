@@ -5,10 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
 public record SolvedTaskSubmission(
-        @JsonProperty("userId")
-        @NotNull
-        Long userId,
-
         @JsonProperty("taskId")
         @NotNull
         Integer taskId,

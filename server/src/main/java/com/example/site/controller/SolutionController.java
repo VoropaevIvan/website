@@ -1,5 +1,6 @@
 package com.example.site.controller;
 
+import com.example.site.dto.User;
 import com.example.site.dto.rest.SolvedTaskSubmission;
 import com.example.site.dto.rest.SolvedVariantSubmission;
 import com.example.site.service.TaskSolutionService;
@@ -22,12 +23,18 @@ public class SolutionController {
     }
 
     @PostMapping("/task")
-    public void solveTask(@RequestBody SolvedTaskSubmission submission) {
-        taskSolutionService.solve(submission);
+    public void solveTask(
+            @RequestAttribute(User.ID_ATTR) Long userId,
+            @RequestBody SolvedTaskSubmission submission
+    ) {
+        taskSolutionService.solve(userId, submission);
     }
 
     @PostMapping("/variant")
-    public void solveVariant(@RequestBody SolvedVariantSubmission submission) {
-        variantSolutionService.solve(submission);
+    public void solveVariant(
+            @RequestAttribute(User.ID_ATTR) Long userId,
+            @RequestBody SolvedVariantSubmission submission
+    ) {
+        variantSolutionService.solve(userId, submission);
     }
 }

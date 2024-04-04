@@ -26,8 +26,7 @@ public class TaskSolutionService {
         this.taskService = taskService;
     }
 
-    public void solve(@Valid SolvedTaskSubmission submission) {
-        long userId = submission.userId();
+    public void solve(Long userId, @Valid SolvedTaskSubmission submission) {
         Optional<User> optUser = userService.findUser(userId);
         if (optUser.isEmpty()) {
             throw new RuntimeException("User(id=" + userId + ") doesn't exist");

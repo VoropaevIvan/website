@@ -33,8 +33,7 @@ public class VariantSolutionService {
     }
 
     @Transactional
-    public void solve(@Valid SolvedVariantSubmission submission) {
-        long userId = submission.userId();
+    public void solve(Long userId, @Valid SolvedVariantSubmission submission) {
         Optional<User> optUser = userService.findUser(userId);
         if (optUser.isEmpty()) {
             throw new RuntimeException("User(id=" + userId + ") doesn't exist");

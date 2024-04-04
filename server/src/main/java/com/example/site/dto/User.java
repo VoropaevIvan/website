@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 public class User implements UserDetails {
+    public static final String ID_ATTR = "userId";
+
     public enum Role {
         USER,
         ADMIN;

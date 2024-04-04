@@ -7,10 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 public record SolvedVariantSubmission(
-        @JsonProperty("userId")
-        @NotNull
-        Long userId,
-
         @JsonProperty("variant")
         @NotNull
         String variantName,
