@@ -4,9 +4,12 @@ import Menu from "../components/Pages/Menu/Menu";
 const MainLayout = () => {
   const location = useLocation();
 
+  const page = location.pathname.split("/").reverse()[1];
+  const menuClass = page === "results" ? "varresmenu" : " ";
+
   return (
     <>
-      {location.pathname.split("/").reverse()[1] !== "variant" ? <Menu /> : ""}
+      {page !== "variant" ? <Menu menuClass={menuClass} /> : ""}
       {/* <NavBar /> */}
       <Outlet />
     </>

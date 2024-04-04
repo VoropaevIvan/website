@@ -60,8 +60,8 @@ const AddTask = () => {
         }
       }
     } catch (error) {
+      alert("Произошла ошибка. Задача не добавлена.");
       console.log(error);
-      alert("Произошла ошибка", error);
     }
   };
 

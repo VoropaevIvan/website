@@ -28,7 +28,7 @@ const getAllTasksFromServer = async (setTasksFromServer) => {
       setTasksFromServer(dataOk);
     }
   } catch (error) {
-    console.log(error);
+    alert("Не удалось загрузить задачи. Попробуйте позже.");
   }
 };
 

@@ -7,6 +7,11 @@ export const addTypeAnswerField = (task) => {
   } else {
     typeAns = "table";
   }
-
   return { ...task, typeAnswer: typeAns };
+};
+
+export const addTypeAnswerFieldForTasks = (tasks) => {
+  return tasks.map((task) => {
+    return addTypeAnswerField(task);
+  });
 };

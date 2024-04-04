@@ -3,6 +3,10 @@
   justify-content: center;
 }
 
+.varTask .tablediv table input:disabled {
+  background-color: white;
+}
+
 .varTask .clearsavebuttons {
   display: flex;
   justify-content: center;
@@ -16,7 +20,7 @@
   width: 40%;
 
   font-size: 0.7rem;
-  margin: 5px;
+  margin: 5px 5px 10px 5px;
   padding: 5px;
   border-radius: 5px;
 }

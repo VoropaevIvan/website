@@ -26,6 +26,8 @@ import AddTaskToVariantById from "./CreateVariantUtils/AddTaskToVariantById";
 import SendToServerButton from "./CreateVariantUtils/SendToServerButton";
 
 const CreateVariant = () => {
+  const location = useLocation();
+
   const [activeTask, setActiveTask] = useState(0);
   const [tasksFromServer, setTasksFromServer] = useState([]);
   const [newTaskId, setNewTaskId] = useState("");
@@ -35,8 +37,6 @@ const CreateVariant = () => {
   const [isOkLoad, setIsOkLoad] = useState(0);
   const [countNewTasks, setCountNewTasks] = useState(1);
   const [currentFile, setCurrentFile] = useState(null);
-
-  const location = useLocation();
 
   useEffect(() => {
     async function fetchData(varId) {

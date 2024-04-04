@@ -4,6 +4,7 @@ import Table from "../../../Utils/Table/Table";
 import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
 import { eraseEmptyRowsFromTable } from "../../../Utils/addTaskUtils/variantUtils";
 import { NOT_DONE_TASK, OK_DONE_TASK, WA_DONE_TASK } from "./constantsTask";
+import { sendSolve } from "../../../server/serverBank";
 
 export const Task = ({
   id,
@@ -55,14 +56,40 @@ export const Task = ({
       answer = eraseEmptyRowsFromTable(answer);
       if (trueAnswer.data.toString() === answer.data.toString()) {
         setIsSolved({ decision: true, text: OK_DONE_TASK });
+        sendSolve({
+          taskId: id,
+          isRight: true,
+          answer: {
+            answer: { ...answer, data: JSON.stringify(answer.data) },
+            scores: 1,
+          },
+        });
       } else {
         setIsSolved({ decision: false, text: WA_DONE_TASK });
+        sendSolve({
+          taskId: id,
+          isRight: true,
+          answer: {
+            answer: { ...answer, data: JSON.stringify(answer.data) },
+            scores: 1,
+          },
+        });
       }
     } else {
       if (trueAnswer.data === answer.data) {
         setIsSolved({ decision: true, text: OK_DONE_TASK });
+        sendSolve({
+          taskId: id,
+          isRight: true,
+          answer: { answer: answer, scores: 1 },
+        });
       } else {
         setIsSolved({ decision: false, text: WA_DONE_TASK });
+        sendSolve({
+          taskId: id,
+          isRight: false,
+          answer: { answer: answer, scores: 0 },
+        });
       }
     }
   }

@@ -8,7 +8,7 @@ import { Test } from "./components/Pages/Test";
 import Variants from "./components/Pages/Variants/Variants";
 import TinyEditor from "./components/Utils/TinyEditor";
 import Variant from "./components/Pages/Variant/Variant";
-import VariantResults from "./components/Pages/Variant/VariantResults";
+import VariantResults from "./components/Pages/Variant/Variant results/VariantResults";
 
 export const publicRoutes = [
   { path: "bank", Component: Tasks, index: true },
@@ -17,9 +17,8 @@ export const publicRoutes = [
   { path: "test", Component: Test },
   { path: "variants", Component: Variants },
   { path: "variant/:id", Component: Variant },
-  { path: "results", Component: VariantResults },
+  { path: "results/:id", Component: VariantResults },
   { path: "variant/:id", Component: Variant },
-
   { path: "*", Component: NotFound },
 ];
 

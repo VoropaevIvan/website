@@ -1,4 +1,5 @@
 export const tableToTags = (table, ind) => {
+  console.log(table);
   const showResults = (data) => {
     return (
       <table>

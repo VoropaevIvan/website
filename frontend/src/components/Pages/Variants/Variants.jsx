@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CreateVariant from "./CreateVariant";
 import "./Variants.css";
 import { useSelector } from "react-redux";
+import { getAllVariants } from "../../server/serverVariant";
 
 const Variants = () => {
   const [variantsNames, setVariantsNames] = useState([]);
@@ -12,11 +12,8 @@ const Variants = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const link = process.env.REACT_APP_LINK_VARIANTS;
-      const res = axios.get(link);
-      res.then((value) => {
-        setVariantsNames(value.data);
-      });
+      const res = await getAllVariants();
+      setVariantsNames(res.data);
     }
     fetchData();
   }, []);
@@ -29,16 +26,17 @@ const Variants = () => {
       </div>
 
       <div className="variants">
-        {variantsNames.map((varName) => {
-          return (
-            <div key={varName}>
-              <Link className="varlink" to={"/variant/" + varName}>
-                {varName}
-              </Link>{" "}
-              {isAdmin && <Link to={"/edit-variant/" + varName}>{"📝"}</Link>}
-            </div>
-          );
-        })}
+        {variantsNames &&
+          variantsNames.map((varName) => {
+            return (
+              <div key={varName}>
+                <Link className="varlink" to={"/variant/" + varName}>
+                  {varName}
+                </Link>{" "}
+                {isAdmin && <Link to={"/edit-variant/" + varName}>{"📝"}</Link>}
+              </div>
+            );
+          })}
       </div>
     </div>
   );

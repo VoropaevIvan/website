@@ -4,7 +4,7 @@ import { useState } from "react";
 import DropDownMenu from "./components/DropDownMenu";
 import "./Menu.css";
 
-const Menu = () => {
+const Menu = ({ menuClass }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const page = location.pathname.split("/")[1];
@@ -24,7 +24,7 @@ const Menu = () => {
   }
 
   return (
-    <div className="menu">
+    <div className={"menu " + menuClass}>
       <NavLink to="/" end>
         На главную
       </NavLink>
@@ -54,7 +54,7 @@ const Menu = () => {
         </NavLink>
       )}
 
-      <NavLink to="/test">Тест</NavLink>
+      {/* <NavLink to="/test">Тест</NavLink> */}
     </div>
   );
 };

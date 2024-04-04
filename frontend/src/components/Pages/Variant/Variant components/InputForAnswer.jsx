@@ -8,11 +8,18 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const curAnswers = useSelector((state) => state.variant.answers);
 
-  const curAnswer = curAnswers[curTaskNumber] ? curAnswers[curTaskNumber] : "";
-  const disabledSaveBut =
-    (valueInAnswerInput.length === 0) | (curAnswer.length > 0);
+  const curAnswer = curAnswers[curTaskNumber]
+    ? curAnswers[curTaskNumber]
+    : {
+        cols: 0,
+        rows: 0,
+        data: "",
+      };
 
-  const isSavedAnswer = curAnswer.length > 0;
+  const disabledSaveBut =
+    (valueInAnswerInput.data.length === 0) | (curAnswer.data.length > 0);
+
+  const isSavedAnswer = curAnswer.data.length > 0;
 
   const handleSaveButtonClick = () => {
     dispatch(
@@ -21,18 +28,27 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
   };
   const handleClearAnswerButtonClick = () => {
     dispatch(clearAnswer(curTaskNumber));
-    setValueInAnswerInput("");
+    setValueInAnswerInput({
+      cols: 0,
+      rows: 0,
+      data: "",
+    });
   };
 
   return (
     <>
       <input
-        value={valueInAnswerInput}
+        value={valueInAnswerInput.data}
         onChange={(e) => {
-          setValueInAnswerInput(e.target.value);
+          setValueInAnswerInput({
+            cols: 0,
+            rows: 0,
+            data: e.target.value,
+          });
         }}
-        disabled={curAnswer.length > 0}
+        disabled={curAnswer.data.length > 0}
       ></input>
+
       <div className="clearsavebut">
         {isSavedAnswer && (
           <button
@@ -42,6 +58,7 @@ const InputForAnswer = ({ valueInAnswerInput, setValueInAnswerInput }) => {
             Очистить
           </button>
         )}
+
         <button
           className={disabledSaveBut ? "savebuttondis" : "savebutton"}
           onClick={handleSaveButtonClick}

@@ -1,5 +1,8 @@
-import axios from "axios";
 import { useState } from "react";
+import {
+  createVariantByName,
+  getAllVariants,
+} from "../../server/serverVariant";
 
 const CreateVariant = ({ setVariantsNames }) => {
   const [newVariantName, setNewVariantName] = useState("");
@@ -12,21 +15,12 @@ const CreateVariant = ({ setVariantsNames }) => {
         }}
       ></input>
       <button
-        onClick={() => {
-          const link = process.env.REACT_APP_LINK_VARIANT;
-          const res = axios.post(link + newVariantName, [], {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-            },
-          });
+        onClick={async () => {
+          const res1 = await createVariantByName({ newVariantName });
+          const res2 = await getAllVariants();
 
-          res.then(() => {
-            const link = process.env.REACT_APP_LINK_VARIANTS;
-            const res1 = axios.get(link);
-            res1.then((value) => {
-              setVariantsNames(value.data);
-            });
-          });
+          setVariantsNames(res2.data);
+          setNewVariantName("");
         }}
       >
         Создать вариант

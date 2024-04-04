@@ -1,0 +1,31 @@
+.variantrestable {
+  font-size: 0.9rem;
+  background-color: white;
+
+  margin: 0px;
+}
+
+.variantrestable .maintr {
+  font-size: 1rem;
+
+  /* font-weight: bold; */
+
+  /* background-color: rgb(209, 193, 255); */
+}
+.variantrestable .maintr td {
+  padding: 5px;
+}
+
+.variantrestable > tbody > tr > td {
+  padding: 10px 20px 10px 20px;
+}
+.variantrestable table {
+  /* padding: 5px; */
+  /* background-color: rgb(246, 246, 246); */
+  width: auto;
+  margin: auto;
+}
+.variantrestable table td {
+  /* padding: 10px; */
+  padding: 5px;
+}

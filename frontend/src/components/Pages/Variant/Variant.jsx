@@ -25,12 +25,22 @@ const Variant = () => {
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const curAnswers = useSelector((state) => state.variant.answers);
 
-  const [valueInAnswerInput, setValueInAnswerInput] = useState("");
+  const [valueInAnswerInput, setValueInAnswerInput] = useState({
+    cols: 0,
+    rows: 0,
+    data: "",
+  });
   const [valueInAnswerTable, setValueInAnswerTable] = useState({});
   const [isOkLoad, setIsOkLoad] = useState(false);
   const [fontScale, setFontScale] = useState(0);
 
-  const curAnswer = curAnswers[curTaskNumber] ? curAnswers[curTaskNumber] : "";
+  const curAnswer = curAnswers[curTaskNumber]
+    ? curAnswers[curTaskNumber]
+    : {
+        cols: 0,
+        rows: 0,
+        data: "",
+      };
 
   useEffect(() => {
     async function fetchData() {
@@ -61,7 +71,11 @@ const Variant = () => {
         }
       } else {
         if (varData[curTaskNumber].typeAnswer === "text") {
-          setValueInAnswerInput("");
+          setValueInAnswerInput({
+            cols: 0,
+            rows: 0,
+            data: "",
+          });
         } else if (varData[curTaskNumber].typeAnswer === "two") {
           setValueInAnswerTable({
             data: createDataForTable({ cols: 2, rows: 1 }),

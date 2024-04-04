@@ -7,20 +7,27 @@ const VarFooter = ({
   InputForAnswer,
   setValueInAnswerInput,
 }) => {
+  const files = varData[curTaskNumber].files;
+  const fileName = (name) => {
+    const curNumberEGE = varData[curTaskNumber].numberEGE.split(" ")[1];
+    const exp = name.split(".")[1];
+    return curNumberEGE + "." + exp;
+  };
   return (
     <>
       <div className="varfiles">
-        {["9.xls", "9.txt", "9.xslx", "9.ods"].map((file, i) => {
+        {files.map((file, i) => {
           return (
             <div
               onClick={() => {
                 console.log("download");
+                window.open(file, "_blank");
               }}
               className="fileandimg"
               key={i}
             >
               <LiaFileDownloadSolid className="fileimg" />
-              {file}
+              {fileName(file)}
             </div>
           );
         })}
