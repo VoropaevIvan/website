@@ -116,4 +116,12 @@ public class VariantService {
     public Optional<Variant> findByName(String name) {
         return variantRepository.findByName(name);
     }
+
+    public Variant getByName(String name) {
+        Optional<Variant> optVariant = findByName(name);
+        if (optVariant.isEmpty()) {
+            throw new RuntimeException("Variant(name=" + name + ") doesn't exist");
+        }
+        return optVariant.get();
+    }
 }

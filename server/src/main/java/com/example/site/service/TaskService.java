@@ -26,7 +26,15 @@ public class TaskService {
                 .toList();
     }
 
-    public Optional<TaskRest> getById(long id) {
+    public Task getById(long id) {
+        Optional<Task> optTask = findById(id);
+        if (optTask.isEmpty()) {
+            throw new RuntimeException("Task(id=" + id + ") doesn't exist");
+        }
+        return optTask.get();
+    }
+
+    public Optional<TaskRest> getRestById(long id) {
         return findById(id).map(TaskRest::fromTask);
     }
 

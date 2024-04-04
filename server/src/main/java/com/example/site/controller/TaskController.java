@@ -24,7 +24,7 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskRest> getById(@PathVariable long id) {
-        return taskService.getById(id)
+        return taskService.getRestById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

@@ -37,6 +37,14 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public User getById(long id) {
+        Optional<User> optUser = findUser(id);
+        if (optUser.isEmpty()) {
+            throw new RuntimeException("User(id=" + id + ") doesn't exist");
+        }
+        return optUser.get();
+    }
+
     private void updateUser(User user) {
         VkUser vkUser = vkService.getVkUser(user.getId());
         user.setName(vkUser.firstName());

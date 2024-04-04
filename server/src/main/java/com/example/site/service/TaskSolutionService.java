@@ -6,6 +6,7 @@ import com.example.site.dto.*;
 import com.example.site.dto.rest.SolvedTaskSubmission;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -32,26 +33,13 @@ public class TaskSolutionService {
     }
 
     @Transactional
-    public void solve(Long userId, @Valid SolvedTaskSubmission submission) {
-        Optional<User> optUser = userService.findUser(userId);
-        if (optUser.isEmpty()) {
-            throw new RuntimeException("User(id=" + userId + ") doesn't exist");
-        }
+    public void solve(@NotNull Long userId, @Valid SolvedTaskSubmission submission) {
+        User user = userService.getById(userId);
+        Task task = taskService.getById(submission.taskId());
 
-        int taskId = submission.taskId();
-        Optional<Task> optTask = taskService.findById(taskId);
-        if (optTask.isEmpty()) {
-            throw new RuntimeException("Task(id=" + taskId + ") doesn't exist");
-        }
+        solvedTaskAnswerRepository.save(new SolvedTaskAnswer(user, task, submission.answer()));
 
-        SolvedTaskAnswer answer = new SolvedTaskAnswer(
-                optUser.get(),
-                optTask.get(),
-                submission.answer());
-        solvedTaskAnswerRepository.save(answer);
-
-        Optional<SolvedTaskCase> optTaskCase = solvedTaskCaseRepository
-                .findByUserAndTask(optUser.get(), optTask.get());
+        Optional<SolvedTaskCase> optTaskCase = solvedTaskCaseRepository.findByUserAndTask(user, task);
 
         SolvedTaskCase taskCase;
         if (optTaskCase.isPresent()) {
@@ -61,10 +49,7 @@ public class TaskSolutionService {
                 taskCase.setSolved(submission.solved());
             }
         } else {
-            taskCase = new SolvedTaskCase(
-                    optUser.get(),
-                    optTask.get(),
-                    submission.solved());
+            taskCase = new SolvedTaskCase(user, task, submission.solved());
         }
 
         solvedTaskCaseRepository.save(taskCase);

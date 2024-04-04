@@ -6,10 +6,9 @@ import com.example.site.dto.*;
 import com.example.site.dto.rest.SolvedVariantSubmission;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.util.Optional;
 
 @Service
 @Validated
@@ -32,24 +31,17 @@ public class VariantSolutionService {
     }
 
     @Transactional
-    public void solve(Long userId, @Valid SolvedVariantSubmission submission) {
-        Optional<User> optUser = userService.findUser(userId);
-        if (optUser.isEmpty()) {
-            throw new RuntimeException("User(id=" + userId + ") doesn't exist");
-        }
+    public void solve(@NotNull Long userId, @Valid SolvedVariantSubmission submission) {
+        User user = userService.getById(userId);
+        Variant variant = variantService.getByName(submission.variantName());
 
-        String variantName = submission.variantName();
-        Optional<Variant> optVariant = variantService.findByName(variantName);
-        if (optVariant.isEmpty()) {
-            throw new RuntimeException("Variant(name=" + variantName + ") doesn't exist");
-        }
-
-        SolvedVariant solvedVariant = solvedVariantRepository.save(
-                new SolvedVariant(optUser.get(), optVariant.get()));
+        SolvedVariant solvedVariant = solvedVariantRepository.save(new SolvedVariant(user, variant));
 
         for (var entry : submission.answers().entrySet()) {
             SolvedVariantAnswer answer = new SolvedVariantAnswer(
-                    solvedVariant, entry.getKey(), entry.getValue());
+                    solvedVariant,
+                    entry.getKey(),
+                    entry.getValue());
             solvedVariantAnswerRepository.save(answer);
         }
     }
