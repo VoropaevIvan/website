@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,10 +47,9 @@ public class VariantSolutionService {
         SolvedVariant solvedVariant = solvedVariantRepository.save(
                 new SolvedVariant(optUser.get(), optVariant.get()));
 
-        List<Answer> answers = submission.answers();
-        for (int i = 0; i < answers.size(); i++) {
+        for (var entry : submission.answers().entrySet()) {
             SolvedVariantAnswer answer = new SolvedVariantAnswer(
-                    solvedVariant, i, answers.get(i));
+                    solvedVariant, entry.getKey(), entry.getValue());
             solvedVariantAnswerRepository.save(answer);
         }
     }

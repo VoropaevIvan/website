@@ -17,12 +17,12 @@ public class SolvedVariantAnswer {
     @Basic(optional = false)
     private int orderInVariant;
 
-    private Answer answer;
+    private TreatedAnswer answer;
 
     public SolvedVariantAnswer() {
     }
 
-    public SolvedVariantAnswer(SolvedVariant variant, int orderInVariant, Answer answer) {
+    public SolvedVariantAnswer(SolvedVariant variant, int orderInVariant, TreatedAnswer answer) {
         this.variant = variant;
         this.orderInVariant = orderInVariant;
         this.answer = answer;
@@ -52,11 +52,11 @@ public class SolvedVariantAnswer {
         this.orderInVariant = orderInVariant;
     }
 
-    public Answer getAnswer() {
+    public TreatedAnswer getAnswer() {
         return answer;
     }
 
-    public void setAnswer(Answer answer) {
+    public void setAnswer(TreatedAnswer answer) {
         this.answer = answer;
     }
 }
