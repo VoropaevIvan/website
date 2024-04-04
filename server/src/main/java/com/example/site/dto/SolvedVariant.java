@@ -18,7 +18,7 @@ public class SolvedVariant {
     private Variant variant;
 
     @OneToMany(mappedBy = "variant")
-    private List<SolvedVariantAnswer> answers;
+    private List<SolvedVariantVerdict> verdicts;
 
     @Basic(optional = false)
     private Instant instant;
@@ -56,12 +56,12 @@ public class SolvedVariant {
         this.variant = variant;
     }
 
-    public List<SolvedVariantAnswer> getAnswers() {
-        return answers;
+    public List<SolvedVariantVerdict> getVerdicts() {
+        return verdicts;
     }
 
-    public void setAnswers(List<SolvedVariantAnswer> answers) {
-        this.answers = answers;
+    public void setVerdicts(List<SolvedVariantVerdict> verdicts) {
+        this.verdicts = verdicts;
     }
 
     public Instant getInstant() {

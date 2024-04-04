@@ -1,7 +1,7 @@
 package com.example.site.service;
 
 import com.example.site.dao.SolvedVariantRepository;
-import com.example.site.dao.SolvedVariantAnswerRepository;
+import com.example.site.dao.SolvedVariantVerdictRepository;
 import com.example.site.dto.*;
 import com.example.site.dto.rest.SolvedVariantSubmission;
 import jakarta.transaction.Transactional;
@@ -16,18 +16,18 @@ public class VariantSolutionService {
     private final UserService userService;
     private final VariantService variantService;
     private final SolvedVariantRepository solvedVariantRepository;
-    private final SolvedVariantAnswerRepository solvedVariantAnswerRepository;
+    private final SolvedVariantVerdictRepository solvedVariantVerdictRepository;
 
     public VariantSolutionService(
             UserService userService,
             VariantService variantService,
             SolvedVariantRepository solvedVariantRepository,
-            SolvedVariantAnswerRepository solvedVariantAnswerRepository
+            SolvedVariantVerdictRepository solvedVariantVerdictRepository
     ) {
         this.userService = userService;
         this.variantService = variantService;
         this.solvedVariantRepository = solvedVariantRepository;
-        this.solvedVariantAnswerRepository = solvedVariantAnswerRepository;
+        this.solvedVariantVerdictRepository = solvedVariantVerdictRepository;
     }
 
     @Transactional
@@ -37,12 +37,12 @@ public class VariantSolutionService {
 
         SolvedVariant solvedVariant = solvedVariantRepository.save(new SolvedVariant(user, variant));
 
-        for (var entry : submission.answers().entrySet()) {
-            SolvedVariantAnswer answer = new SolvedVariantAnswer(
+        for (var entry : submission.verdicts().entrySet()) {
+            SolvedVariantVerdict answer = new SolvedVariantVerdict(
                     solvedVariant,
                     entry.getKey(),
                     entry.getValue());
-            solvedVariantAnswerRepository.save(answer);
+            solvedVariantVerdictRepository.save(answer);
         }
     }
 }

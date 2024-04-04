@@ -1,6 +1,6 @@
 package com.example.site.dto.rest;
 
-import com.example.site.dto.TreatedAnswer;
+import com.example.site.dto.Verdict;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,7 +13,7 @@ public record SolvedVariantSubmission(
 
         @JsonProperty("answers")
         @NotNull
-        Map<Integer, TreatedAnswer> answers,
+        Map<Integer, Verdict> verdicts,
 
         @JsonProperty("isEGEFormat")
         Boolean exam,

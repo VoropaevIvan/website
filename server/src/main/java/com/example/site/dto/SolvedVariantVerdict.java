@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-public class SolvedVariantAnswer {
+public class SolvedVariantVerdict {
     @Id
     @GeneratedValue
     private Long id;
@@ -17,15 +17,15 @@ public class SolvedVariantAnswer {
     @Basic(optional = false)
     private int orderInVariant;
 
-    private TreatedAnswer answer;
+    private Verdict verdict;
 
-    public SolvedVariantAnswer() {
+    public SolvedVariantVerdict() {
     }
 
-    public SolvedVariantAnswer(SolvedVariant variant, int orderInVariant, TreatedAnswer answer) {
+    public SolvedVariantVerdict(SolvedVariant variant, int orderInVariant, Verdict verdict) {
         this.variant = variant;
         this.orderInVariant = orderInVariant;
-        this.answer = answer;
+        this.verdict = verdict;
     }
 
     public Long getId() {
@@ -52,11 +52,11 @@ public class SolvedVariantAnswer {
         this.orderInVariant = orderInVariant;
     }
 
-    public TreatedAnswer getAnswer() {
-        return answer;
+    public Verdict getVerdict() {
+        return verdict;
     }
 
-    public void setAnswer(TreatedAnswer answer) {
-        this.answer = answer;
+    public void setVerdict(Verdict verdict) {
+        this.verdict = verdict;
     }
 }

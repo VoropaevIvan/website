@@ -1,6 +1,6 @@
 package com.example.site.service;
 
-import com.example.site.dao.SolvedTaskAnswerRepository;
+import com.example.site.dao.SolvedTaskVerdictRepository;
 import com.example.site.dao.SolvedTaskCaseRepository;
 import com.example.site.dto.*;
 import com.example.site.dto.rest.SolvedTaskSubmission;
@@ -18,18 +18,18 @@ public class TaskSolutionService {
     private final UserService userService;
     private final TaskService taskService;
     private final SolvedTaskCaseRepository solvedTaskCaseRepository;
-    private final SolvedTaskAnswerRepository solvedTaskAnswerRepository;
+    private final SolvedTaskVerdictRepository solvedTaskVerdictRepository;
 
     public TaskSolutionService(
             UserService userService,
             TaskService taskService,
             SolvedTaskCaseRepository solvedTaskCaseRepository,
-            SolvedTaskAnswerRepository solvedTaskAnswerRepository
+            SolvedTaskVerdictRepository solvedTaskVerdictRepository
     ) {
         this.userService = userService;
         this.taskService = taskService;
         this.solvedTaskCaseRepository = solvedTaskCaseRepository;
-        this.solvedTaskAnswerRepository = solvedTaskAnswerRepository;
+        this.solvedTaskVerdictRepository = solvedTaskVerdictRepository;
     }
 
     @Transactional
@@ -37,7 +37,7 @@ public class TaskSolutionService {
         User user = userService.getById(userId);
         Task task = taskService.getById(submission.taskId());
 
-        solvedTaskAnswerRepository.save(new SolvedTaskAnswer(user, task, submission.answer()));
+        solvedTaskVerdictRepository.save(new SolvedTaskVerdict(user, task, submission.verdict()));
 
         Optional<SolvedTaskCase> optTaskCase = solvedTaskCaseRepository.findByUserAndTask(user, task);
 

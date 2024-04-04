@@ -1,6 +1,6 @@
 package com.example.site.dto.rest;
 
-import com.example.site.dto.TreatedAnswer;
+import com.example.site.dto.Verdict;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,7 +11,7 @@ public record SolvedTaskSubmission(
 
         @JsonProperty("answer")
         @NotNull
-        TreatedAnswer answer,
+        Verdict verdict,
 
         @JsonProperty("isRight")
         @NotNull

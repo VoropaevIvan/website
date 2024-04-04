@@ -4,7 +4,7 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public record TreatedAnswer(
+public record Verdict(
         Answer answer,
         @Basic(optional = false) Integer scores
 ) {
