@@ -54,16 +54,13 @@ public class VariantService {
 
         return Optional.of(new VariantRest(
                 taskRestList,
-                optionalVariant.get().getMaxScore()
+                optionalVariant.get().getMaxScore(),
+                optionalVariant.get().getExam()
         ));
     }
 
-    public VariantRest post(@NotBlank String variantName, @Valid VariantRest variantRest) {
-        return post2(variantName, variantRest);
-    }
-
     @Transactional
-    private VariantRest post2(String variantName, VariantRest variantRest) {
+    public VariantRest post(@NotBlank String variantName, @Valid VariantRest variantRest) {
         List<Task> tasks = variantRest.tasks().stream()
                 .map(TaskRest::toTask)
                 .map(task -> taskService.edit(task.getId(), task)
@@ -74,6 +71,7 @@ public class VariantService {
                 .orElseGet(() -> {
                     Variant newVar = new Variant(variantName);
                     newVar.setMaxScore(variantRest.maxScore());
+                    newVar.setExam(variantRest.exam());
                     return variantRepository.save(newVar);
                 });
 
@@ -102,7 +100,8 @@ public class VariantService {
 
         return new VariantRest(
                 tasks.stream().map(TaskRest::fromTask).toList(),
-                variantRest.maxScore()
+                variantRest.maxScore(),
+                variantRest.exam()
         );
     }
 

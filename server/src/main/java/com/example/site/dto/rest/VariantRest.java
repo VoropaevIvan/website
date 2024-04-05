@@ -14,6 +14,9 @@ public record VariantRest(
         @JsonProperty("maxScore")
         @NotNull
         @PositiveOrZero
-        Integer maxScore
+        Integer maxScore,
+
+        @JsonProperty("isEGEFormat")
+        Boolean exam
 ) {
 }

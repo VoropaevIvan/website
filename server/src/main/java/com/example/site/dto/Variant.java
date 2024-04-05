@@ -22,6 +22,8 @@ public class Variant {
     @Basic(optional = false)
     private Integer maxScore;
 
+    private Boolean exam;
+
     public Variant() {
     }
 
@@ -59,6 +61,14 @@ public class Variant {
 
     public void setMaxScore(Integer maxScore) {
         this.maxScore = maxScore;
+    }
+
+    public Boolean getExam() {
+        return exam;
+    }
+
+    public void setExam(Boolean exam) {
+        this.exam = exam;
     }
 
     @Override
