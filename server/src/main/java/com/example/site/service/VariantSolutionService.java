@@ -38,17 +38,26 @@ public class VariantSolutionService {
         User user = userService.getById(userId);
         Variant variant = variantService.getByName(submission.variantName());
 
-        SolvedVariant solvedVariant = new SolvedVariant(user, variant, submission.primaryScore());
-        solvedVariant.setExam(submission.exam());
-        solvedVariant.setFinalScore(submission.finalScore());
+        SolvedVariant solvedVariant = new SolvedVariant(user, variant);
+        submission.transferTo(solvedVariant);
 
         solvedVariant = solvedVariantRepository.save(solvedVariant);
 
+        List<Answer> rightAnswers = variant.getTasks().stream()
+                .map(VariantTask::getTask)
+                .map(Task::getAnswer).toList();
+
         for (var entry : submission.verdicts().entrySet()) {
+            Verdict fullVerdict = new Verdict(
+                    entry.getValue().userAnswer(),
+                    rightAnswers.get(entry.getKey()),
+                    entry.getValue().scores());
+
             SolvedVariantVerdict answer = new SolvedVariantVerdict(
                     solvedVariant,
                     entry.getKey(),
-                    entry.getValue());
+                    fullVerdict);
+
             solvedVariantVerdictRepository.save(answer);
         }
     }
@@ -63,7 +72,7 @@ public class VariantSolutionService {
         Variant variant = variantService.getByName(variantName);
 
         return solvedVariantRepository
-                .findFirstByUserAndVariantOrderByScoreDescInstantAsc(user, variant)
+                .findFirstByUserAndVariantOrderByPrimaryScoreDescInstantAsc(user, variant)
                 .orElseThrow(() -> noVariantExc(userId, variantName));
     }
 
@@ -73,6 +82,15 @@ public class VariantSolutionService {
 
         return solvedVariantRepository
                 .findFirstByUserAndVariantOrderByInstantDesc(user, variant)
+                .orElseThrow(() -> noVariantExc(userId, variantName));
+    }
+
+    public SolvedVariant getFirst(@NotNull Long userId, @NotBlank String variantName) {
+        User user = userService.getById(userId);
+        Variant variant = variantService.getByName(variantName);
+
+        return solvedVariantRepository
+                .findFirstByUserAndVariantOrderByInstantAsc(user, variant)
                 .orElseThrow(() -> noVariantExc(userId, variantName));
     }
 

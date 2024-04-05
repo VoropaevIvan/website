@@ -1,6 +1,6 @@
 package com.example.site.controller;
 
-import com.example.site.dto.rest.TaskRest;
+import com.example.site.dto.rest.VariantRest;
 import com.example.site.service.VariantService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,8 @@ public class VariantController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<List<TaskRest>> getTasks(@PathVariable String name) {
-        return variantService.getTasks(name)
+    public ResponseEntity<VariantRest> get(@PathVariable String name) {
+        return variantService.get(name)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -30,12 +30,12 @@ public class VariantController {
     }
 
     @PostMapping("/{name}")
-    public List<TaskRest> postVariant(@PathVariable String name, @RequestBody List<TaskRest> tasks) {
-        return variantService.post(name, tasks);
+    public VariantRest post(@PathVariable String name, @RequestBody VariantRest variant) {
+        return variantService.post(name, variant);
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<?> deleteVariant(@PathVariable String name) {
+    public ResponseEntity<?> delete(@PathVariable String name) {
         if (variantService.delete(name)) {
             return ResponseEntity.ok().build();
         }

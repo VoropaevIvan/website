@@ -6,12 +6,17 @@ import com.example.site.dto.Task;
 import com.example.site.dto.Variant;
 import com.example.site.dto.VariantTask;
 import com.example.site.dto.rest.TaskRest;
+import com.example.site.dto.rest.VariantRest;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.*;
 
 @Service
+@Validated
 public class VariantService {
     private final VariantRepository variantRepository;
     private final VariantTaskRepository variantTaskRepository;
@@ -33,7 +38,7 @@ public class VariantService {
                 .toList();
     }
 
-    public Optional<List<TaskRest>> getTasks(String name) {
+    public Optional<VariantRest> get(@NotBlank String name) {
         Optional<Variant> optionalVariant = variantRepository.findByName(name);
         if (optionalVariant.isEmpty()) {
             return Optional.empty();
@@ -47,19 +52,30 @@ public class VariantService {
                 .map(TaskRest::fromTask)
                 .toList();
 
-        return Optional.of(taskRestList);
+        return Optional.of(new VariantRest(
+                taskRestList,
+                optionalVariant.get().getMaxScore()
+        ));
+    }
+
+    public VariantRest post(@NotBlank String variantName, @Valid VariantRest variantRest) {
+        return post2(variantName, variantRest);
     }
 
     @Transactional
-    public List<TaskRest> post(String variantName, List<TaskRest> taskRestList) {
-        List<Task> tasks = taskRestList.stream()
+    private VariantRest post2(String variantName, VariantRest variantRest) {
+        List<Task> tasks = variantRest.tasks().stream()
                 .map(TaskRest::toTask)
                 .map(task -> taskService.edit(task.getId(), task)
                         .orElseGet(() -> taskService.add(task)))
                 .toList();
 
         Variant variant = variantRepository.findByName(variantName)
-                .orElseGet(() -> variantRepository.save(new Variant(variantName)));
+                .orElseGet(() -> {
+                    Variant newVar = new Variant(variantName);
+                    newVar.setMaxScore(variantRest.maxScore());
+                    return variantRepository.save(newVar);
+                });
 
         List<VariantTask> variantTasks = Optional.ofNullable(variant.getTasks())
                 .orElse(new ArrayList<>());
@@ -84,12 +100,13 @@ public class VariantService {
             variantTaskRepository.deleteById(variantTasks.get(i).getId());
         }
 
-        return tasks.stream()
-                .map(TaskRest::fromTask)
-                .toList();
+        return new VariantRest(
+                tasks.stream().map(TaskRest::fromTask).toList(),
+                variantRest.maxScore()
+        );
     }
 
-    public boolean delete(String variantName) {
+    public boolean delete(@NotBlank String variantName) {
         Optional<Variant> optionalVariant = variantRepository.findByName(variantName);
         if (optionalVariant.isEmpty()) {
             return false;

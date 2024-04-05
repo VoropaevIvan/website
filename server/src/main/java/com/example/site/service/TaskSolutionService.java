@@ -36,8 +36,12 @@ public class TaskSolutionService {
     public void solve(@NotNull Long userId, @Valid SolvedTaskSubmission submission) {
         User user = userService.getById(userId);
         Task task = taskService.getById(submission.taskId());
+        Verdict fullVerdict = new Verdict(
+                submission.verdict().userAnswer(),
+                task.getAnswer(),
+                submission.verdict().scores());
 
-        solvedTaskVerdictRepository.save(new SolvedTaskVerdict(user, task, submission.verdict()));
+        solvedTaskVerdictRepository.save(new SolvedTaskVerdict(user, task, fullVerdict));
 
         Optional<SolvedTaskCase> optTaskCase = solvedTaskCaseRepository.findByUserAndTask(user, task);
 

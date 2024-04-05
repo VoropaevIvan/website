@@ -19,6 +19,9 @@ public class Variant {
     @OneToMany(mappedBy = "variant")
     private List<VariantTask> tasks;
 
+    @Basic(optional = false)
+    private Integer maxScore;
+
     public Variant() {
     }
 
@@ -48,6 +51,14 @@ public class Variant {
 
     public void setTasks(List<VariantTask> tasks) {
         this.tasks = tasks;
+    }
+
+    public Integer getMaxScore() {
+        return maxScore;
+    }
+
+    public void setMaxScore(Integer maxScore) {
+        this.maxScore = maxScore;
     }
 
     @Override

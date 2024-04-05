@@ -31,8 +31,8 @@ public class HistoryService {
             bestSolutions.compute(id, (k, v) -> {
                 if (
                         v == null ||
-                        variant.getScore() > v.getScore() ||
-                        (variant.getScore().equals(v.getScore()) &&
+                        variant.getPrimaryScore() > v.getPrimaryScore() ||
+                        (variant.getPrimaryScore().equals(v.getPrimaryScore()) &&
                          variant.getInstant().isBefore(v.getInstant()))
                 ) {
                     return variant;
@@ -54,6 +54,7 @@ public class HistoryService {
         SolvedVariant solvedVariant;
         switch (type) {
             case "best" -> solvedVariant = variantSolutionService.getBest(userId, name);
+            case "first" -> solvedVariant = variantSolutionService.getFirst(userId, name);
             case "last" -> solvedVariant = variantSolutionService.getLast(userId, name);
             default -> throw new RuntimeException("Unknown type of requested variant");
         }

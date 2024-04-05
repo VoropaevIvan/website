@@ -21,7 +21,7 @@ public class SolvedVariant {
     private List<SolvedVariantVerdict> verdicts;
 
     @Basic(optional = false)
-    private Integer score;
+    private Integer primaryScore;
 
     private Integer finalScore;
 
@@ -33,10 +33,9 @@ public class SolvedVariant {
     public SolvedVariant() {
     }
 
-    public SolvedVariant(User user, Variant variant, int score) {
+    public SolvedVariant(User user, Variant variant) {
         this.user = user;
         this.variant = variant;
-        this.score = score;
         this.instant = Instant.now();
     }
 
@@ -72,12 +71,12 @@ public class SolvedVariant {
         this.verdicts = verdicts;
     }
 
-    public Integer getScore() {
-        return score;
+    public Integer getPrimaryScore() {
+        return primaryScore;
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public void setPrimaryScore(Integer primaryScore) {
+        this.primaryScore = primaryScore;
     }
 
     public Integer getFinalScore() {
