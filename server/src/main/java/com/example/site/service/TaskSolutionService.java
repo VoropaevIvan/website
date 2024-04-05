@@ -44,8 +44,8 @@ public class TaskSolutionService {
         SolvedTaskCase taskCase;
         if (optTaskCase.isPresent()) {
             taskCase = optTaskCase.get();
-            taskCase.addAttempt();
             if (!taskCase.getSolved()) {
+                taskCase.addAttempt();
                 taskCase.setSolved(submission.solved());
             }
         } else {

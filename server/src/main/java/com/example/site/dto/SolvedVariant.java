@@ -21,14 +21,22 @@ public class SolvedVariant {
     private List<SolvedVariantVerdict> verdicts;
 
     @Basic(optional = false)
+    private Integer score;
+
+    private Integer finalScore;
+
+    private Boolean exam;
+
+    @Basic(optional = false)
     private Instant instant;
 
     public SolvedVariant() {
     }
 
-    public SolvedVariant(User user, Variant variant) {
+    public SolvedVariant(User user, Variant variant, int score) {
         this.user = user;
         this.variant = variant;
+        this.score = score;
         this.instant = Instant.now();
     }
 
@@ -62,6 +70,30 @@ public class SolvedVariant {
 
     public void setVerdicts(List<SolvedVariantVerdict> verdicts) {
         this.verdicts = verdicts;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getFinalScore() {
+        return finalScore;
+    }
+
+    public void setFinalScore(Integer finalScore) {
+        this.finalScore = finalScore;
+    }
+
+    public Boolean getExam() {
+        return exam;
+    }
+
+    public void setExam(Boolean exam) {
+        this.exam = exam;
     }
 
     public Instant getInstant() {
