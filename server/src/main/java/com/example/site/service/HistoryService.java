@@ -1,7 +1,7 @@
 package com.example.site.service;
 
 import com.example.site.dto.SolvedVariant;
-import com.example.site.dto.rest.SolvedVariantSubmission;
+import com.example.site.dto.rest.SolvedVariantReply;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class HistoryService {
         this.variantSolutionService = variantSolutionService;
     }
 
-    public List<SolvedVariantSubmission> getAllVariants(@NotNull Long userId) {
+    public List<SolvedVariantReply> getAllVariants(@NotNull Long userId) {
         List<SolvedVariant> solvedVariants = variantSolutionService.getAll(userId);
 
         Map<Long, SolvedVariant> bestSolutions = new HashMap<>();
@@ -42,11 +42,11 @@ public class HistoryService {
         }
 
         return bestSolutions.values()
-                .stream().map(SolvedVariantSubmission::from)
+                .stream().map(SolvedVariantReply::from)
                 .toList();
     }
 
-    public SolvedVariantSubmission getVariant(
+    public SolvedVariantReply getVariant(
             @NotNull Long userId,
             @NotBlank String name,
             @NotBlank String type
@@ -59,6 +59,6 @@ public class HistoryService {
             default -> throw new RuntimeException("Unknown type of requested variant");
         }
 
-        return SolvedVariantSubmission.from(solvedVariant);
+        return SolvedVariantReply.from(solvedVariant);
     }
 }

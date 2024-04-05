@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Validated
@@ -47,16 +48,20 @@ public class VariantSolutionService {
                 .map(VariantTask::getTask)
                 .map(Task::getAnswer).toList();
 
-        for (var entry : submission.verdicts().entrySet()) {
-            Verdict fullVerdict = new Verdict(
-                    entry.getValue().userAnswer(),
-                    rightAnswers.get(entry.getKey()),
-                    entry.getValue().scores());
+        for (int i = 0; i < rightAnswers.size(); i++) {
+            Answer userAnswer = null;
+            int scores = 0;
+            Optional<Verdict> verdict = Optional.ofNullable(submission.verdicts().get(i));
+
+            if (verdict.isPresent()) {
+                userAnswer = verdict.get().userAnswer();
+                scores = verdict.get().scores();
+            }
+
+            Verdict fullVerdict = new Verdict(userAnswer, rightAnswers.get(i), scores);
 
             SolvedVariantVerdict answer = new SolvedVariantVerdict(
-                    solvedVariant,
-                    entry.getKey(),
-                    fullVerdict);
+                    solvedVariant, i, fullVerdict);
 
             solvedVariantVerdictRepository.save(answer);
         }

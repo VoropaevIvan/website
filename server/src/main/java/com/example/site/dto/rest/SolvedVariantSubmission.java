@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -39,21 +38,5 @@ public record SolvedVariantSubmission(
                 solvedVariant.setPrimaryScore(primaryScore);
                 solvedVariant.setFinalScore(finalScore);
                 solvedVariant.setExam(exam);
-        }
-
-        public static SolvedVariantSubmission from(SolvedVariant solvedVariant) {
-                Map<Integer, Verdict> verdicts = new HashMap<>();
-                for (var v : solvedVariant.getVerdicts()) {
-                        verdicts.put(v.getOrderInVariant(), v.getVerdict());
-                }
-
-                return new SolvedVariantSubmission(
-                        solvedVariant.getVariant().getName(),
-                        verdicts,
-                        solvedVariant.getVariant().getMaxScore(),
-                        solvedVariant.getExam(),
-                        solvedVariant.getPrimaryScore(),
-                        solvedVariant.getFinalScore()
-                );
         }
 }
