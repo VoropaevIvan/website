@@ -1,5 +1,6 @@
 package com.example.site.controller;
 
+import com.example.site.dto.User;
 import com.example.site.dto.rest.TaskRest;
 import com.example.site.service.TaskService;
 import com.example.site.service.TaskSolutionService;
@@ -21,12 +22,15 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<TaskRest> getAll(@RequestAttribute Long userId) {
+    public List<TaskRest> getAll(@RequestAttribute(name = User.ID_ATTR, required = false) Long userId) {
         return taskSolutionService.getAllTasks(userId);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TaskRest> getById(@RequestAttribute Long userId, @PathVariable long taskId) {
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskRest> getById(
+            @RequestAttribute(name = User.ID_ATTR, required = false) Long userId,
+            @PathVariable("taskId") long taskId
+    ) {
         return taskSolutionService.getRestById(userId, taskId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());

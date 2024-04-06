@@ -101,7 +101,7 @@ public class TaskSolutionService {
         return TaskRest.UserAnswer.RIGHT;
     }
 
-    public Optional<TaskRest> getRestById(@NotNull Long userId, long taskId) {
+    public Optional<TaskRest> getRestById(Long userId, long taskId) {
         Optional<Task> optTask = taskService.findById(taskId);
         if (optTask.isEmpty()) {
             return Optional.empty();
