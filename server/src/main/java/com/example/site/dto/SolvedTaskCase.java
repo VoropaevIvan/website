@@ -28,8 +28,11 @@ public class SolvedTaskCase extends SolvedTask {
         this.attempts = attempts;
     }
 
-    public void addAttempt() {
-        this.attempts++;
+    public void addAttempt(boolean solved) {
+        if (!getSolved()) {
+            attempts++;
+            setSolved(solved);
+        }
     }
 
     public Boolean getSolved() {
@@ -38,5 +41,9 @@ public class SolvedTaskCase extends SolvedTask {
 
     public void setSolved(Boolean solved) {
         this.solved = solved;
+    }
+
+    public boolean firstTryRight() {
+        return solved && attempts == 1;
     }
 }

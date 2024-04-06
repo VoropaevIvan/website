@@ -20,10 +20,8 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<TaskRest> getAll() {
-        return taskRepository.findAll().stream()
-                .map(TaskRest::fromTask)
-                .toList();
+    public List<Task> getAll() {
+        return taskRepository.findAll();
     }
 
     public Task getById(long id) {
@@ -32,10 +30,6 @@ public class TaskService {
             throw new RuntimeException("Task(id=" + id + ") doesn't exist");
         }
         return optTask.get();
-    }
-
-    public Optional<TaskRest> getRestById(long id) {
-        return findById(id).map(TaskRest::fromTask);
     }
 
     public Optional<Task> findById(long id) {
@@ -55,13 +49,13 @@ public class TaskService {
         return save(task);
     }
 
-    public Task save(Task task) {
+    private Task save(Task task) {
         return taskRepository.save(task);
     }
 
     public Optional<TaskRest> edit(Long id, @Valid TaskRest taskRest) {
         Task task = taskRest.toTask();
-        return edit(id, task).map(TaskRest::fromTask);
+        return edit(id, task).map(t -> TaskRest.from(t, taskRest.userAnswer()));
     }
 
     public Optional<Task> edit(Long id, Task task) {

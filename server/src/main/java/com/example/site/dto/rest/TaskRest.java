@@ -54,9 +54,21 @@ public record TaskRest(
         String videoReview,
 
         @JsonProperty("solution")
-        String solution
+        String solution,
+
+        @JsonProperty(value = "userAnswer", defaultValue = "ABSENT")
+        UserAnswer userAnswer
+
 ) {
-    public static TaskRest fromTask(Task task) {
+    public enum UserAnswer {
+        ABSENT, WRONG, RIGHT, FIRST_TRY_RIGHT
+    }
+
+    public static TaskRest from(Task task) {
+        return TaskRest.from(task, null);
+    }
+
+    public static TaskRest from(Task task, UserAnswer answer) {
         return new TaskRest(
                 task.getId(),
                 task.getContent(),
@@ -72,7 +84,8 @@ public record TaskRest(
                 task.getCreateDate(),
                 task.getEditDate(),
                 task.getVideoReview(),
-                task.getSolution()
+                task.getSolution(),
+                answer
         );
     }
 

@@ -49,7 +49,7 @@ public class VariantService {
 
         List<TaskRest> taskRestList = tasks.stream()
                 .map(VariantTask::getTask)
-                .map(TaskRest::fromTask)
+                .map(TaskRest::from)
                 .toList();
 
         return Optional.of(new VariantRest(
@@ -99,7 +99,7 @@ public class VariantService {
         }
 
         return new VariantRest(
-                tasks.stream().map(TaskRest::fromTask).toList(),
+                tasks.stream().map(TaskRest::from).toList(),
                 variantRest.maxScore(),
                 variantRest.exam()
         );
