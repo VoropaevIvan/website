@@ -42,6 +42,9 @@ public class TaskService {
     }
 
     public Task add(Task task) {
+        task.setId(null);
+        task.setStatistics(new Task.Statistics(0L, 0L));
+
         Instant now = Instant.now();
         task.setCreateDate(now);
         task.setEditDate(now);
@@ -49,13 +52,13 @@ public class TaskService {
         return save(task);
     }
 
-    private Task save(Task task) {
+    public Task save(Task task) {
         return taskRepository.save(task);
     }
 
     public Optional<TaskRest> edit(Long id, @Valid TaskRest taskRest) {
         Task task = taskRest.toTask();
-        return edit(id, task).map(t -> TaskRest.from(t, taskRest.userAnswer()));
+        return edit(id, task).map(TaskRest::from);
     }
 
     public Optional<Task> edit(Long id, Task task) {

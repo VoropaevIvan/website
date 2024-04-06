@@ -117,4 +117,8 @@ public class TaskSolutionService {
 
         return Optional.of(TaskRest.from(task, getUserAnswer(taskCase)));
     }
+
+    public List<SolvedTaskCase> getAllByTask(Task task) {
+        return solvedTaskCaseRepository.findAllByTask(task);
+    }
 }

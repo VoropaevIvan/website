@@ -12,4 +12,6 @@ public interface SolvedTaskCaseRepository extends JpaRepository<SolvedTaskCase, 
     Optional<SolvedTaskCase> findByUserAndTask(User user, Task task);
 
     List<SolvedTaskCase> findAllByUser(User user);
+
+    List<SolvedTaskCase> findAllByTask(Task task);
 }

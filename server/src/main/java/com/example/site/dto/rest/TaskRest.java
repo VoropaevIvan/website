@@ -2,6 +2,7 @@ package com.example.site.dto.rest;
 
 import com.example.site.dto.Answer;
 import com.example.site.dto.Task;
+import com.example.site.dto.Task.Statistics;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,6 +19,9 @@ public record TaskRest(
         @JsonProperty("answer")
         @NotNull
         Answer answer,
+
+        @JsonProperty("stats")
+        Statistics statistics,
 
         @JsonProperty("numberEGE")
         @NotNull
@@ -56,7 +60,7 @@ public record TaskRest(
         @JsonProperty("solution")
         String solution,
 
-        @JsonProperty(value = "userAnswer", defaultValue = "ABSENT")
+        @JsonProperty(value = "userAnswer")
         UserAnswer userAnswer
 
 ) {
@@ -73,6 +77,7 @@ public record TaskRest(
                 task.getId(),
                 task.getContent(),
                 task.getAnswer(),
+                task.getStatistics(),
                 task.getNumber(),
                 task.isHidden(),
                 task.isOfficial(),
@@ -95,6 +100,7 @@ public record TaskRest(
         task.setId(id);
         task.setContent(content);
         task.setAnswer(answer);
+//        task.setStatistics(statistics);
         task.setNumber(number);
         task.setHidden(hidden);
         task.setOfficial(official);

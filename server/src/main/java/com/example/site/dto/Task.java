@@ -8,6 +8,16 @@ import java.time.Instant;
 public class Task {
     static final int MAX_LENGTH = 10_000;
 
+    @Embeddable
+    public record Statistics(
+            @Basic(optional = false)
+            Long solvedCount,
+
+            @Basic(optional = false)
+            Long solvedFirstTryCount
+    ) {
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -18,12 +28,14 @@ public class Task {
 
     private Answer answer;
 
+    private Statistics statistics;
+
     @Basic(optional = false)
     private String number;
 
-    private boolean hidden;
+    private Boolean hidden;
 
-    private boolean official;
+    private Boolean official;
 
     private String actuality;
 
@@ -32,13 +44,15 @@ public class Task {
     @Column(length = MAX_LENGTH)
     private String source;
 
-    private int topic;
+    private Integer topic;
 
     @Column(length = MAX_LENGTH)
     private String files;
 
+    @Basic(optional = false)
     private Instant createDate;
 
+    @Basic(optional = false)
     private Instant editDate;
 
     @Column(length = MAX_LENGTH)
@@ -71,6 +85,14 @@ public class Task {
         this.answer = answer;
     }
 
+    public Statistics getStatistics() {
+        return statistics;
+    }
+
+    public void setStatistics(Statistics statistics) {
+        this.statistics = statistics;
+    }
+
     public String getNumber() {
         return number;
     }
@@ -79,19 +101,19 @@ public class Task {
         this.number = number;
     }
 
-    public boolean isHidden() {
+    public Boolean isHidden() {
         return hidden;
     }
 
-    public void setHidden(boolean hidden) {
+    public void setHidden(Boolean hidden) {
         this.hidden = hidden;
     }
 
-    public boolean isOfficial() {
+    public Boolean isOfficial() {
         return official;
     }
 
-    public void setOfficial(boolean official) {
+    public void setOfficial(Boolean official) {
         this.official = official;
     }
 
@@ -119,11 +141,11 @@ public class Task {
         this.source = source;
     }
 
-    public int getTopic() {
+    public Integer getTopic() {
         return topic;
     }
 
-    public void setTopic(int topic) {
+    public void setTopic(Integer topic) {
         this.topic = topic;
     }
 
