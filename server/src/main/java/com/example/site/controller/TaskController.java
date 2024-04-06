@@ -22,16 +22,16 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<TaskRest> getAll(@RequestAttribute(name = User.ID_ATTR, required = false) Long userId) {
-        return taskSolutionService.getAllTasks(userId);
+    public List<TaskRest> getAll(@RequestAttribute(name = User.ATTR, required = false) User user) {
+        return taskSolutionService.getAllTasks(user);
     }
 
     @GetMapping("/{taskId}")
     public ResponseEntity<TaskRest> getById(
-            @RequestAttribute(name = User.ID_ATTR, required = false) Long userId,
+            @RequestAttribute(name = User.ATTR, required = false) User user,
             @PathVariable("taskId") long taskId
     ) {
-        return taskSolutionService.getRestById(userId, taskId)
+        return taskSolutionService.getRestById(user, taskId)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

@@ -18,16 +18,16 @@ public class HistoryController {
     }
 
     @GetMapping("/variants")
-    public List<SolvedVariantReply> getAllVariants(@RequestAttribute(User.ID_ATTR) Long userId) {
-        return historyService.getAllVariants(userId);
+    public List<SolvedVariantReply> getAllVariants(@RequestAttribute(User.ATTR) User user) {
+        return historyService.getAllVariants(user);
     }
 
     @GetMapping("/variants/{name}")
     public SolvedVariantReply getVariant(
-            @RequestAttribute(User.ID_ATTR) Long userId,
+            @RequestAttribute(User.ATTR) User user,
             @PathVariable("name") String name,
             @RequestParam("type") String type
     ) {
-        return historyService.getVariant(userId, name, type);
+        return historyService.getVariant(user, name, type);
     }
 }

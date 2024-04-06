@@ -17,26 +17,22 @@ import java.util.Optional;
 @Service
 @Validated
 public class VariantSolutionService {
-    private final UserService userService;
     private final VariantService variantService;
     private final SolvedVariantRepository solvedVariantRepository;
     private final SolvedVariantVerdictRepository solvedVariantVerdictRepository;
 
     public VariantSolutionService(
-            UserService userService,
             VariantService variantService,
             SolvedVariantRepository solvedVariantRepository,
             SolvedVariantVerdictRepository solvedVariantVerdictRepository
     ) {
-        this.userService = userService;
         this.variantService = variantService;
         this.solvedVariantRepository = solvedVariantRepository;
         this.solvedVariantVerdictRepository = solvedVariantVerdictRepository;
     }
 
     @Transactional
-    public void solve(@NotNull Long userId, @Valid SolvedVariantSubmission submission) {
-        User user = userService.getById(userId);
+    public void solve(@NotNull User user, @Valid SolvedVariantSubmission submission) {
         Variant variant = variantService.getByName(submission.variantName());
 
         SolvedVariant solvedVariant = new SolvedVariant(user, variant);
@@ -67,40 +63,34 @@ public class VariantSolutionService {
         }
     }
 
-    public List<SolvedVariant> getAll(@NotNull Long userId) {
-        User user = userService.getById(userId);
+    public List<SolvedVariant> getAll(@NotNull User user) {
         return solvedVariantRepository.findAllByUser(user);
     }
 
-    public SolvedVariant getBest(@NotNull Long userId, @NotBlank String variantName) {
-        User user = userService.getById(userId);
+    public SolvedVariant getBest(@NotNull User user, @NotBlank String variantName) {
         Variant variant = variantService.getByName(variantName);
-
         return solvedVariantRepository
                 .findFirstByUserAndVariantOrderByPrimaryScoreDescInstantAsc(user, variant)
-                .orElseThrow(() -> noVariantExc(userId, variantName));
+                .orElseThrow(() -> noVariantExc(user, variantName));
     }
 
-    public SolvedVariant getLast(@NotNull Long userId, @NotBlank String variantName) {
-        User user = userService.getById(userId);
+    public SolvedVariant getLast(@NotNull User user, @NotBlank String variantName) {
         Variant variant = variantService.getByName(variantName);
-
         return solvedVariantRepository
                 .findFirstByUserAndVariantOrderByInstantDesc(user, variant)
-                .orElseThrow(() -> noVariantExc(userId, variantName));
+                .orElseThrow(() -> noVariantExc(user, variantName));
     }
 
-    public SolvedVariant getFirst(@NotNull Long userId, @NotBlank String variantName) {
-        User user = userService.getById(userId);
+    public SolvedVariant getFirst(@NotNull User user, @NotBlank String variantName) {
         Variant variant = variantService.getByName(variantName);
 
         return solvedVariantRepository
                 .findFirstByUserAndVariantOrderByInstantAsc(user, variant)
-                .orElseThrow(() -> noVariantExc(userId, variantName));
+                .orElseThrow(() -> noVariantExc(user, variantName));
     }
 
-    private RuntimeException noVariantExc(long userId, String variantName) {
+    private RuntimeException noVariantExc(User user, String variantName) {
          return new RuntimeException(
-                 "No solved variant(userId=" + userId + ",variantName=" + variantName + ")");
+                 "No solved variant(userId=" + user.getId() + ",variantName=" + variantName + ")");
     }
 }

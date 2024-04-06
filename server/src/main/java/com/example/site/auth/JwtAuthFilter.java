@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -57,9 +56,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         long id = jwtService.extractUserId(jwt);
         User user;
         try {
-            user = userService.findUser(id).orElseThrow();
-        } catch (NoSuchElementException e) {
-            logger.warn("User(id = " + id + ") doesn't exist.");
+            user = userService.getById(id);
+        } catch (RuntimeException e) {
+            logger.warn(e.getMessage());
             return;
         }
         UsernamePasswordAuthenticationToken authToken =
@@ -74,6 +73,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(authToken);
         SecurityContextHolder.setContext(context);
-        request.setAttribute(User.ID_ATTR, id);
+        request.setAttribute(User.ATTR, user);
     }
 }

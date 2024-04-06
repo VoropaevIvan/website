@@ -24,17 +24,17 @@ public class SolutionController {
 
     @PostMapping("/task")
     public void solveTask(
-            @RequestAttribute(User.ID_ATTR) Long userId,
+            @RequestAttribute(User.ATTR) User user,
             @RequestBody SolvedTaskSubmission submission
     ) {
-        taskSolutionService.solve(userId, submission);
+        taskSolutionService.solve(user, submission);
     }
 
     @PostMapping("/variant")
     public void solveVariant(
-            @RequestAttribute(User.ID_ATTR) Long userId,
+            @RequestAttribute(User.ATTR) User user,
             @RequestBody SolvedVariantSubmission submission
     ) {
-        variantSolutionService.solve(userId, submission);
+        variantSolutionService.solve(user, submission);
     }
 }
