@@ -58,7 +58,8 @@ public class StatsService {
 
     public TopUsers getTopUsers(User user) {
         LocalDate now = LocalDate.now();
-        LocalDate currentWeek = LocalDate.of(now.getYear(), now.getMonth(), 1);
+        LocalDate currentWeek = LocalDate.of(now.getYear(), now.getMonth(),
+                now.getDayOfMonth() - now.getDayOfWeek().getValue() + 1);
         LocalDate currentMonth = LocalDate.of(now.getYear(), now.getMonth(), 1);
 
         List<User> users = userService.findAll();
