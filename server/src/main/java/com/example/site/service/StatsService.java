@@ -1,14 +1,15 @@
 package com.example.site.service;
 
+import com.example.site.dto.SolvedTaskCase;
+import com.example.site.dto.Task.Statistics;
 import com.example.site.dto.User;
+import com.example.site.dto.rest.TaskInfo;
 import com.example.site.dto.rest.UserInfo;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Validated
@@ -16,11 +17,41 @@ public class StatsService {
     public static final int TOP_SIZE = 10;
 
     private final UserService userService;
+    private final TaskSolutionService taskSolutionService;
 
     public StatsService(
-            UserService userService
+            UserService userService,
+            TaskSolutionService taskSolutionService
     ) {
         this.userService = userService;
+        this.taskSolutionService = taskSolutionService;
+    }
+
+    public List<TaskInfo> getCurrentUser(@NotNull User user) {
+        List<SolvedTaskCase> taskCases = taskSolutionService.getAllTaskCases(user);
+
+        Map<String, List<Long>> taskCasesByNumber = new HashMap<>();
+        final int solvedPos = 0;
+        final int solvedFirstTryPos = 1;
+
+        for (SolvedTaskCase taskCase : taskCases) {
+            String number = taskCase.getTask().getNumber();
+            List<Long> solutionCount = taskCasesByNumber.computeIfAbsent(number, k ->
+                    new ArrayList<>(List.of(0L, 0L)));
+
+            if (taskCase.getSolved()) {
+                solutionCount.set(solvedPos, solutionCount.get(solvedPos) + 1);
+            }
+            if (taskCase.firstTryRight()) {
+                solutionCount.set(solvedFirstTryPos, solutionCount.get(solvedFirstTryPos) + 1);
+            }
+        }
+
+        return taskCasesByNumber.entrySet().stream()
+                .map(e -> new TaskInfo(e.getKey(), new Statistics(
+                        e.getValue().get(solvedPos),
+                        e.getValue().get(solvedFirstTryPos))))
+                .toList();
     }
 
     public List<UserInfo> getTopUsers(User user) {

@@ -1,6 +1,7 @@
 package com.example.site.controller;
 
 import com.example.site.dto.User;
+import com.example.site.dto.rest.TaskInfo;
 import com.example.site.dto.rest.UserInfo;
 import com.example.site.service.StatsService;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,11 @@ public class StatsController {
 
     public StatsController(StatsService statsService) {
         this.statsService = statsService;
+    }
+
+    @GetMapping
+    public List<TaskInfo> getCurrentUser(@RequestAttribute(User.ATTR) User user) {
+        return statsService.getCurrentUser(user);
     }
 
     @GetMapping("/users")

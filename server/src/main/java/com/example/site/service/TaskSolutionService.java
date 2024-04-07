@@ -108,7 +108,7 @@ public class TaskSolutionService {
         }).toList();
     }
 
-    private List<SolvedTaskCase> getAllTaskCases(User user) {
+    public List<SolvedTaskCase> getAllTaskCases(User user) {
         return solvedTaskCaseRepository.findAllByUser(user);
     }
 
