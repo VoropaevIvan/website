@@ -27,11 +27,16 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private static final String ADMIN = Role.ADMIN.toString();
     private static final String[] commonAccessPatterns = {
             "/files/**",
             "/tasks/**",
-            "/variants/**"
+            "/variants/**",
+            "/stats/users"
+    };
+    private static final String[] personalAccessPatterns = {
+            "/solves/**",
+            "/history/**",
+            "/stats"
     };
 
     private final JwtAuthFilter jwtAuthFilter;
@@ -57,11 +62,10 @@ public class SecurityConfig {
                 // Настройка доступа к конечным точкам
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.GET, commonAccessPatterns).permitAll()
-                        .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
-                        .requestMatchers("/solves/**").authenticated()
-                        .requestMatchers("/history/**").authenticated()
-                        .anyRequest().hasRole(ADMIN))
+                        .requestMatchers(personalAccessPatterns).authenticated()
+                        .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
+                        .anyRequest().hasRole(Role.ADMIN.toString()))
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

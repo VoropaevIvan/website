@@ -21,15 +21,18 @@ import java.util.Optional;
 @Validated
 public class TaskSolutionService {
     private final TaskService taskService;
+    private final UserService userService;
     private final SolvedTaskCaseRepository solvedTaskCaseRepository;
     private final SolvedTaskVerdictRepository solvedTaskVerdictRepository;
 
     public TaskSolutionService(
             TaskService taskService,
+            UserService userService,
             SolvedTaskCaseRepository solvedTaskCaseRepository,
             SolvedTaskVerdictRepository solvedTaskVerdictRepository
     ) {
         this.taskService = taskService;
+        this.userService = userService;
         this.solvedTaskCaseRepository = solvedTaskCaseRepository;
         this.solvedTaskVerdictRepository = solvedTaskVerdictRepository;
     }
@@ -47,14 +50,31 @@ public class TaskSolutionService {
         Optional<SolvedTaskCase> optTaskCase = findTaskCase(user, task);
 
         SolvedTaskCase taskCase;
+        boolean solvedBefore;
         if (optTaskCase.isPresent()) {
             taskCase = optTaskCase.get();
+            solvedBefore = taskCase.getSolved();
             taskCase.addAttempt(submission.solved());
         } else {
             taskCase = new SolvedTaskCase(user, task, submission.solved());
+            solvedBefore = false;
         }
 
         solvedTaskCaseRepository.save(taskCase);
+
+        if (!solvedBefore && taskCase.getSolved()) {
+            int userScore = user.getRatingScore();
+            if (taskCase.firstTryRight()) {
+                userScore += 10;
+            } else if (taskCase.getAttempts() == 2) {
+                userScore += 5;
+            } else if (taskCase.getAttempts() == 3) {
+                userScore += 2;
+            }
+            user.setRatingScore(userScore);
+
+            userService.save(user);
+        }
     }
 
     private Optional<SolvedTaskCase> findTaskCase(User user, Task task) {

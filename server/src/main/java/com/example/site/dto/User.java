@@ -36,19 +36,24 @@ public class User implements UserDetails {
     @Basic(optional = false)
     private Role role;
 
+    @Basic(optional = false)
+    private Integer ratingScore;
+
     public User() {
+        ratingScore = 0;
     }
 
     public User(long id, Role role) {
+        this();
         this.id = id;
         this.role = role;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -82,6 +87,14 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Integer getRatingScore() {
+        return ratingScore;
+    }
+
+    public void setRatingScore(Integer ratingScore) {
+        this.ratingScore = ratingScore;
     }
 
     @Override

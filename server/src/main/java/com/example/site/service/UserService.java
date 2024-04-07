@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -53,14 +54,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void updateUser(long userId) {
-        Optional<User> optUser = findUser(userId);
-        if (optUser.isEmpty()) {
-            return;
-        }
-        updateUser(optUser.get());
-    }
-
     public UserDetailsService userDetailsService() {
         return username -> {
             try {
@@ -92,5 +85,13 @@ public class UserService {
         Role role = jwtService.extractUserRole(jwt);
         long jwtId = jwtService.extractUserId(jwt);
         return role == Role.ADMIN || jwtId == id;
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
