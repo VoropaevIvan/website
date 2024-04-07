@@ -3,6 +3,8 @@ package com.example.site.dto;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class SolvedTaskCase extends SolvedTask {
     @Basic(optional = false)
@@ -11,6 +13,9 @@ public class SolvedTaskCase extends SolvedTask {
     @Basic(optional = false)
     protected Boolean solved;
 
+    @Basic(optional = false)
+    protected Integer points;
+
     public SolvedTaskCase() {
     }
 
@@ -18,6 +23,7 @@ public class SolvedTaskCase extends SolvedTask {
         super(user, task);
         this.solved = solved;
         this.attempts = 1;
+        this.points = 0;
     }
 
     public Integer getAttempts() {
@@ -32,6 +38,7 @@ public class SolvedTaskCase extends SolvedTask {
         if (!getSolved()) {
             attempts++;
             setSolved(solved);
+            setInstant(LocalDateTime.now());
         }
     }
 
@@ -45,5 +52,13 @@ public class SolvedTaskCase extends SolvedTask {
 
     public boolean firstTryRight() {
         return solved && attempts == 1;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 }

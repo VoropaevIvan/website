@@ -4,17 +4,19 @@ import com.example.site.dto.SolvedTaskCase;
 import com.example.site.dto.Task.Statistics;
 import com.example.site.dto.User;
 import com.example.site.dto.rest.TaskInfo;
-import com.example.site.dto.rest.UserInfo;
+import com.example.site.dto.rest.TopUsers;
+import com.example.site.dto.rest.TopUsers.UserInfo;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.*;
 import java.util.*;
 
 @Service
 @Validated
 public class StatsService {
-    public static final int TOP_SIZE = 10;
+    private record Score(User user, int value) {}
 
     private final UserService userService;
     private final TaskSolutionService taskSolutionService;
@@ -54,50 +56,78 @@ public class StatsService {
                 .toList();
     }
 
-    public List<UserInfo> getTopUsers(User user) {
-        List<User> users = userService.findAll();
-        Comparator<User> scoreComparator = Comparator.comparingInt(User::getRatingScore);
-        users.sort(scoreComparator);
+    public TopUsers getTopUsers(User user) {
+        LocalDate now = LocalDate.now();
+        LocalDate currentWeek = LocalDate.of(now.getYear(), now.getMonth(), 1);
+        LocalDate currentMonth = LocalDate.of(now.getYear(), now.getMonth(), 1);
 
-        List<UserInfo> userInfoList = new ArrayList<>(TOP_SIZE + 1);
+        List<User> users = userService.findAll();
+
+        List<UserInfo> week = get10TopUsers(users, user, currentWeek);
+        List<UserInfo> month = get10TopUsers(users, user, currentMonth);
+        List<UserInfo> allTime = get10TopUsers(users, user, LocalDate.MIN);
+
+        return new TopUsers(week, month, allTime);
+    }
+
+    private List<UserInfo> get10TopUsers(List<User> users, User currentUser, LocalDate localDate) {
+        final int K = 10;
+        LocalDateTime instant = LocalDateTime.of(localDate, LocalTime.MIN);
+
+        Comparator<Score> scoreComparator = Comparator.comparingInt(Score::value);
+        List<Score> scores = users.stream()
+                .map(user -> new Score(user, calculateScore(user, instant)))
+                .sorted(scoreComparator)
+                .toList();
+
+        List<UserInfo> userInfoList = new ArrayList<>(K + 1);
         boolean currentUserInTop = false;
 
-        for (int i = 1; i <= TOP_SIZE && i <= users.size(); i++) {
-            User u = users.get(users.size() - i);
-            boolean currentUser = u.equals(user);
-            if (currentUser) {
+        for (int i = 1; i <= K && i <= scores.size(); i++) {
+            Score score = scores.get(scores.size() - i);
+            User user = score.user();
+            boolean isCurrentUser = user.equals(currentUser);
+            if (isCurrentUser) {
                 currentUserInTop = true;
             }
 
             userInfoList.add(new UserInfo(
-                    u.getName(),
-                    u.getSurname(),
+                    user.getName(),
+                    user.getSurname(),
                     i,
-                    u.getRatingScore(),
-                    currentUser));
+                    score.value(),
+                    isCurrentUser));
         }
 
-        if (user == null || currentUserInTop) {
+        if (currentUser == null || currentUserInTop) {
             return userInfoList;
         }
 
-        int pos = Collections.binarySearch(users, user, scoreComparator);
-        while (pos > 0 && users.get(pos - 1).getRatingScore().equals(user.getRatingScore())) {
+        Score currentUserScore = new Score(currentUser, calculateScore(currentUser, instant));
+        int pos = Collections.binarySearch(scores, currentUserScore, scoreComparator);
+        while (pos > 0 && scores.get(pos - 1).value() == currentUserScore.value()) {
             pos--;
         }
 
-        while (pos < users.size()) {
-            if (users.get(pos).equals(user)) {
+        while (pos < scores.size()) {
+            if (scores.get(pos).user().equals(currentUser)) {
                 userInfoList.add(new UserInfo(
-                        user.getName(),
-                        user.getSurname(),
+                        currentUser.getName(),
+                        currentUser.getSurname(),
                         pos + 1,
-                        user.getRatingScore(),
+                        currentUserScore.value(),
                         true));
                 return userInfoList;
             }
             pos++;
         }
-        throw new RuntimeException("User(id=" + user.getId() + ") has been deleted");
+        throw new RuntimeException("User(id=" + currentUser.getId() + ") has been deleted");
+    }
+
+    private int calculateScore(User user, LocalDateTime startInstant) {
+        return taskSolutionService.getAllTaskCases(user).stream()
+                .filter(SolvedTaskCase::getSolved)
+                .filter(taskCase -> startInstant.isBefore(taskCase.getInstant()))
+                .reduce(0, (acc, taskCase) -> acc + taskCase.getPoints(), Integer::sum);
     }
 }

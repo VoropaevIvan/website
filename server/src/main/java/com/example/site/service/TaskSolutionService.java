@@ -22,18 +22,15 @@ import java.util.Optional;
 @Validated
 public class TaskSolutionService {
     private final TaskService taskService;
-    private final UserService userService;
     private final SolvedTaskCaseRepository solvedTaskCaseRepository;
     private final SolvedTaskVerdictRepository solvedTaskVerdictRepository;
 
     public TaskSolutionService(
             TaskService taskService,
-            UserService userService,
             SolvedTaskCaseRepository solvedTaskCaseRepository,
             SolvedTaskVerdictRepository solvedTaskVerdictRepository
     ) {
         this.taskService = taskService;
-        this.userService = userService;
         this.solvedTaskCaseRepository = solvedTaskCaseRepository;
         this.solvedTaskVerdictRepository = solvedTaskVerdictRepository;
     }
@@ -61,32 +58,37 @@ public class TaskSolutionService {
             solvedBefore = false;
         }
 
-        solvedTaskCaseRepository.save(taskCase);
-
         if (!solvedBefore && taskCase.getSolved()) {
-            int userScore = user.getRatingScore();
-            long solvedCount = task.getStatistics().solvedCount() + 1;
-            long solvedFirstTryCount = task.getStatistics().solvedFirstTryCount();
-
-            if (taskCase.firstTryRight()) {
-                userScore += 10;
-                solvedFirstTryCount++;
-            } else if (taskCase.getAttempts() == 2) {
-                userScore += 5;
-            } else if (taskCase.getAttempts() == 3) {
-                userScore += 2;
-            }
-
-            user.setRatingScore(userScore);
-            task.setStatistics(new Statistics(solvedCount, solvedFirstTryCount));
-
-            userService.save(user);
-            taskService.save(task);
+            chargePoints(task, taskCase);
         }
+
+        solvedTaskCaseRepository.save(taskCase);
     }
 
     private Optional<SolvedTaskCase> findTaskCase(User user, Task task) {
         return solvedTaskCaseRepository.findByUserAndTask(user, task);
+    }
+
+    private void chargePoints(Task task, SolvedTaskCase taskCase) {
+        int points;
+        long solvedCount = task.getStatistics().solvedCount() + 1;
+        long solvedFirstTryCount = task.getStatistics().solvedFirstTryCount();
+
+        if (taskCase.firstTryRight()) {
+            points = 10;
+            solvedFirstTryCount++;
+        } else if (taskCase.getAttempts() == 2) {
+            points = 5;
+        } else if (taskCase.getAttempts() == 3) {
+            points = 2;
+        } else {
+            points = 1;
+        }
+
+        taskCase.setPoints(points);
+        task.setStatistics(new Statistics(solvedCount, solvedFirstTryCount));
+
+        taskService.save(task);
     }
 
     public List<TaskRest> getAllTasks(User user) {

@@ -2,7 +2,7 @@ package com.example.site.dto;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class SolvedTask {
@@ -17,7 +17,7 @@ public class SolvedTask {
     protected Task task;
 
     @Basic(optional = false)
-    protected Instant instant;
+    protected LocalDateTime instant;
 
     public SolvedTask() {
     }
@@ -25,7 +25,7 @@ public class SolvedTask {
     public SolvedTask(User user, Task task) {
         this.user = user;
         this.task = task;
-        this.instant = Instant.now();
+        this.instant = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -52,11 +52,11 @@ public class SolvedTask {
         this.task = task;
     }
 
-    public Instant getInstant() {
+    public LocalDateTime getInstant() {
         return instant;
     }
 
-    public void setInstant(Instant instant) {
+    public void setInstant(LocalDateTime instant) {
         this.instant = instant;
     }
 
