@@ -1,11 +1,7 @@
 package com.example.site.service;
 
-import com.example.site.dto.SolvedTaskCase;
-import com.example.site.dto.Task;
-import com.example.site.dto.Task.Statistics;
 import com.example.site.dto.User;
 import com.example.site.dto.rest.UserInfo;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -20,17 +16,11 @@ public class StatsService {
     public static final int TOP_SIZE = 10;
 
     private final UserService userService;
-    private final TaskService taskService;
-    private final TaskSolutionService taskSolutionService;
 
     public StatsService(
-            UserService userService,
-            TaskService taskService,
-            TaskSolutionService taskSolutionService
+            UserService userService
     ) {
         this.userService = userService;
-        this.taskService = taskService;
-        this.taskSolutionService = taskSolutionService;
     }
 
     public List<UserInfo> getTopUsers(User user) {
@@ -78,19 +68,5 @@ public class StatsService {
             pos++;
         }
         throw new RuntimeException("User(id=" + user.getId() + ") has been deleted");
-    }
-
-    @Transactional
-    public void updateTaskStats() {
-        for (Task task : taskService.getAll()) {
-            List<SolvedTaskCase> cases = taskSolutionService.getAllByTask(task);
-            long solvedCount = cases.stream()
-                    .filter(SolvedTaskCase::getSolved).count();
-            long solvedFirstTryCount = cases.stream()
-                    .filter(SolvedTaskCase::firstTryRight).count();
-
-            task.setStatistics(new Statistics(solvedCount, solvedFirstTryCount));
-            taskService.save(task);
-        }
     }
 }

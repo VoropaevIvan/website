@@ -17,11 +17,6 @@ public class StatsController {
         this.statsService = statsService;
     }
 
-    @PostMapping("/tasks")
-    public void updateTaskStats() {
-        statsService.updateTaskStats();
-    }
-
     @GetMapping("/users")
     public List<UserInfo> getTopUsers(@RequestAttribute(name = User.ATTR, required = false) User user) {
         return statsService.getTopUsers(user);

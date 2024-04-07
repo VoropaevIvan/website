@@ -3,6 +3,7 @@ package com.example.site.service;
 import com.example.site.dao.SolvedTaskVerdictRepository;
 import com.example.site.dao.SolvedTaskCaseRepository;
 import com.example.site.dto.*;
+import com.example.site.dto.Task.Statistics;
 import com.example.site.dto.rest.SolvedTaskSubmission;
 import com.example.site.dto.rest.TaskRest;
 import com.example.site.dto.rest.TaskRest.UserAnswer;
@@ -64,16 +65,23 @@ public class TaskSolutionService {
 
         if (!solvedBefore && taskCase.getSolved()) {
             int userScore = user.getRatingScore();
+            long solvedCount = task.getStatistics().solvedCount() + 1;
+            long solvedFirstTryCount = task.getStatistics().solvedFirstTryCount();
+
             if (taskCase.firstTryRight()) {
                 userScore += 10;
+                solvedFirstTryCount++;
             } else if (taskCase.getAttempts() == 2) {
                 userScore += 5;
             } else if (taskCase.getAttempts() == 3) {
                 userScore += 2;
             }
+
             user.setRatingScore(userScore);
+            task.setStatistics(new Statistics(solvedCount, solvedFirstTryCount));
 
             userService.save(user);
+            taskService.save(task);
         }
     }
 
@@ -131,9 +139,5 @@ public class TaskSolutionService {
         SolvedTaskCase taskCase = findTaskCase(user, task).orElse(null);
 
         return Optional.of(TaskRest.from(task, getUserAnswer(taskCase)));
-    }
-
-    public List<SolvedTaskCase> getAllByTask(Task task) {
-        return solvedTaskCaseRepository.findAllByTask(task);
     }
 }
