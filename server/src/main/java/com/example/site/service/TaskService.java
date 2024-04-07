@@ -56,17 +56,23 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public Optional<TaskRest> edit(Long id, @Valid TaskRest taskRest) {
+    public Optional<TaskRest> edit(long id, @Valid TaskRest taskRest) {
         Task task = taskRest.toTask();
         return edit(id, task).map(TaskRest::from);
     }
 
     public Optional<Task> edit(Long id, Task task) {
-        if (id == null || !taskRepository.existsById(id)) {
+        if (id == null) {
+            return Optional.empty();
+        }
+
+        Optional<Task> oldTask = findById(id);
+        if (oldTask.isEmpty()) {
             return Optional.empty();
         }
 
         task.setId(id);
+        task.setStatistics(oldTask.get().getStatistics());
         task.setEditDate(Instant.now());
 
         return Optional.of(save(task));
