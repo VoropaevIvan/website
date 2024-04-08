@@ -13,10 +13,12 @@ const TopUsers = () => {
     async function fetchData() {
       const topUsers = await getTopUsers();
 
-      try {
+      if (topUsers?.week) {
         setTopUsersByWeek(topUsers.week);
+      }
+      if (topUsers?.month) {
         setTopUsersByMonth(topUsers.month);
-      } catch (error) {}
+      }
     }
     fetchData();
   }, [location]);
@@ -24,7 +26,7 @@ const TopUsers = () => {
   console.log(topUsersByWeek);
   return (
     <>
-      {topUsersByWeek.length > 0 && (
+      {topUsersByWeek && topUsersByWeek.length > 0 && (
         <div>
           <h1>Лучшие пользователи сайта</h1>
         </div>
