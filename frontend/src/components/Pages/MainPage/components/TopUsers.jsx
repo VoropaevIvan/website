@@ -13,26 +13,36 @@ const TopUsers = () => {
     async function fetchData() {
       const topUsers = await getTopUsers();
 
-      setTopUsersByWeek(topUsers.week);
-      setTopUsersByMonth(topUsers.month);
+      try {
+        setTopUsersByWeek(topUsers.week);
+        setTopUsersByMonth(topUsers.month);
+      } catch (error) {}
     }
     fetchData();
   }, [location]);
 
   console.log(topUsersByWeek);
   return (
-    <div className="topusers">
-      <div>
-        {topUsersByWeek.length > 0 && (
-          <TableForTopUsers title={"Топ за неделю"} users={topUsersByWeek} />
-        )}
+    <>
+      {topUsersByWeek.length > 0 && (
+        <div>
+          <h1>Лучшие пользователи сайта</h1>
+        </div>
+      )}
+
+      <div className="topusers">
+        <div>
+          {topUsersByWeek.length > 0 && (
+            <TableForTopUsers title={"Топ за неделю"} users={topUsersByWeek} />
+          )}
+        </div>
+        <div>
+          {topUsersByMonth.length > 0 && (
+            <TableForTopUsers title={"Топ за месяц"} users={topUsersByMonth} />
+          )}
+        </div>
       </div>
-      <div>
-        {topUsersByMonth.length > 0 && (
-          <TableForTopUsers title={"Топ за месяц"} users={topUsersByMonth} />
-        )}
-      </div>
-    </div>
+    </>
   );
 };
 

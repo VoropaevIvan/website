@@ -37,10 +37,6 @@ const MainPage = () => {
 
   return (
     <div className="mainpage">
-      <div>
-        <h1>Лучшие пользователи сайта</h1>
-      </div>
-
       <TopUsers />
 
       <div>
