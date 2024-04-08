@@ -18,6 +18,7 @@ const Variants = () => {
     fetchData();
   }, []);
 
+  console.log(variantsNames);
   return (
     <div className="variantspage">
       {isAdmin && <CreateVariant setVariantsNames={setVariantsNames} />}
