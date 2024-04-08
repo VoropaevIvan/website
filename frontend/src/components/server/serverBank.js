@@ -27,6 +27,7 @@ export const getAllTasksFromServer = async (setTasksFromServer) => {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
       },
     });
+    console.log(res);
     if (res.data) {
       let dataOk = res.data;
 
