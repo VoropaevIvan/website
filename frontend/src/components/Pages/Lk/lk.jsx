@@ -30,10 +30,6 @@ const Lk = () => {
       <VariantsResults variantsHistory={variantsHistory} />
       <StatByNumber statByNumberEGE={statByNumberEGE} />
 
-      <div className="capt">
-        <h2>Лучшие пользователи сайта</h2>
-      </div>
-
       <TopUsers />
     </div>
   );

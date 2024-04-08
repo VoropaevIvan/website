@@ -27,8 +27,8 @@ const TopUsers = () => {
   return (
     <>
       {topUsersByWeek && topUsersByWeek.length > 0 && (
-        <div>
-          <h1>Лучшие пользователи сайта</h1>
+        <div className="capt">
+          <h2>Лучшие пользователи сайта</h2>
         </div>
       )}
 
