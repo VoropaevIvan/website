@@ -12,8 +12,8 @@ const Variants = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await getAllVariants();
-      setVariantsNames(res.data);
+      const variants = await getAllVariants();
+      setVariantsNames(variants);
     }
     fetchData();
   }, []);

@@ -6,7 +6,7 @@ export const getAllVariants = async () => {
   try {
     const link = process.env.REACT_APP_LINK_VARIANTS;
     const res = await axios.get(link);
-    return res;
+    return res.data;
   } catch (error) {
     alert("Не удалось загрузить варианты. Попробуйте позже.");
     return [];

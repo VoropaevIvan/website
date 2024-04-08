@@ -1,19 +1,18 @@
 import axios from "axios";
 
 export const getStatByNumberEGE = async () => {
-  const stat = [];
-  for (let i = 1; i < 28; i++) {
-    stat.push({ numberEGE: i, countAll: i * 2, percent: (i * 20) % 101 });
-  }
+  try {
+    const link = process.env.REACT_APP_STATS_BY_NUMBER_EGE;
+    const res = await axios.get(link, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    });
 
-  const link = process.env.REACT_APP_STATS_BY_NUMBER_EGE;
-  const res = await axios.get(link, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
-    },
-  });
-  console.log("res", res.data);
-  return res.data;
+    return res.data;
+  } catch (error) {
+    return [];
+  }
 };
 
 // export const getVariantsResultsHistory = async () => {
