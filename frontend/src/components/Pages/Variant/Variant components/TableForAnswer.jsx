@@ -35,7 +35,6 @@ const TableForAnswer = ({
     });
   };
 
-  console.log(valueInAnswerTable);
   return (
     <>
       <div className="tablediv">

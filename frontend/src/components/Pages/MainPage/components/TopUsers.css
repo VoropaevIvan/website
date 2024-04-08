@@ -1,5 +1,6 @@
 .tablefortopusers {
   display: inline-block;
   border: 0;
+  width: initial;
   /* margin-right: 100px; */
 }

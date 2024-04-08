@@ -36,6 +36,10 @@
   background-color: antiquewhite;
 }
 
-.mainpage table {
+.mainpage table tbody {
   background-color: white;
+}
+
+.mainpage .gowork {
+  cursor: pointer;
 }

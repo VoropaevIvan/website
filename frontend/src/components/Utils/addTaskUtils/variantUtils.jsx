@@ -90,3 +90,36 @@ export const prepareAnswerFields = ({
     }
   }
 };
+
+export const eraseStringifyFromData = (answersWithBalls) => {
+  const answersWithBallsNotJson = {};
+  for (let key in answersWithBalls) {
+    if (answersWithBalls[key].userAnswer) {
+      if (
+        answersWithBalls[key].userAnswer.cols !== 0 ||
+        answersWithBalls[key].userAnswer.rows !== 0
+      ) {
+        answersWithBallsNotJson[key] = {
+          ...answersWithBalls[key],
+          userAnswer: {
+            ...answersWithBalls[key].userAnswer,
+            data: JSON.parse(answersWithBalls[key].userAnswer.data),
+          },
+        };
+      } else {
+        answersWithBallsNotJson[key] = answersWithBalls[key];
+      }
+    }
+  }
+  return answersWithBallsNotJson;
+};
+
+export const objectToArray = (answers, tasks) => {
+  return tasks.map((task, i) => {
+    if (answers[i]) {
+      return answers[i];
+    } else {
+      return { scores: 0, userAnswer: null, rightAnswer: task.answer };
+    }
+  });
+};

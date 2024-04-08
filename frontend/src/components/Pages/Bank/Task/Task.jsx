@@ -3,7 +3,14 @@ import "./Task.css";
 import Table from "../../../Utils/Table/Table";
 import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
 import { eraseEmptyRowsFromTable } from "../../../Utils/addTaskUtils/variantUtils";
-import { NOT_DONE_TASK, OK_DONE_TASK, WA_DONE_TASK } from "./constantsTask";
+import {
+  FIRST_TRY_RIGHT,
+  NOT_DONE_TASK,
+  OK_DONE_TASK,
+  RIGHT,
+  WA_DONE_TASK,
+  WRONG,
+} from "./constantsTask";
 import { sendSolve } from "../../../server/serverBank";
 
 export const Task = ({
@@ -15,6 +22,9 @@ export const Task = ({
   actuality,
   difficulty,
   files,
+  solvedStatus,
+  solvedCount,
+  solvedFirstTryCount,
 }) => {
   const [isSolved, setIsSolved] = useState({
     decision: false,
@@ -56,40 +66,48 @@ export const Task = ({
       answer = eraseEmptyRowsFromTable(answer);
       if (trueAnswer.data.toString() === answer.data.toString()) {
         setIsSolved({ decision: true, text: OK_DONE_TASK });
-        sendSolve({
-          taskId: id,
-          isRight: true,
-          answer: {
-            answer: { ...answer, data: JSON.stringify(answer.data) },
-            scores: 1,
-          },
-        });
+        if (localStorage.getItem("jwt")) {
+          sendSolve({
+            taskId: id,
+            isRight: true,
+            answer: {
+              userAnswer: { ...answer, data: JSON.stringify(answer.data) },
+              scores: 1,
+            },
+          });
+        }
       } else {
         setIsSolved({ decision: false, text: WA_DONE_TASK });
-        sendSolve({
-          taskId: id,
-          isRight: true,
-          answer: {
-            answer: { ...answer, data: JSON.stringify(answer.data) },
-            scores: 1,
-          },
-        });
+        if (localStorage.getItem("jwt")) {
+          sendSolve({
+            taskId: id,
+            isRight: false,
+            answer: {
+              userAnswer: { ...answer, data: JSON.stringify(answer.data) },
+              scores: 0,
+            },
+          });
+        }
       }
     } else {
       if (trueAnswer.data === answer.data) {
         setIsSolved({ decision: true, text: OK_DONE_TASK });
-        sendSolve({
-          taskId: id,
-          isRight: true,
-          answer: { answer: answer, scores: 1 },
-        });
+        if (localStorage.getItem("jwt")) {
+          sendSolve({
+            taskId: id,
+            isRight: true,
+            answer: { userAnswer: answer, scores: 1 },
+          });
+        }
       } else {
         setIsSolved({ decision: false, text: WA_DONE_TASK });
-        sendSolve({
-          taskId: id,
-          isRight: false,
-          answer: { answer: answer, scores: 0 },
-        });
+        if (localStorage.getItem("jwt")) {
+          sendSolve({
+            taskId: id,
+            isRight: false,
+            answer: { userAnswer: answer, scores: 0 },
+          });
+        }
       }
     }
   }
@@ -155,12 +173,17 @@ export const Task = ({
       <></>
     );
   };
+
   return (
     <div
       className={
         "task " +
-        (isSolved.text === OK_DONE_TASK ? "OK" : "") +
-        (isSolved.text === WA_DONE_TASK ? "WA" : "")
+        (isSolved.text === NOT_DONE_TASK
+          ? (solvedStatus === WRONG ? "WA " : " ") +
+            (solvedStatus === RIGHT ? "OK " : " ") +
+            (solvedStatus === FIRST_TRY_RIGHT ? "OKFT " : " ")
+          : (isSolved.text === OK_DONE_TASK ? "OK " : " ") +
+            (isSolved.text === WA_DONE_TASK ? "WA " : " "))
       }
     >
       <div className="taskinfo">
@@ -172,6 +195,13 @@ export const Task = ({
         <span>{isOfficial ? "Официальная" : "Не официальная"}</span>
         <span>{", " + actuality}</span>
         <span>{", " + difficulty}</span>
+        <p>
+          Решили: {solvedCount} (
+          {solvedFirstTryCount > 0
+            ? Math.round((solvedFirstTryCount / solvedCount) * 100)
+            : 0}
+          %)
+        </p>
       </div>
 
       <hr></hr>

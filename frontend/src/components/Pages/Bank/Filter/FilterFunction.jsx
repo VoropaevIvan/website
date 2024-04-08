@@ -1,10 +1,27 @@
 import {
   ALL_ACTUALITY,
   ALL_DIFFICULTY,
+  ALL_STATUS,
   NOT_AND_OFFICIAL_TASK,
+  NOT_SOLVE_TASKS,
   OFFICIAL_TASK,
+  OK_TASKS,
+  WA_TASKS,
 } from "../../../Pages/constants";
+import { ABSENT, FIRST_TRY_RIGHT, RIGHT, WRONG } from "../Task/constantsTask";
 import { ALL_VARIANTS_TASK_NUMBER } from "./constants";
+
+const prepareSolveStatus = (status) => {
+  if (status === ABSENT) {
+    return NOT_SOLVE_TASKS;
+  }
+  if (status === RIGHT || status === FIRST_TRY_RIGHT) {
+    return OK_TASKS;
+  }
+  if (status === WRONG) {
+    return WA_TASKS;
+  }
+};
 
 const FilterFunction = (task, filtersData) => {
   let decision = 1;
@@ -50,6 +67,17 @@ const FilterFunction = (task, filtersData) => {
     decision *= 1;
   } else {
     if (task.difficulty === filtersData.difficulty) {
+      decision *= 1;
+    } else {
+      decision *= 0;
+    }
+  }
+
+  // Task status
+  if (filtersData.solveStatus === ALL_STATUS) {
+    decision *= 1;
+  } else {
+    if (prepareSolveStatus(task.userAnswer) === filtersData.solveStatus) {
       decision *= 1;
     } else {
       decision *= 0;

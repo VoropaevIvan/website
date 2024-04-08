@@ -8,6 +8,7 @@ export const DEFAULT_ALL_TASK_DATA = {
   isOfficial: false,
   actuality: "Актуальна",
   difficulty: "Уровень ЕГЭ",
-  topic: "",
+  topic: 1,
   files: [],
+  hiddenInBank: false,
 };

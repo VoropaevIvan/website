@@ -4,12 +4,14 @@ import {
   ALL_ACTUALITY,
   ALL_DIFFICULTY,
   NOT_AND_OFFICIAL_TASK,
+  ALL_STATUS,
 } from "../../components/Pages/constants";
 const initialState = {
   numberEGE: ALL_VARIANTS_TASK_NUMBER,
   isOfficial: NOT_AND_OFFICIAL_TASK,
   actuality: ALL_ACTUALITY,
   difficulty: ALL_DIFFICULTY,
+  solveStatus: ALL_STATUS,
   sorting: "Сначала новые",
 };
 
@@ -32,6 +34,9 @@ const bankFilterSlice = createSlice({
     setDifficultyFilter: (state, action) => {
       return { ...state, difficulty: action.payload };
     },
+    setSolveStatusFilter: (state, action) => {
+      return { ...state, solveStatus: action.payload };
+    },
   },
 });
 
@@ -40,5 +45,7 @@ export const setSortingFilter = bankFilterSlice.actions.setSortingFilter;
 export const setIsOfficialFilter = bankFilterSlice.actions.setIsOfficialFilter;
 export const setActualityFilter = bankFilterSlice.actions.setActualityFilter;
 export const setDifficultyFilter = bankFilterSlice.actions.setDifficultyFilter;
+export const setSolveStatusFilter =
+  bankFilterSlice.actions.setSolveStatusFilter;
 
 export default bankFilterSlice.reducer;

@@ -10,18 +10,37 @@ import TableContainer from "./Variant components/TableContainer";
 import VarFooter from "./Variant components/VarFooter";
 import NotFound from "../NotFound";
 
-import { setCurrentTask, setData } from "../../../redux/slices/variantSlice";
+import {
+  clearAnswers,
+  setCurrentTask,
+  setData,
+  setVariantResults,
+} from "../../../redux/slices/variantSlice";
 import { createDataForTable } from "../../Utils/addTaskUtils/addTaskUtils";
 import { getVariantTasksFromServer } from "../../Utils/addTaskUtils/server";
-import { addTypeAnswerField } from "./Variant components/VariantUtils";
+import {
+  addTrueAnswer,
+  addTypeAnswerField,
+  createVarResults,
+} from "./Variant components/VariantUtils";
 
 import "./Variant.css";
+import { saveVariantOnServer } from "../../server/serverVariant";
+import {
+  calcFirstBalls,
+  firstToTestBalls,
+} from "../../Utils/variant/variantUtils";
+import {
+  addEmptyAnswers,
+  eraseStringifyFromData,
+  objectToArray,
+} from "../../Utils/addTaskUtils/variantUtils";
 
 const Variant = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const varData = useSelector((state) => state.variant.data);
+  const varTasks = useSelector((state) => state.variant.data);
   const curTaskNumber = useSelector((state) => state.variant.currentTask);
   const curAnswers = useSelector((state) => state.variant.answers);
 
@@ -34,6 +53,7 @@ const Variant = () => {
   const [isOkLoad, setIsOkLoad] = useState(false);
   const [fontScale, setFontScale] = useState(0);
 
+  const varId = location.pathname.split("/").reverse()[0];
   const curAnswer = curAnswers[curTaskNumber]
     ? curAnswers[curTaskNumber]
     : {
@@ -44,8 +64,9 @@ const Variant = () => {
 
   useEffect(() => {
     async function fetchData() {
+      dispatch(clearAnswers());
       getVariantTasksFromServer({
-        varId: location.pathname.split("/").reverse()[0],
+        varId: varId,
         setTasksFromServer: (tasks) => {
           const tasksWithTypeAnswer = tasks.map((task) => {
             return addTypeAnswerField(task);
@@ -59,24 +80,24 @@ const Variant = () => {
     }
 
     fetchData();
-  }, [dispatch, location]);
+  }, [dispatch, location, varId]);
 
   useEffect(() => {
-    if (varData[curTaskNumber]) {
+    if (varTasks[curTaskNumber]) {
       if (curAnswers[curTaskNumber]) {
-        if (varData[curTaskNumber].typeAnswer === "text") {
+        if (varTasks[curTaskNumber].typeAnswer === "text") {
           setValueInAnswerInput(curAnswers[curTaskNumber]);
         } else {
           setValueInAnswerTable(curAnswers[curTaskNumber]);
         }
       } else {
-        if (varData[curTaskNumber].typeAnswer === "text") {
+        if (varTasks[curTaskNumber].typeAnswer === "text") {
           setValueInAnswerInput({
             cols: 0,
             rows: 0,
             data: "",
           });
-        } else if (varData[curTaskNumber].typeAnswer === "two") {
+        } else if (varTasks[curTaskNumber].typeAnswer === "two") {
           setValueInAnswerTable({
             data: createDataForTable({ cols: 2, rows: 1 }),
             cols: 2,
@@ -93,7 +114,7 @@ const Variant = () => {
         }
       }
     }
-  }, [curTaskNumber, varData, curAnswers]);
+  }, [curTaskNumber, varTasks, curAnswers]);
 
   useEffect(() => {
     const onKeypress = (e) => {
@@ -103,8 +124,8 @@ const Variant = () => {
         }
       }
       if (e.key === "ArrowRight") {
-        if (varData) {
-          if (curTaskNumber + 1 < varData.length) {
+        if (varTasks) {
+          if (curTaskNumber + 1 < varTasks.length) {
             dispatch(setCurrentTask(curTaskNumber + 1));
           }
         }
@@ -116,7 +137,18 @@ const Variant = () => {
     return () => {
       document.removeEventListener("keydown", onKeypress);
     };
-  }, [dispatch, curTaskNumber, varData]);
+  }, [dispatch, curTaskNumber, varTasks]);
+
+  useEffect(() => {
+    const unloadCallback = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return "";
+    };
+
+    window.addEventListener("beforeunload", unloadCallback);
+    return () => window.removeEventListener("beforeunload", unloadCallback);
+  }, []);
 
   const handlePrevTaskBut = () => {
     if (curTaskNumber > 0) {
@@ -124,22 +156,55 @@ const Variant = () => {
     }
   };
   const handleNextTaskBut = () => {
-    if (curTaskNumber + 1 < varData.length) {
+    if (curTaskNumber + 1 < varTasks.length) {
       dispatch(setCurrentTask(curTaskNumber + 1));
     }
   };
 
   if (!isOkLoad) {
-    return <NotFound />;
+    return <div className="container"></div>;
   }
-  if (varData.length === 0) {
+  if (varTasks.length === 0) {
     return <NotFound />;
   }
 
   return (
     <div className="container">
       <div className="varHeader">
-        <VarMenu />
+        <VarMenu
+          saveVariantOnServer={async () => {
+            const answersWithBalls = createVarResults({
+              answers: curAnswers,
+              varTasks: varTasks,
+            });
+
+            const firstBalls = calcFirstBalls(answersWithBalls);
+            if (localStorage.getItem("jwt")) {
+              await saveVariantOnServer({
+                variantName: varId,
+                answers: answersWithBalls,
+                isEGEFormat: true,
+                scoresEGE: firstToTestBalls(firstBalls),
+                primaryScores: firstBalls,
+              });
+            } else {
+              let answersWithBallsOk = eraseStringifyFromData(answersWithBalls);
+              answersWithBallsOk = addTrueAnswer(answersWithBallsOk, varTasks);
+              answersWithBallsOk = eraseStringifyFromData(answersWithBallsOk);
+              answersWithBallsOk = objectToArray(answersWithBallsOk, varTasks);
+
+              dispatch(
+                setVariantResults({
+                  variantName: varId,
+                  userAnswers: answersWithBallsOk,
+                  isEGEFormat: true,
+                  scoresEGE: firstToTestBalls(firstBalls),
+                  primaryScores: firstBalls,
+                })
+              );
+            }
+          }}
+        />
       </div>
 
       <div className="varNavigate">
@@ -159,11 +224,11 @@ const Variant = () => {
           </div>
 
           {/* Table answer */}
-          {varData &&
-            varData[curTaskNumber] &&
-            varData[curTaskNumber]["typeAnswer"] &&
-            (varData[curTaskNumber]["typeAnswer"] === "table" ||
-              varData[curTaskNumber]["typeAnswer"] === "two") && (
+          {varTasks &&
+            varTasks[curTaskNumber] &&
+            varTasks[curTaskNumber]["typeAnswer"] &&
+            (varTasks[curTaskNumber]["typeAnswer"] === "table" ||
+              varTasks[curTaskNumber]["typeAnswer"] === "two") && (
               <TableContainer
                 valueInAnswerTable={valueInAnswerTable}
                 curAnswer={curAnswer}
@@ -183,7 +248,7 @@ const Variant = () => {
       <div className="varfooter">
         <VarFooter
           valueInAnswerInput={valueInAnswerInput}
-          varData={varData}
+          varData={varTasks}
           curTaskNumber={curTaskNumber}
           InputForAnswer={InputForAnswer}
           setValueInAnswerInput={setValueInAnswerInput}

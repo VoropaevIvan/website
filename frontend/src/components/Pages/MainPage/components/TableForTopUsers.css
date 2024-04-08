@@ -10,3 +10,7 @@
   font-weight: bold;
   background-color: antiquewhite;
 }
+
+.tablefortopusers .curuser {
+  background-color: rgb(250, 252, 207);
+}

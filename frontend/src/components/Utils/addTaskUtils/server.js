@@ -65,19 +65,20 @@ export const getVariantTasksFromServer = async ({
     const link = process.env.REACT_APP_LINK_VARIANT;
     const res = await axios.get(link + varId);
 
+    console.log(res.data);
     if (res.data) {
-      let dataOk = res.data;
+      let tasks = res.data.tasks;
 
-      dataOk = dataOk.map((task) => {
+      tasks = tasks.map((task) => {
         return parseTaskFromServer(task);
       });
-      setTasksFromServer([...dataOk]);
-      if (dataOk.length > 0) {
-        setTextInEditor(dataOk[0].content);
-        setTextInSolutionEditor(dataOk[0].solution);
+      setTasksFromServer([...tasks]);
+      if (tasks.length > 0) {
+        setTextInEditor(tasks[0].content);
+        setTextInSolutionEditor(tasks[0].solution);
       }
       setIsOkLoad(1);
-      return [...dataOk];
+      return [...tasks];
     }
   } catch (error) {
     console.log(error.response);

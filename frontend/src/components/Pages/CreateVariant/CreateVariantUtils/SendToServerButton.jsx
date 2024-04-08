@@ -14,12 +14,12 @@ const SendToServerButton = ({
       return prepareTaskToServer(task);
     });
 
-    console.log(okData);
+    console.log("okd", okData);
     const link = process.env.REACT_APP_LINK_VARIANT;
     console.log(link);
     const res = axios.post(
       link + location.pathname.split("/").reverse()[0],
-      okData,
+      { tasks: okData, maxScore: 29, isEGEFormat: true },
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
@@ -28,13 +28,13 @@ const SendToServerButton = ({
     );
     res.then((value) => {
       console.log("ret", value.data);
-      let dataOk = value.data;
+      let tasks = value.data.tasks;
 
-      dataOk = dataOk.map((task) => {
+      tasks = tasks.map((task) => {
         return parseTaskFromServer(task);
       });
 
-      setTasksFromServer([...dataOk]);
+      setTasksFromServer([...tasks]);
     });
   };
   return (

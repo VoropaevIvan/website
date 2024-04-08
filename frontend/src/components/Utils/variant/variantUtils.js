@@ -24,7 +24,7 @@ export const emptyAnswerTable = (ans) => {
 // (-1: NG), (0: WA), (1: OK)
 export const checkAnswer = (userAnswer, trueAnswer) => {
   // empty userAnswer
-  if (userAnswer === undefined) {
+  if (userAnswer === undefined || userAnswer.data === null) {
     return -1;
   }
 
@@ -77,4 +77,26 @@ export const checkAnswer = (userAnswer, trueAnswer) => {
     }
   }
   return 1;
+};
+
+export const firstToTestBalls = (firstBalls) => {
+  const testBalls = [
+    0, 7, 14, 20, 27, 34, 40, 43, 46, 48, 51, 54, 56, 59, 62, 64, 67, 70, 72,
+    75, 78, 80, 83, 85, 88, 90, 93, 95, 98, 100,
+  ];
+  try {
+    return testBalls[firstBalls];
+  } catch (error) {
+    return -1;
+  }
+};
+
+export const calcFirstBalls = (answersWithDecision) => {
+  let summFirstBalls = 0;
+  for (const key in answersWithDecision) {
+    if (answersWithDecision[key].scores > 0) {
+      summFirstBalls += answersWithDecision[key].scores;
+    }
+  }
+  return summFirstBalls;
 };

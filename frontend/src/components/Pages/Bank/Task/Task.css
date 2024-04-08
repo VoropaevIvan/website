@@ -74,8 +74,13 @@
   text-decoration: none;
 }
 
+.OKFT {
+  border: 2px solid #e692e0;
+  border: 2px solid rgb(54, 229, 41);
+}
+
 .OK {
-  border: 2px solid rgb(44, 255, 44);
+  border: 2px solid rgb(54, 229, 41);
 }
 
 .WA {

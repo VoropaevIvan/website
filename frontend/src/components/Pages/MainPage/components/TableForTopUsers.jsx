@@ -14,7 +14,7 @@ const TableForTopUsers = ({ title, users }) => {
       <tbody>
         {users.map((user, ind) => {
           return (
-            <tr key={ind}>
+            <tr key={ind} className={user.isCurrentUser ? "curuser " : " "}>
               <td>{user.position}</td>
               <td>{user.name + " " + user.surname}</td>
               <td>{user.balls}</td>

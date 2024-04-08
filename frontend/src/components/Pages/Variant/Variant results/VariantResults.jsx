@@ -1,45 +1,66 @@
 import { useSelector } from "react-redux";
-import TableVarResults from "./components/TableVarResults";
-import "./VariantResults.css";
-import { getVariantResults } from "../../../server/serverVariant";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+
+import TableVarResults from "./components/TableVarResults";
+import { getVariantResults } from "../../../server/serverVariant";
+
+import "./VariantResults.css";
 
 const VariantResults = () => {
   const variantName = useParams()["id"];
 
-  // const varData = useSelector((state) => state.variant.data);
-  // const curAnswers = useSelector((state) => state.variant.answers);
+  const navigate = useNavigate();
 
-  // console.log(curAnswers);
-  const [varData, setVarData] = useState([]);
-  const [userAnswers, setUserAnswers] = useState({});
+  const variantResultsFromRedux = useSelector(
+    (state) => state.variant.variantResults
+  );
 
+  const [userAnswers, setUserAnswers] = useState([]);
   const [testScore, setTestScore] = useState(0);
   const [firstScore, setFirstScore] = useState(0);
   const [countUserAns, setCountUserAns] = useState(0);
   const [isEGEFormat, setIsEGEFormat] = useState(true);
   const [maxBall, setMaxBall] = useState(0);
 
-  const countTasks = varData.length;
+  const countTasks = userAnswers.length;
 
   useEffect(() => {
     async function fetchData() {
-      const res = await getVariantResults({ variantName });
-      setVarData(res.varData);
-      setUserAnswers(res.userAnswers);
-      setCountUserAns(res.countUserAns);
-      setTestScore(res.testScore);
-      setFirstScore(res.firstScore);
-      setIsEGEFormat(res.isEGEFormat);
-      setMaxBall(res.maxBall);
+      if (localStorage.getItem("jwt")) {
+        // Auth user
+        const res = await getVariantResults({ variantName });
+        setUserAnswers(res.userAnswers);
+        setCountUserAns(res.countUserAns);
+        setTestScore(res.testScore);
+        setFirstScore(res.firstScore);
+        setIsEGEFormat(res.isEGEFormat);
+        setMaxBall(res.maxBall);
+        console.log(res);
+      } else {
+        // Not auth user
+        if (variantResultsFromRedux.userAnswers) {
+          setUserAnswers(variantResultsFromRedux.userAnswers);
+
+          setTestScore(variantResultsFromRedux.scoresEGE);
+          setFirstScore(variantResultsFromRedux.primaryScores);
+          setIsEGEFormat(variantResultsFromRedux.isEGEFormat);
+          setMaxBall(variantResultsFromRedux.maxBall);
+
+          let countUserAns = 0;
+          variantResultsFromRedux.userAnswers.map((ans) => {
+            if (ans.userAnswer !== null) {
+              countUserAns += 1;
+            }
+            return 1;
+          });
+          setCountUserAns(countUserAns);
+        }
+      }
     }
 
     fetchData();
-  }, []);
-
-  console.log("Vardata", varData);
-  console.log("Useranswers", userAnswers);
+  }, [variantName, variantResultsFromRedux]);
 
   if (countTasks === 0) {
     return <div className="variantresults"></div>;
@@ -75,8 +96,18 @@ const VariantResults = () => {
           </div>
         </div>
         <div className="varrestable">
-          <TableVarResults varData={varData} curAnswers={userAnswers} />
+          <TableVarResults data={userAnswers} />
         </div>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            navigate("../variant/" + variantName);
+          }}
+          className="backtovarbutton"
+        >
+          Вернуться к варианту
+        </button>
       </div>
     </div>
   );

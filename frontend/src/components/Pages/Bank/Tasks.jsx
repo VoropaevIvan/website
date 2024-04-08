@@ -9,8 +9,11 @@ import "./Tasks.css";
 
 const getAllTasksFromServer = async (setTasksFromServer) => {
   try {
-    const res = await axios.get(process.env.REACT_APP_LINK_GET_ALL_TASK);
-
+    const res = await axios.get(process.env.REACT_APP_LINK_GET_ALL_TASK, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+    });
     if (res.data) {
       let dataOk = res.data;
 
@@ -56,6 +59,7 @@ export const Tasks = () => {
     filtersData.sorting
   );
 
+  console.log(tasksFromServer);
   return (
     <div className="bank">
       <BankFilter />
@@ -73,6 +77,9 @@ export const Tasks = () => {
               actuality={task.actuality}
               difficulty={task.difficulty}
               files={task.files}
+              solvedStatus={task.userAnswer}
+              solvedCount={task.stats.solvedCount}
+              solvedFirstTryCount={task.stats.solvedFirstTryCount}
             />
           );
         })}

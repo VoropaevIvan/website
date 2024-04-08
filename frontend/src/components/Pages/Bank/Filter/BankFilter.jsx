@@ -4,6 +4,7 @@ import {
   setDifficultyFilter,
   setIsOfficialFilter,
   setNumberEGEFilter,
+  setSolveStatusFilter,
   setSortingFilter,
 } from "../../../../redux/slices/bankFilterSlice";
 import { TASK_NUMBERS_NAMES } from "./constants";
@@ -12,6 +13,7 @@ import {
   ACTUAL,
   ALL_ACTUALITY,
   ALL_DIFFICULTY,
+  ALL_STATUS,
   EASY_THEN_EGE,
   GROB,
   LEVEL_OF_EGE,
@@ -20,7 +22,10 @@ import {
   NOT_ACTUAL,
   NOT_AND_OFFICIAL_TASK,
   NOT_OFFICIAL_TASK,
+  NOT_SOLVE_TASKS,
   OFFICIAL_TASK,
+  OK_TASKS,
+  WA_TASKS,
   WILL_BE_IN_EGE,
 } from "../../../Pages/constants";
 
@@ -87,6 +92,21 @@ const BankFilter = () => {
           <option>{EASY_THEN_EGE}</option>;
           <option>{LITTLE_HARD_THEN_EGE}</option>
           <option>{GROB}</option>;
+        </select>
+      </div>
+
+      <div className="block">
+        <span>{"Статус задачи "}</span>
+        <select
+          onChange={(e) => {
+            dispatch(setSolveStatusFilter(e.target.value));
+          }}
+          value={filtersData.solveStatus}
+        >
+          <option>{ALL_STATUS}</option>
+          <option>{NOT_SOLVE_TASKS}</option>
+          <option>{WA_TASKS}</option>
+          <option>{OK_TASKS}</option>
         </select>
       </div>
 
