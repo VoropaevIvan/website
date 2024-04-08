@@ -19,7 +19,7 @@ const CreateVariant = ({ setVariantsNames }) => {
           const res1 = await createVariantByName({ newVariantName });
           const res2 = await getAllVariants();
 
-          setVariantsNames(res2.data);
+          setVariantsNames(res2);
           setNewVariantName("");
         }}
       >
