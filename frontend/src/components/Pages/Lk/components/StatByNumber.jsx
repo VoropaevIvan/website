@@ -1,7 +1,7 @@
 const StatByNumber = ({ statByNumberEGE }) => {
   return (
     <div className="statbynumber">
-      {statByNumberEGE && statByNumberEGE > 0 && (
+      {statByNumberEGE && statByNumberEGE.length > 0 && (
         <>
           <div className="capt">
             <h2>Статистика по номерам ЕГЭ</h2>

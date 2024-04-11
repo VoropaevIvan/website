@@ -86,3 +86,9 @@
 .WA {
   border: 2px solid red;
 }
+
+@media (orientation: portrait) {
+  .taskcontent {
+    font-size: 0.75rem;
+  }
+}
