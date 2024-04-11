@@ -10,7 +10,7 @@ const VarFooter = ({
   const files = varData[curTaskNumber].files;
   const fileName = (name) => {
     const curNumberEGE = varData[curTaskNumber].numberEGE.split(" ")[1];
-    const exp = name.split(".")[1];
+    const exp = name.split(".").reverse()[0];
     return curNumberEGE + "." + exp;
   };
   return (

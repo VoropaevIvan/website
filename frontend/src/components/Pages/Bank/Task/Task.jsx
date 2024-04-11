@@ -217,7 +217,7 @@ export const Task = ({
           {files.map((file, i) => {
             return (
               <a key={i} href={file}>
-                {"Файл " + (i + 1) + " "}
+                {"Файл "}
               </a>
             );
           })}
