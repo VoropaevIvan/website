@@ -1,10 +1,12 @@
+import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
-import { useEffect } from "react";
+
 import TopUsers from "./components/TopUsers";
 import { getTokenByVkId } from "../../server/serverAuth";
 import { useDispatch } from "react-redux";
 import { setHasToken } from "../../../redux/slices/authSlice";
+
 import "./MainPage.css";
 
 const MainPage = () => {

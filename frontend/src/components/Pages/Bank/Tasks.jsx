@@ -1,12 +1,13 @@
-import axios from "axios";
-import Task from "./Task/Task";
+import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+
+import Task from "./Task/Task";
 import filterFunction from "./Filter/FilterFunction";
 import BankFilter from "./Filter/BankFilter";
-import { useSelector } from "react-redux";
 import sortFunction from "./Filter/sortFunction";
-import "./Tasks.css";
 import { getAllTasksFromServer } from "../../server/serverBank";
+
+import "./Tasks.css";
 
 export const Tasks = () => {
   const filtersData = useSelector((state) => state.bankFilter);

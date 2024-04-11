@@ -36,7 +36,6 @@ const VariantResults = () => {
         setFirstScore(res.firstScore);
         setIsEGEFormat(res.isEGEFormat);
         setMaxBall(res.maxBall);
-        console.log(res);
       } else {
         // Not auth user
         if (variantResultsFromRedux.userAnswers) {

@@ -31,7 +31,6 @@ import {
   firstToTestBalls,
 } from "../../Utils/variant/variantUtils";
 import {
-  addEmptyAnswers,
   eraseStringifyFromData,
   objectToArray,
 } from "../../Utils/addTaskUtils/variantUtils";

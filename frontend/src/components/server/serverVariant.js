@@ -6,7 +6,6 @@ export const getAllVariants = async () => {
   try {
     const link = process.env.REACT_APP_LINK_VARIANTS;
     const res = await axios.get(link);
-    console.log(res);
 
     return res.data;
   } catch (error) {
@@ -110,7 +109,7 @@ export const saveVariantOnServer = async ({
   try {
     const link = process.env.REACT_APP_SEND_VARIANT_SOLVE;
 
-    const res = await axios.post(
+    await axios.post(
       link,
       { variantName, answers, isEGEFormat, scoresEGE, primaryScores },
       {

@@ -10,7 +10,7 @@ const getVariantData = (varId) => {
       return "table";
     }
   };
-  console.log("Load data");
+
   const data = [];
   for (let i = 1; i < 28; i++) {
     data.push({

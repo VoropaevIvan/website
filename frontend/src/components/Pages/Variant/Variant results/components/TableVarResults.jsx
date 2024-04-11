@@ -74,7 +74,6 @@ const TableVarResults = ({ data }) => {
     }
   };
 
-  console.log(data);
   return (
     <table className="variantrestable">
       <tbody>

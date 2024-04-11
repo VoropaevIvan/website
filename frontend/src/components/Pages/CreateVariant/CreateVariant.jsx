@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import TinyEditor from "../../Utils/TinyEditor";
-import "./CreateVariant.css";
+
 import {
   getVariantTasksFromServer,
   saveFileOnServer,
 } from "../../Utils/addTaskUtils/server";
+
 import AnswerSelect from "../AddTask/components/AnswerSelect";
 import ActualitySelect from "../AddTask/components/ActualitySelect";
 import NumberEGESelect from "../AddTask/components/NumberEGESelect";
@@ -13,17 +15,20 @@ import IsOfficialSelect from "../AddTask/components/IsOfficialSelect";
 import DifficultySelect from "../AddTask/components/DifficultySelect";
 import TopicSelect from "../AddTask/components/TopicSelect";
 import VideoReviewSelect from "../AddTask/components/VideoReviewSelect";
+
 import { DEFAULT_ALL_TASK_DATA } from "../AddTask/AddTaskConstants";
-import { useLocation } from "react-router-dom";
 import AddFiles from "../AddTask/components/AddFiles";
 import {
   delFileFromFilesList,
   replaceTaskByPosition,
 } from "../../Utils/addTaskUtils/addTaskUtils";
+
 import NavigationCVar from "./CreateVariantUtils/NavigationCVar";
 import SaveButtonCVar from "./CreateVariantUtils/SaveButtonCVar";
 import AddTaskToVariantById from "./CreateVariantUtils/AddTaskToVariantById";
 import SendToServerButton from "./CreateVariantUtils/SendToServerButton";
+
+import "./CreateVariant.css";
 
 const CreateVariant = () => {
   const location = useLocation();

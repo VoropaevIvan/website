@@ -20,7 +20,6 @@ const VarFooter = ({
           return (
             <div
               onClick={() => {
-                console.log("download");
                 window.open(file, "_blank");
               }}
               className="fileandimg"

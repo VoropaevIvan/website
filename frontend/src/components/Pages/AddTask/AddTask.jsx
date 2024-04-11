@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import { getTaskById, saveTaskOnServer } from "../../Utils/addTaskUtils/server";
 import { DEFAULT_SOLVE_FOR_TASK_TEXT, DEFAULT_TASK_TEXT } from "../constants";
 import { DEFAULT_ALL_TASK_DATA } from "./AddTaskConstants";
@@ -17,6 +18,7 @@ import SolutionSelect from "./components/SolutionSelect";
 import AddFiles from "./components/AddFiles";
 import SendButtons from "./components/SendButtons";
 import { saveFileOnServer as saveFile } from "../../Utils/addTaskUtils/server";
+
 import "./AddTask.css";
 
 const AddTask = () => {
@@ -61,7 +63,6 @@ const AddTask = () => {
       }
     } catch (error) {
       alert("Произошла ошибка. Задача не добавлена.");
-      console.log(error);
     }
   };
 
@@ -103,7 +104,6 @@ const AddTask = () => {
           setIsOkLoad(false);
         }
       });
-      console.log("fetch");
     } else {
       setAllTaskData(DEFAULT_ALL_TASK_DATA);
       setCurrentFile(null);

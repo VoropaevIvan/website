@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Task.css";
+
 import Table from "../../../Utils/Table/Table";
 import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
 import { eraseEmptyRowsFromTable } from "../../../Utils/addTaskUtils/variantUtils";
@@ -12,6 +12,8 @@ import {
   WRONG,
 } from "./constantsTask";
 import { sendSolve } from "../../../server/serverBank";
+
+import "./Task.css";
 
 export const Task = ({
   id,

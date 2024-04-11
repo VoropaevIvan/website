@@ -22,3 +22,7 @@
 .varHeader a:hover {
   color: rgb(255, 255, 255);
 }
+
+.varHeader .finishvar:hover {
+  cursor: pointer;
+}

@@ -13,14 +13,14 @@ function VarMenu({ saveVariantOnServer }) {
         На главную
       </NavLink>
       <p
+        className="finishvar"
         onClick={async () => {
           const isConfirmFinish = window.confirm(textConfirmFinishVariant);
           if (isConfirmFinish) {
             // Save on server or redux
-            const res = await saveVariantOnServer();
-            console.log("save");
+            await saveVariantOnServer();
           }
-          console.log("navigate");
+
           navigate("/results/" + varName, { relative: "path" });
         }}
       >
