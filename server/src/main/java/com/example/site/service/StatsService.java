@@ -53,7 +53,22 @@ public class StatsService {
                 .map(e -> new TaskInfo(e.getKey(), new Statistics(
                         e.getValue().get(solvedPos),
                         e.getValue().get(solvedFirstTryPos))))
+                .sorted(Comparator.comparingInt(t -> taskNumToInt(t.number())))
                 .toList();
+    }
+
+    private int taskNumToInt(String number) {
+        if (number.startsWith("№")) {
+            number = number.substring(1).strip();
+        }
+        if (number.contains("-")) {
+            number = number.split("-", 2)[0].strip();
+        }
+        try {
+            return Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            return Integer.MAX_VALUE;
+        }
     }
 
     public TopUsers getTopUsers(User user) {
