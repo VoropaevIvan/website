@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +41,10 @@ public class VariantSolutionService {
 
         solvedVariant = solvedVariantRepository.save(solvedVariant);
 
-        List<Answer> rightAnswers = variant.getTasks().stream()
+        List<VariantTask> variantTasks = variant.getTasks();
+        variantTasks.sort(Comparator.comparingInt(VariantTask::getTaskOrder));
+
+        List<Answer> rightAnswers = variantTasks.stream()
                 .map(VariantTask::getTask)
                 .map(Task::getAnswer).toList();
 
