@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.GET, commonAccessPatterns).permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+                        .requestMatchers("/files").permitAll()
                         .requestMatchers(personalAccessPatterns).authenticated()
                         .requestMatchers(HttpMethod.GET, "/users/**").authenticated()
                         .anyRequest().hasRole(Role.ADMIN.toString()))
