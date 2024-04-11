@@ -1,10 +1,11 @@
-import * as VKID from "@vkid/sdk";
 import { useEffect } from "react";
+import * as VKID from "@vkid/sdk";
+
 import "./Auth.css";
 
 const Auth = () => {
   VKID.Config.set({
-    app: 51879792, // Идентификатор приложения.
+    app: process.env.REACT_APP_AUTH_VK_ID, // Идентификатор приложения.
     redirectUrl: process.env.REACT_APP_AUTH_REDIRECT, // Адрес для перехода после авторизации.
   });
 

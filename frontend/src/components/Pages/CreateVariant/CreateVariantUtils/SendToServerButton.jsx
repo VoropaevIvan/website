@@ -14,9 +14,8 @@ const SendToServerButton = ({
       return prepareTaskToServer(task);
     });
 
-    console.log("okd", okData);
     const link = process.env.REACT_APP_LINK_VARIANT;
-    console.log(link);
+
     const res = axios.post(
       link + location.pathname.split("/").reverse()[0],
       { tasks: okData, maxScore: 29, isEGEFormat: true },
@@ -27,7 +26,6 @@ const SendToServerButton = ({
       }
     );
     res.then((value) => {
-      console.log("ret", value.data);
       let tasks = value.data.tasks;
 
       tasks = tasks.map((task) => {

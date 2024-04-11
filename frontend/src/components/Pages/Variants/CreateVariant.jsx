@@ -16,7 +16,7 @@ const CreateVariant = ({ setVariantsNames }) => {
       ></input>
       <button
         onClick={async () => {
-          const res1 = await createVariantByName({ newVariantName });
+          await createVariantByName({ newVariantName });
           const res2 = await getAllVariants();
 
           setVariantsNames(res2);

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
+
 import {
   getStatByNumberEGE,
   getVariantsBestHistory,
 } from "../../server/serverLk";
-import "./Lk.css";
 import StatByNumber from "./components/StatByNumber";
 import VariantsResults from "./components/VariantsResults";
 import TopUsers from "../MainPage/components/TopUsers";
 import { prepareVarHistForLk } from "./components/lkUtils";
+
+import "./Lk.css";
 
 const Lk = () => {
   const [statByNumberEGE, setStatByNumberEGE] = useState([]);

@@ -1,9 +1,7 @@
 export const prepareVarHistForLk = (varHistory) => {
-  console.log(varHistory);
   const res = varHistory.map((variant) => {
     const answersRes = [];
     for (const key in variant.answers) {
-      console.log(variant.answers[key].userAnswer);
       if (variant.answers[key].userAnswer === null) {
         answersRes.push("-");
       } else if (variant.answers[key].scores === 1) {

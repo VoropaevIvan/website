@@ -1,5 +1,7 @@
 import { Reorder } from "framer-motion";
+
 import { DEFAULT_ALL_TASK_DATA } from "../../AddTask/AddTaskConstants";
+
 import "./NavigationCVar.css";
 
 const NavigationCVar = ({

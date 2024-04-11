@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CreateVariant from "./CreateVariant";
-import "./Variants.css";
 import { useSelector } from "react-redux";
+
+import CreateVariant from "./CreateVariant";
 import { getAllVariants } from "../../server/serverVariant";
+
+import "./Variants.css";
 
 const Variants = () => {
   const [variantsNames, setVariantsNames] = useState([]);
@@ -18,7 +20,6 @@ const Variants = () => {
     fetchData();
   }, []);
 
-  console.log(variantsNames);
   return (
     <div className="variantspage">
       {isAdmin && <CreateVariant setVariantsNames={setVariantsNames} />}

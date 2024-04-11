@@ -23,7 +23,6 @@ const TopUsers = () => {
     fetchData();
   }, [location]);
 
-  console.log(topUsersByWeek);
   return (
     <>
       {topUsersByWeek && topUsersByWeek.length > 0 && (
