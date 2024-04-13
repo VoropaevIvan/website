@@ -2,6 +2,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import DropDownMenu from "./components/DropDownMenu";
+
 import "./Menu.css";
 
 const Menu = ({ menuClass }) => {
@@ -42,12 +43,14 @@ const Menu = ({ menuClass }) => {
       )}
 
       {isAuth ? (
-        <DropDownMenu
-          showDropDownMenu={showDropDownMenu}
-          setShowDropDownMenu={setShowDropDownMenu}
-          dispatch={dispatch}
-          img={img}
-        />
+        <>
+          <DropDownMenu
+            showDropDownMenu={showDropDownMenu}
+            setShowDropDownMenu={setShowDropDownMenu}
+            dispatch={dispatch}
+            img={img}
+          />
+        </>
       ) : (
         <NavLink className="login" to="/auth">
           Войти

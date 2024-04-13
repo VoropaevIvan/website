@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Table from "../../../Utils/Table/Table";
 import { createDataForTable } from "../../../Utils/addTaskUtils/addTaskUtils";
@@ -12,8 +14,11 @@ import {
   WRONG,
 } from "./constantsTask";
 import { sendSolve } from "../../../server/serverBank";
+import { MdModeEdit } from "react-icons/md";
 
 import "./Task.css";
+
+import Highlight from "react-highlight";
 
 export const Task = ({
   id,
@@ -28,6 +33,11 @@ export const Task = ({
   solvedCount,
   solvedFirstTryCount,
 }) => {
+  const navigate = useNavigate();
+
+  const authData = useSelector((state) => state.auth);
+  const { isAdmin } = authData;
+
   const [isSolved, setIsSolved] = useState({
     decision: false,
     text: NOT_DONE_TASK,
@@ -128,7 +138,6 @@ export const Task = ({
       return (
         <input
           className="answerinbanktext"
-          style={{ margin: "4px" }}
           value={userAnswer.data}
           onChange={(e) => {
             setUserAnswer({ cols: 0, rows: 0, data: e.target.value });
@@ -175,7 +184,7 @@ export const Task = ({
       <></>
     );
   };
-
+  console.log(createMarkup(content));
   return (
     <div
       className={
@@ -191,7 +200,15 @@ export const Task = ({
       <div className="taskinfo">
         <p>
           <strong>{numberEGE}</strong>
-          <span>{" (" + id + ")"}</span>
+          <span>{" (" + id + ") "}</span>
+          {isAdmin && (
+            <MdModeEdit
+              className="editbut"
+              onClick={() => {
+                navigate("../edit-task/" + id, { relative: "path" });
+              }}
+            />
+          )}
         </p>
 
         <span>{isOfficial ? "Официальная" : "Не официальная"}</span>
@@ -210,8 +227,13 @@ export const Task = ({
 
       <div
         className="taskcontent"
-        dangerouslySetInnerHTML={createMarkup(content)}
-      />
+        //dangerouslySetInnerHTML={createMarkup(content)}
+      >
+        <Highlight className="language-python" innerHTML={true}>
+          {content}
+        </Highlight>
+      </div>
+
       {files && files.length > 0 && (
         <div className="files">
           {files.map((file, i) => {
@@ -227,11 +249,11 @@ export const Task = ({
       <hr></hr>
 
       <div className="answerinbank">
-        {trueAnswer && answerInput()}
-        <button onClick={handleAnswerSubmit}>Проверить ответ</button>
+        <form>
+          {trueAnswer && answerInput()}
+          <button onClick={handleAnswerSubmit}>Проверить ответ</button>
+        </form>
       </div>
-
-      {/* <a href={"https://localhost/edit-task/" + id}>Редактировать задачу</a> */}
     </div>
   );
 };

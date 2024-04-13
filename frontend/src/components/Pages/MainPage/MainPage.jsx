@@ -9,6 +9,8 @@ import { setHasToken } from "../../../redux/slices/authSlice";
 
 import "./MainPage.css";
 
+import Highlight from "react-highlight";
+
 const MainPage = () => {
   const navigate = useNavigate();
   const location = useLocation();

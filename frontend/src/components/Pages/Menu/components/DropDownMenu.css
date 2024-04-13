@@ -1,0 +1,16 @@
+.drop .photos {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.drop .photos .sdown {
+  font-size: 0.8rem;
+}
+.drop .photos .sdown:hover {
+  cursor: pointer;
+}
+
+.drop {
+  user-select: none;
+}

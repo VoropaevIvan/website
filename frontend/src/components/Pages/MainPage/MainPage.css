@@ -44,3 +44,10 @@
 .mainpage .gowork {
   cursor: pointer;
 }
+
+.mainpage .capt:hover {
+  cursor: default;
+}
+.mainpage table {
+  cursor: default;
+}

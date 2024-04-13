@@ -19,20 +19,33 @@
   background-color: rgb(240, 239, 239);
 }
 
+.taskinfo .editbut:hover {
+  cursor: pointer;
+  color: cornflowerblue;
+}
+
 .answerinbank {
-  padding: 15px;
+  padding: 20px 20px 20px 20px;
   background-color: rgb(240, 239, 239);
   border-radius: 0px 0px 8px 8px;
 }
 
+.answerinbank form {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px;
+  padding: 0px;
+  /* justify-content: space-between; */
+  gap: 10px 20px;
+  align-items: flex-end;
+  align-items: center;
+}
+
 .answerinbank button {
   padding: 7px;
-  border: 0px;
-  border-radius: 10px;
-  display: inline-flex;
   background-color: white;
-  margin: 0px 0px 0px 20px;
   border: 2px solid #ffffff;
+  border-radius: 7px;
 }
 
 .answerinbank button:hover {
@@ -47,22 +60,20 @@
 }
 
 .answerinbank table {
-  display: inline-flex;
+  margin: 0px;
   border: 0px;
 
-  padding-top: 0px;
-  margin-top: 7px;
-  margin-bottom: 7px;
   background-color: white;
-
-  max-width: 70%;
 }
 
 .answerinbanktext {
-  padding: 5px;
+  padding: 7px;
   font-size: 1.1rem;
 
   max-width: 70%;
+  border: 1px solid grey;
+  border-radius: 7px;
+  outline: none;
 }
 
 .task .files {
