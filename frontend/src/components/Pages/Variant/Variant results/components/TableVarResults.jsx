@@ -75,34 +75,36 @@ const TableVarResults = ({ data }) => {
   };
 
   return (
-    <table className="variantrestable">
-      <tbody>
-        <tr className="maintr">
-          <td>Номер</td>
-          <td>Ваш ответ</td>
-          <td>Правильный ответ</td>
-          <td>Балл</td>
-        </tr>
-        {data.map((el, i) => {
-          return (
-            <tr key={i}>
-              <td
-                className={answerDecision(
-                  data[i].userAnswer,
-                  data[i].rightAnswer
-                )}
-              >
-                {i + 1}
-              </td>
-              <td>{prepareAnswer(data[i].userAnswer, i)}</td>
-              <td>{data[i] && prepareAnswer(data[i].rightAnswer, i)}</td>
-              <td>{el.scores}</td>
-              {/* <td>{varData[i]["answer"]["data"]}</td> */}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <div className="tablewrap">
+      <table className="variantrestable">
+        <tbody>
+          <tr className="maintr">
+            <td>Номер</td>
+            <td>Ваш ответ</td>
+            <td>Правильный ответ</td>
+            <td>Балл</td>
+          </tr>
+          {data.map((el, i) => {
+            return (
+              <tr key={i}>
+                <td
+                  className={answerDecision(
+                    data[i].userAnswer,
+                    data[i].rightAnswer
+                  )}
+                >
+                  {i + 1}
+                </td>
+                <td>{prepareAnswer(data[i].userAnswer, i)}</td>
+                <td>{data[i] && prepareAnswer(data[i].rightAnswer, i)}</td>
+                <td>{el.scores}</td>
+                {/* <td>{varData[i]["answer"]["data"]}</td> */}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

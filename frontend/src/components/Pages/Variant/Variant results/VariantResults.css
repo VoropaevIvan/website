@@ -5,7 +5,17 @@
 
   background-color: #e8eef9;
   min-height: 100vh;
+  max-width: 100vw;
 }
+
+.variantresults .tablewrap {
+  padding: 20px;
+  overflow-x: auto;
+}
+.variantresults table {
+  width: initial;
+}
+
 .variantresults h1 {
   margin: 15px;
   text-align: center;
@@ -42,8 +52,7 @@
 
 .variantresults .varresball {
   margin-top: 20px;
-  /* display: flex; */
-  /* flex-direction: column; */
+
   color: #12264f;
   text-align: center;
 }
@@ -76,14 +85,12 @@
 }
 
 .varrestable {
-  padding: 20px;
-  margin: 20px;
+  /* padding: 20px;
+  margin: 20px; */
+  margin: 20px 0px 20px;
   background-color: white;
   border-radius: 10px;
   max-width: 100%;
-}
-.varrestable table {
-  max-width: 80%;
 }
 
 .varrescont {
