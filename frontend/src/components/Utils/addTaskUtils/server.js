@@ -128,7 +128,6 @@ export const saveTaskOnServer = async ({ allTaskData, locationPath }) => {
       {
         ...allTaskData,
         answer: answer,
-        hiddenInBank: false, // TO DO
         files: JSON.stringify(allTaskData.files),
       },
       {

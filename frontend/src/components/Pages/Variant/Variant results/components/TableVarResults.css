@@ -8,6 +8,16 @@
   padding: 10px;
 }
 
+.variantrestable tr {
+  transition-delay: 30ms;
+  transition-duration: 50ms;
+}
+.variantrestable tr:hover {
+  background-color: rgb(237, 255, 236);
+}
+.variantrestable table td {
+  width: 25%;
+}
 .variantrestable td {
   overflow: auto;
 }

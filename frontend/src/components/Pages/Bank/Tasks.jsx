@@ -33,7 +33,6 @@ export const Tasks = () => {
     filtersData.sorting
   );
 
-  console.log(tasksFromServer);
   return (
     <div className="bank">
       <BankFilter />

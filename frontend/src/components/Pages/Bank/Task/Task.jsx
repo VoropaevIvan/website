@@ -184,7 +184,7 @@ export const Task = ({
       <></>
     );
   };
-  console.log(createMarkup(content));
+
   return (
     <div
       className={

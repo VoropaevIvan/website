@@ -14,7 +14,10 @@
   padding: 1px;
   text-align: center;
 }
-
+.addTask .checkbox {
+  width: 15px;
+  height: 15px;
+}
 .addTask .answer span {
   margin-right: 5px;
 }

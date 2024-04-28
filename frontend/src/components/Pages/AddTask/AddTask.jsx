@@ -20,6 +20,7 @@ import SendButtons from "./components/SendButtons";
 import { saveFileOnServer as saveFile } from "../../Utils/addTaskUtils/server";
 
 import "./AddTask.css";
+import HiddenInBank from "./components/HiddenInBank";
 
 const AddTask = () => {
   const navigate = useNavigate();
@@ -119,39 +120,51 @@ const AddTask = () => {
       </div>
     );
   }
-
+  console.log(allTaskData);
   return (
     <div className="addTask">
+      <HiddenInBank
+        allTaskData={allTaskData}
+        setAllTaskData={setAllTaskData}
+        setIsSend={setIsSend}
+      ></HiddenInBank>
+
       <NumberEGESelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
         setIsSend={setIsSend}
       />
+
       <SourceSelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
         setIsSend={setIsSend}
       />
+
       <IsOfficialSelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
         setIsSend={setIsSend}
       />
+
       <ActualitySelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
         setIsSend={setIsSend}
       />
+
       <DifficultySelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
         setIsSend={setIsSend}
       />
+
       <TopicSelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
         setIsSend={setIsSend}
       />
+
       <TaskContentSelect
         allTaskData={allTaskData}
         setText={setText}
@@ -159,11 +172,13 @@ const AddTask = () => {
         setIsSend={setIsSend}
         reload={reload}
       />
+
       <AnswerSelect
         setIsSend={setIsSend}
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
       />
+
       <VideoReviewSelect
         allTaskData={allTaskData}
         setAllTaskData={setAllTaskData}
